@@ -31,5 +31,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('update/{id}', 'PenampilController@update');
             Route::post('delete/{id}', 'PenampilController@delete');
         });
+
+        Route::group(['prefix' => 'program'], function () {
+            Route::get('/', 'ProgramController@index');
+            Route::get('{id}', 'ProgramController@detail');
+            Route::post('create', 'ProgramController@create');
+            Route::post('update/{id}', 'ProgramController@update');
+            Route::post('delete/{id}', 'ProgramController@delete');
+        });
     });
 });

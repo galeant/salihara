@@ -26,8 +26,13 @@ class PenampilController extends Controller
 
         try {
             $data = Penampil::order($order_by, $sort)
-                ->search($search_by, $keyword)
-                ->paginate($per_page);
+                ->search($search_by, $keyword);
+
+            if ($request->has('all') ||  $request->all == true) {
+                $data = $data->get();
+            } else {
+                $data = $data->paginate($per_page);
+            }
 
             return PenampilTransformer::getList($data);
         } catch (\Exception $e) {

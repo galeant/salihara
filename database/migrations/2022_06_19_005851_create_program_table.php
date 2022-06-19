@@ -18,13 +18,16 @@ class CreateProgramTable extends Migration
             $table->integer('order');
             $table->string('name');
             $table->string('slug');
-            $table->string('schedule')->comment('unix timestamp ');
+            $table->string('schedule_unix')->comment('unix timestamp ');
             $table->date('schedule_date');
-            $table->integer('hour');
-            $table->integer('minutes')->nullable();
+            $table->integer('duration_hour');
+            $table->integer('duration_minute')->nullable();
 
             $table->text('desc_id')->nullable();
             $table->text('desc_en')->nullable();
+
+            $table->boolean('only_indo')->defaul(false);
+
             $table->timestamps();
         });
     }
