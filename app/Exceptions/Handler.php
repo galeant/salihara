@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Route;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +51,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $uri = Route::current()->uri;
+
+        if (str_starts_with($uri, 'admin') || str_starts_with($uri, 'customer')) {
+            return response()->json([
+                'code' => 500,
+                'message' => $exception->getMessage(),
+                'result' => NULL
+            ]);
+        }
         return parent::render($request, $exception);
     }
 }
