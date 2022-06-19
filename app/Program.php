@@ -9,6 +9,16 @@ class Program extends Model
     protected $table = 'program';
     protected $guarded = [];
 
+    public function scopeLuring($q)
+    {
+        $q->where('type', 'luring');
+    }
+
+    public function scopeDaring($q)
+    {
+        $q->where('type', 'daring');
+    }
+
 
     public function scopeOrder($q, $order_by, $sort = 'ASC')
     {
@@ -27,5 +37,10 @@ class Program extends Model
     public function penampil()
     {
         return $this->belongsToMany('App\Penampil', 'program_penampil', 'program_id', 'penampil_id');
+    }
+
+    public function ticket()
+    {
+        return $this->hasMany('App\Ticket', 'program_id', 'id');
     }
 }

@@ -35,9 +35,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'program'], function () {
             Route::get('/', 'ProgramController@index');
             Route::get('{id}', 'ProgramController@detail');
+
+            // Route::post('{id}/ticket', 'ProgramController@detail');
+
             Route::post('create', 'ProgramController@create');
             Route::post('update/{id}', 'ProgramController@update');
             Route::post('delete/{id}', 'ProgramController@delete');
+        });
+
+        Route::group(['prefix' => 'ticket'], function () {
+            Route::get('/', 'TicketController@index');
+            Route::get('{id}', 'TicketController@detail');
+            Route::post('create', 'TicketController@create');
+            Route::post('update/{id}', 'TicketController@update');
+            Route::post('delete/{id}', 'TicketController@delete');
         });
     });
 });

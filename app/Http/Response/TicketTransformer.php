@@ -4,7 +4,7 @@ namespace App\Http\Response;
 
 use Carbon\Carbon;
 
-class ProgramTransformer
+class TicketTransformer
 {
 
     public static function getList($data, $message = 'Success')
@@ -46,27 +46,26 @@ class ProgramTransformer
 
     private static function reform($val)
     {
-        $return = [
+        return [
             'id' => $val->id,
             'name' => $val->name,
             'slug' => $val->slug,
             'order' => $val->order,
-            'schedule_unix' => $val->schedule_unix,
-            'schedule_date' => Carbon::parse($val->schedule_date)->format('d-m-Y'),
-            'duration_hour' => $val->duration_hour,
-            'duration_minute' => $val->duration_minute,
-            'desc_id' => $val->desc_id,
-            'desc_en' => $val->desc_en,
-            'penampil' => [],
-        ];
 
-        foreach ($val->penampil as $penampil) {
-            $return['penampil'][] = [
-                'id' => $penampil->id,
-                'name' => $penampil->name,
-                'slug' => $penampil->slug,
-            ];
-        }
-        return $return;
+            'price_idr' => $val->price_idr,
+            'price_usd' => $val->price_usd,
+
+            'desc_id' => $val->desc_id,
+            'desc_en' => $val->desc_usd,
+
+            'snk_id' => $val->snk_id,
+            'snk_en' => $val->snk_en,
+
+            'program' => [
+                'id' => $val->program->id,
+                'name' => $val->program->name,
+                'slug' => $val->program->slug,
+            ]
+        ];
     }
 }

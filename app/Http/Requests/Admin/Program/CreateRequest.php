@@ -31,6 +31,7 @@ class CreateRequest extends FormRequest
             'desc_id' => 'required',
             'only_indo' => 'nullable|in:' . true . ',' . false,
             'penampil_id' => 'array',
+            'type' => 'required|in:daring,luring',
         ];
     }
 }

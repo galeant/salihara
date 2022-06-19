@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 use App\Program;
+use App\Penampil;
 
 class ProgramController extends Controller
 {
@@ -28,9 +29,13 @@ class ProgramController extends Controller
 
         try {
             $data = Program::order($order_by, $sort)
-                ->search($search_by, $keyword)
-                ->paginate($per_page);
+                ->search($search_by, $keyword);
 
+            if ($request->has('all') || $request->all == true) {
+                $data = $data->get();
+            } else {
+                $data = $data->paginate($per_page);
+            }
             return ProgramTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -61,7 +66,10 @@ class ProgramController extends Controller
                 'only_indo' => $only_indo,
             ]);
 
-            $data->penampil()->sync($request->penampil_id);
+            $get_penampil = Penampil::select('id')->get();
+            $get_penampil = $get_penampil->pluck('id')->toArray();
+            $exist_id = array_intersect($request->penampil_id, $get_penampil);
+            $data->penampil()->sync($exist_id);
 
             DB::commit();
             return ProgramTransformer::getDetail($data);
@@ -111,7 +119,10 @@ class ProgramController extends Controller
                 'only_indo' => $only_indo,
             ]);
 
-            $data->penampil()->sync($request->penampil_id);
+            $get_penampil = Penampil::select('id')->get();
+            $get_penampil = $get_penampil->pluck('id')->toArray();
+            $exist_id = array_intersect($request->penampil_id, $get_penampil);
+            $data->penampil()->sync($exist_id);
 
             DB::commit();
             return ProgramTransformer::getDetail($data->fresh());

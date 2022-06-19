@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Program;
+namespace App\Http\Requests\Admin\Ticket;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,14 +24,10 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:program,name',
-            'schedule_date'  => 'required|date',
-            'duration_hour' => 'required',
-            'duration_minute' => 'nullable',
+            'name' => 'required',
+            'program_id' => 'required|exists:program,id',
+            'price_idr'  => 'required|numeric',
             'desc_id' => 'required',
-            'only_indo' => 'nullable|in:' . true . ',' . false,
-            'penampil_id' => 'array',
-            'type' => 'required|in:daring,luring',
         ];
     }
 }
