@@ -22,6 +22,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', 'AuthController@profile');
     Route::post('logout', 'AuthController@logout');
 
-    Route::group(['namespace' => 'admin'], function () {
+    Route::group(['namespace' => 'Admin'], function () {
+
+        Route::group(['prefix' => 'penampil'], function () {
+            Route::get('/', 'PenampilController@index');
+            Route::get('{id}', 'PenampilController@detail');
+            Route::post('create', 'PenampilController@create');
+            Route::post('update/{id}', 'PenampilController@update');
+            Route::post('delete/{id}', 'PenampilController@delete');
+        });
     });
 });

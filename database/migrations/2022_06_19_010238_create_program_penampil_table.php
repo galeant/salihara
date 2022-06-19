@@ -15,7 +15,7 @@ class CreateProgramPenampilTable extends Migration
     {
         Schema::create('program_penampil', function (Blueprint $table) {
             $table->bigInteger('program_id');
-            $table->bigInteger('pemanmpil_id');
+            $table->bigInteger('penampil_id');
         });
     }
 
