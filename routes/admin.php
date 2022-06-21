@@ -50,5 +50,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('update/{id}', 'TicketController@update');
             Route::post('delete/{id}', 'TicketController@delete');
         });
+
+        Route::group(['prefix' => 'misc'], function () {
+            Route::get('banner', 'MiscController@banner');
+            Route::post('banner', 'MiscController@Postbanner');
+        });
     });
 });

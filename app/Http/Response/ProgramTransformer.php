@@ -51,13 +51,17 @@ class ProgramTransformer
             'name' => $val->name,
             'slug' => $val->slug,
             'order' => $val->order,
+            'type' => $val->type,
             'schedule_unix' => $val->schedule_unix,
             'schedule_date' => Carbon::parse($val->schedule_date)->format('d-m-Y'),
             'duration_hour' => $val->duration_hour,
             'duration_minute' => $val->duration_minute,
             'desc_id' => $val->desc_id,
             'desc_en' => $val->desc_en,
+            'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
             'penampil' => [],
+            'only_indo' => (bool)$val->only_indo,
+            'video_url' => $val->video_url,
         ];
 
         foreach ($val->penampil as $penampil) {

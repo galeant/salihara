@@ -11,6 +11,7 @@ use App\Penampil;
 use App\Http\Response\PenampilTransformer;
 
 use Illuminate\Support\Str;
+use App\Image;
 
 class PenampilController extends Controller
 {
@@ -51,6 +52,17 @@ class PenampilController extends Controller
                 'desc_id' => $request->desc_id,
                 'desc_en' => $request->desc_en
             ]);
+            if ($request->has('image')) {
+                // $delete_path = str_replace('storage', '', $image);
+                $image = imageUpload('penampil/', $request->image, NULL, Str::uuid());
+                Image::updateOrCreate([
+                    'relation_id' => $data->id,
+                    'relation_type' => 'penampil',
+                    'function_type' => 'banner',
+                ], [
+                    'path' => $image
+                ]);
+            }
             DB::commit();
             return PenampilTransformer::getDetail($data);
         } catch (\Exception $e) {
@@ -74,6 +86,7 @@ class PenampilController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         DB::beginTransaction();
+        $delete_path = NULL;
         try {
             $data = Penampil::where([
                 'id' => $id
@@ -86,6 +99,17 @@ class PenampilController extends Controller
                 'desc_id' => $request->desc_id,
                 'desc_en' => $request->desc_en
             ]);
+
+            if ($request->has('image')) {
+                $image = imageUpload('penampil/', $request->image, NULL, Str::uuid());
+                Image::updateOrCreate([
+                    'relation_id' => $data->id,
+                    'relation_type' => 'penampil',
+                    'function_type' => 'banner',
+                ], [
+                    'path' => $image
+                ]);
+            }
             DB::commit();
             return PenampilTransformer::getDetail($data->fresh());
         } catch (\Exception $e) {

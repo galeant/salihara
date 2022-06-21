@@ -14,6 +14,7 @@ use Carbon\Carbon;
 
 use App\Program;
 use App\Penampil;
+use App\Image;
 
 class ProgramController extends Controller
 {
@@ -64,10 +65,24 @@ class ProgramController extends Controller
                 'desc_id' => $request->desc_id,
                 'desc_en' => $request->desc_en,
                 'only_indo' => $only_indo,
+                'video_url' => $request->video_url,
             ]);
+
+            if ($request->has('image')) {
+                // $delete_path = str_replace('storage', '', $image);
+                $image = imageUpload('program/', $request->image, NULL, Str::uuid());
+                Image::updateOrCreate([
+                    'relation_id' => $data->id,
+                    'relation_type' => 'program',
+                    'function_type' => 'banner',
+                ], [
+                    'path' => $image
+                ]);
+            }
 
             $get_penampil = Penampil::select('id')->get();
             $get_penampil = $get_penampil->pluck('id')->toArray();
+
             $exist_id = array_intersect($request->penampil_id, $get_penampil);
             $data->penampil()->sync($exist_id);
 
@@ -117,7 +132,20 @@ class ProgramController extends Controller
                 'desc_id' => $request->desc_id,
                 'desc_en' => $request->desc_en,
                 'only_indo' => $only_indo,
+                'video_url' => $request->video_url,
             ]);
+
+            if ($request->has('image')) {
+                // $delete_path = str_replace('storage', '', $image);
+                $image = imageUpload('program/', $request->image, NULL, Str::uuid());
+                Image::updateOrCreate([
+                    'relation_id' => $data->id,
+                    'relation_type' => 'program',
+                    'function_type' => 'banner',
+                ], [
+                    'path' => $image
+                ]);
+            }
 
             $get_penampil = Penampil::select('id')->get();
             $get_penampil = $get_penampil->pluck('id')->toArray();

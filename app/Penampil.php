@@ -27,4 +27,13 @@ class Penampil extends Model
     {
         return $this->belongsToMany('App\Program', 'program_penampil', 'penampil_id', 'program_id');
     }
+
+    public function imageBanner()
+    {
+        return $this->hasOne('App\Image', 'relation_id', 'id')
+            ->where([
+                'relation_type' => 'penampil',
+                'function_type' => 'banner'
+            ]);
+    }
 }

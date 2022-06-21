@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 use DB;
 use App\Ticket;
-
+use App\Image;
 
 class TicketController extends Controller
 {
@@ -63,6 +63,18 @@ class TicketController extends Controller
 
             ]);
 
+            if ($request->has('image')) {
+                // $delete_path = str_replace('storage', '', $image);
+                $image = imageUpload('ticket/', $request->image, NULL, Str::uuid());
+                Image::updateOrCreate([
+                    'relation_id' => $data->id,
+                    'relation_type' => 'ticket',
+                    'function_type' => 'banner',
+                ], [
+                    'path' => $image
+                ]);
+            }
+
             DB::commit();
             return TicketTransformer::getDetail($data);
         } catch (\Exception $e) {
@@ -110,6 +122,18 @@ class TicketController extends Controller
                 'snk_id' => $request->snk_id,
                 'snk_en' => $request->snk_en,
             ]);
+
+            if ($request->has('image')) {
+                // $delete_path = str_replace('storage', '', $image);
+                $image = imageUpload('ticket/', $request->image, NULL, Str::uuid());
+                Image::updateOrCreate([
+                    'relation_id' => $data->id,
+                    'relation_type' => 'ticket',
+                    'function_type' => 'banner',
+                ], [
+                    'path' => $image
+                ]);
+            }
 
             DB::commit();
             return TicketTransformer::getDetail($data->fresh());

@@ -37,4 +37,13 @@ class Ticket extends Model
     {
         return $this->belongsTo('App\Program', 'program_id', 'id');
     }
+
+    public function imageBanner()
+    {
+        return $this->hasOne('App\Image', 'relation_id', 'id')
+            ->where([
+                'relation_type' => 'ticket',
+                'function_type' => 'banner'
+            ]);
+    }
 }

@@ -50,7 +50,8 @@ class PenampilTransformer
             'name' => $val->name,
             'slug' => $val->slug,
             'desc_id' => $val->desc_id,
-            'desc_en' => $val->desc_en
+            'desc_en' => $val->desc_en,
+            'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
         ];
     }
 }

@@ -54,9 +54,19 @@ class Handler extends ExceptionHandler
         $uri = Route::current()->uri;
 
         if (str_starts_with($uri, 'admin') || str_starts_with($uri, 'customer')) {
+
+            $code = 500;
+            $message = $exception->getMessage();
+            if ($exception instanceof \Illuminate\Validation\ValidationException) {
+                $code = 422;
+                $message = [];
+                foreach ($exception->errors() as $ky => $err) {
+                    $message[$ky] = $err[0];
+                }
+            }
             return response()->json([
-                'code' => 500,
-                'message' => $exception->getMessage(),
+                'code' => $code,
+                'message' => $message,
                 'result' => NULL
             ]);
         }

@@ -15,8 +15,8 @@ class CreateImageTable extends Migration
     {
         Schema::create('image', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('relation_id');
-            $table->string('relation_type');
+            $table->bigInteger('relation_id')->nullable();
+            $table->string('relation_type')->nullable();
             $table->string('function_type');
             $table->string('path');
             $table->timestamps();

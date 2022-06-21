@@ -43,4 +43,13 @@ class Program extends Model
     {
         return $this->hasMany('App\Ticket', 'program_id', 'id');
     }
+
+    public function imageBanner()
+    {
+        return $this->hasOne('App\Image', 'relation_id', 'id')
+            ->where([
+                'relation_type' => 'program',
+                'function_type' => 'banner'
+            ]);
+    }
 }

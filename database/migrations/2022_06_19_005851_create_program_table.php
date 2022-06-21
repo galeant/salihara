@@ -30,6 +30,8 @@ class CreateProgramTable extends Migration
 
             $table->boolean('only_indo')->defaul(false);
 
+            $table->text('video_url')->nullable();
+
             $table->timestamps();
         });
     }
