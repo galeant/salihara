@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 // });
 
 Route::post('login', 'AuthController@login');
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('profile', 'AuthController@profile');
     Route::post('logout', 'AuthController@logout');
 
@@ -54,6 +54,20 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'misc'], function () {
             Route::get('banner', 'MiscController@banner');
             Route::post('banner', 'MiscController@Postbanner');
+        });
+
+        // Route::group(['prefix' => 'user'], function () {
+        //     Route::get('/', 'UserController@index');
+        //     Route::get('{id}', 'UserController@detail');
+        //     Route::post('create', 'UserController@create');
+        //     Route::post('update/{id}', 'UserController@update');
+        //     Route::post('delete/{id}', 'UserController@delete');
+        // });
+
+        Route::group(['prefix' => 'customer'], function () {
+            Route::get('/', 'CustomerController@index');
+            Route::get('{id}', 'CustomerController@detail');
+            Route::post('block/{id}', 'CustomerController@block');
         });
     });
 });

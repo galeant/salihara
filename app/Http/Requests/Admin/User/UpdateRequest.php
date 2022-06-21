@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Ticket;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,10 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:ticket,name,' . $this->id,
-            'program_id' => 'required|exists:program,id',
-            'price_idr'  => 'required|numeric',
-            'desc_id' => 'required',
+            //
         ];
     }
 }

@@ -24,7 +24,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:ticket,name',
             'program_id' => 'required|exists:program,id',
             'price_idr'  => 'required|numeric',
             'desc_id' => 'required',

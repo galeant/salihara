@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\Penampil\CreateRequest;
-use App\Http\Requests\Admin\Penampil\UpdateRequest;
-use App\Penampil;
-use App\Http\Response\Admin\PenampilTransformer;
+use App\User;
+use App\Http\Response\UserTransformer;
 
-use Illuminate\Support\Str;
-use App\Image;
-
-class PenampilController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request)
     {
@@ -26,7 +20,8 @@ class PenampilController extends Controller
         $per_page = $request->input('per_page', 10);
 
         try {
-            $data = Penampil::order($order_by, $sort)
+            $data = User::admin()
+                ->order($order_by, $sort)
                 ->search($search_by, $keyword);
 
             if ($request->has('all') ||  $request->all == true) {
@@ -35,7 +30,7 @@ class PenampilController extends Controller
                 $data = $data->paginate($per_page);
             }
 
-            return PenampilTransformer::getList($data);
+            return UserTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests\Admin\Program\CreateRequest;
 use App\Http\Requests\Admin\Program\UpdateRequest;
-use App\Http\Response\ProgramTransformer;
+use App\Http\Response\Admin\ProgramTransformer;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -37,6 +37,7 @@ class ProgramController extends Controller
             } else {
                 $data = $data->paginate($per_page);
             }
+            // dd($data);
             return ProgramTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -151,7 +152,6 @@ class ProgramController extends Controller
             $get_penampil = $get_penampil->pluck('id')->toArray();
             $exist_id = array_intersect($request->penampil_id, $get_penampil);
             $data->penampil()->sync($exist_id);
-
             DB::commit();
             return ProgramTransformer::getDetail($data->fresh());
         } catch (\Exception $e) {

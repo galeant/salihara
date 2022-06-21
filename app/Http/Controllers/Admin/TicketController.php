@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Ticket\CreateRequest;
 use App\Http\Requests\Admin\Ticket\UpdateRequest;
-use App\Http\Response\TicketTransformer;
+use App\Http\Response\Admin\TicketTransformer;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 

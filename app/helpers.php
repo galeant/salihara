@@ -18,6 +18,9 @@ use Illuminate\Support\Str;
 
 function imageUpload($folder_upload, $image, $resize = null, $name = null)
 {
+    if (str_contains($image, url('/'))) {
+        return str_replace(url('/') . '/', '', $image);
+    }
     $img = ImageManipulation::make($image);
     $type = str_replace('image/', '.', $img->mime());
     $image_name = $folder_upload . (string) Str::uuid() . $type;

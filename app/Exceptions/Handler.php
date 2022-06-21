@@ -51,8 +51,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        $uri = Route::current()->uri;
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+            return response()->json([
+                'code' => 500,
+                'message' => 'Route Not Found',
+                'result' => NULL
+            ]);
+        }
 
+        $uri = Route::current()->uri;
         if (str_starts_with($uri, 'admin') || str_starts_with($uri, 'customer')) {
 
             $code = 500;

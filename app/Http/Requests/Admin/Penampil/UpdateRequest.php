@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:penampil,name',
+            'name' => 'required|unique:penampil,name,' . $this->id,
             'desc_id'  => 'required',
         ];
     }

@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:program,name',
+            'name' => 'required|unique:program,name,' . $this->id,
             'schedule_date'  => 'required|date',
             'duration_hour' => 'required',
             'duration_minute' => 'nullable',

@@ -8,7 +8,7 @@ use DB;
 use App\Image;
 use Illuminate\Support\Str;
 use App\Http\Requests\Admin\Misc\BannerCreateRequest;
-use App\Http\Response\MiscTransformer;
+use App\Http\Response\Admin\MiscTransformer;
 
 class MiscController extends Controller
 {

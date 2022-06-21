@@ -18,7 +18,8 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name', 'email', 'password',
-        'role', 'phone', 'address'
+        'role', 'phone', 'address',
+        'is_disabled'
     ];
 
     /**
@@ -59,5 +60,19 @@ class User extends Authenticatable implements JWTSubject
     public function scopeCustomer($query)
     {
         return $query->where('role', 'customer');
+    }
+
+    public function scopeOrder($q, $order_by, $sort = 'ASC')
+    {
+        if (isset($order_by) && isset($sort)) {
+            $q->orderBy($order_by, $sort);
+        }
+    }
+
+    public function scopeSearch($q, $field, $keyword)
+    {
+        if (isset($field) && isset($keyword)) {
+            $q->where($field, "like", "%$keyword%");
+        }
     }
 }

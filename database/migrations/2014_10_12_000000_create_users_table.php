@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
 
+            $table->boolean('is_disabled')->default(false);
+
             $table->timestamps();
         });
     }
