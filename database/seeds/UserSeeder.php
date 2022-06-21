@@ -22,6 +22,22 @@ class UserSeeder extends Seeder
         ]);
 
         User::firstOrcreate([
+            'name' => 'admin1',
+            'email' => 'admin1@mail.com'
+        ], [
+            'password' => Hash::make('admin1'),
+            'role' => 'admin'
+        ]);
+
+        User::firstOrcreate([
+            'name' => 'admin2',
+            'email' => 'admin2@mail.com'
+        ], [
+            'password' => Hash::make('admin2'),
+            'role' => 'admin'
+        ]);
+
+        User::firstOrcreate([
             'name' => 'customer',
             'email' => 'customer@mail.com'
         ], [

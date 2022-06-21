@@ -56,13 +56,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('banner', 'MiscController@Postbanner');
         });
 
-        // Route::group(['prefix' => 'user'], function () {
-        //     Route::get('/', 'UserController@index');
-        //     Route::get('{id}', 'UserController@detail');
-        //     Route::post('create', 'UserController@create');
-        //     Route::post('update/{id}', 'UserController@update');
-        //     Route::post('delete/{id}', 'UserController@delete');
-        // });
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/', 'UserController@index');
+            Route::get('{id}', 'UserController@detail');
+            Route::post('create', 'UserController@create');
+            Route::post('update/{id}', 'UserController@update');
+            Route::post('delete/{id}', 'UserController@delete');
+            Route::post('block/{id}', 'UserController@block');
+        });
 
         Route::group(['prefix' => 'customer'], function () {
             Route::get('/', 'CustomerController@index');
