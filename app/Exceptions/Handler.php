@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
                 'code' => 500,
                 'message' => 'Route Not Found',
                 'result' => NULL
-            ]);
+            ], 500);
         }
 
         $uri = Route::current()->uri;
@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
                 'code' => $code,
                 'message' => $message,
                 'result' => NULL
-            ]);
+            ], $code);
         }
         return parent::render($request, $exception);
     }

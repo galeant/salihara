@@ -32,6 +32,8 @@ class CreateProgramTable extends Migration
 
             $table->text('video_url')->nullable();
 
+            $table->boolean('is_publish')->default(true);
+
             $table->timestamps();
         });
     }

@@ -16,14 +16,10 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::group(['namespace' => 'Customer'], function () {
 
-Route::group(['prefix' => 'program'], function () {
-    Route::get('/', 'ProgramController@index');
-    Route::get('{id}', 'ProgramController@detail');
-
-    // Route::post('{id}/ticket', 'ProgramController@detail');
-
-    Route::post('create', 'ProgramController@create');
-    Route::post('update/{id}', 'ProgramController@update');
-    Route::post('delete/{id}', 'ProgramController@delete');
+    Route::group(['prefix' => 'program'], function () {
+        Route::get('/', 'ProgramController@index');
+        Route::get('{slug}', 'ProgramController@detail');
+    });
 });
