@@ -65,7 +65,7 @@ class TicketController extends Controller
 
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);
-                $image = imageUpload('ticket/', $request->image, NULL, Str::uuid());
+                $image = imageUpload('public/ticket/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
                     'relation_id' => $data->id,
                     'relation_type' => 'ticket',
@@ -125,7 +125,7 @@ class TicketController extends Controller
 
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);
-                $image = imageUpload('ticket/', $request->image, NULL, Str::uuid());
+                $image = imageUpload('public/ticket/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
                     'relation_id' => $data->id,
                     'relation_type' => 'ticket',

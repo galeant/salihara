@@ -19,7 +19,17 @@ use Illuminate\Http\Request;
 Route::group(['namespace' => 'Customer'], function () {
 
     Route::group(['prefix' => 'program'], function () {
-        Route::get('/', 'ProgramController@index');
-        Route::get('{slug}', 'ProgramController@detail');
+        Route::get('{type}', 'ProgramController@index');
+        Route::get('/detail/{slug}', 'ProgramController@detail');
+    });
+
+    Route::group(['prefix' => 'ticket'], function () {
+        Route::get('{type}', 'TicketController@index');
+        Route::get('/detail/{slug}', 'TicketController@detail');
+    });
+
+    Route::group(['prefix' => 'penampil'], function () {
+        //     Route::get('{program_id}', 'ProgramController@index');
+        Route::get('/detail/{slug}', 'PenampilController@detail');
     });
 });

@@ -51,35 +51,31 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $code = 500;
+        $message = $exception->getMessage();
         if (
             $exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException ||
             $exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
         ) {
-            return response()->json([
-                'code' => 500,
-                'message' => 'Route Not Found',
-                'result' => NULL
-            ], 500);
-        }
-
-        $uri = Route::current()->uri;
-        if (str_starts_with($uri, 'admin') || str_starts_with($uri, 'customer')) {
-
-            $code = 500;
-            $message = $exception->getMessage();
-            if ($exception instanceof \Illuminate\Validation\ValidationException) {
-                $code = 422;
-                $message = [];
-                foreach ($exception->errors() as $ky => $err) {
-                    $message[$ky] = $err[0];
-                }
+            $message = 'Route Not Found';
+        } else if ($exception instanceof \Illuminate\Validation\ValidationException) {
+            $code = 422;
+            $message = [];
+            foreach ($exception->errors() as $ky => $err) {
+                $message[$ky] = $err[0];
             }
-            return response()->json([
-                'code' => $code,
-                'message' => $message,
-                'result' => NULL
-            ], $code);
+        } else if (str_contains($message, 'No query results for model')) {
+            $code = 404;
+            $message = 'Data Not Found';
         }
+        // $uri = Route::current()->uri;
+        // if (str_starts_with($uri, 'admin') || str_starts_with($uri, 'customer') || str_starts_with($uri, 'api')) {
+        return response()->json([
+            'code' => $code,
+            'message' => $message,
+            'result' => NULL
+        ], $code);
+        // }
         return parent::render($request, $exception);
     }
 }

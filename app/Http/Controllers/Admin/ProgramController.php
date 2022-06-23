@@ -67,11 +67,12 @@ class ProgramController extends Controller
                 'desc_en' => $request->desc_en,
                 'only_indo' => $only_indo,
                 'video_url' => $request->video_url,
+                'type' => $request->type,
             ]);
 
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);
-                $image = imageUpload('program/', $request->image, NULL, Str::uuid());
+                $image = imageUpload('public/program/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
                     'relation_id' => $data->id,
                     'relation_type' => 'program',
@@ -134,11 +135,12 @@ class ProgramController extends Controller
                 'desc_en' => $request->desc_en,
                 'only_indo' => $only_indo,
                 'video_url' => $request->video_url,
+                'type' => $request->type,
             ]);
 
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);
-                $image = imageUpload('program/', $request->image, NULL, Str::uuid());
+                $image = imageUpload('public/program/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
                     'relation_id' => $data->id,
                     'relation_type' => 'program',

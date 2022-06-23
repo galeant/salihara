@@ -53,7 +53,7 @@ class MiscController extends Controller
                 } else if (!isset($req_banner[$i]) && isset($exist[$i])) {
                     $exist[$i]->delete();
                 } else if (isset($req_banner[$i]) && !isset($exist[$i])) {
-                    $image = imageUpload('main_banner/', $req_banner[$i], NULL, Str::uuid());
+                    $image = imageUpload('public/main_banner/', $req_banner[$i], NULL, Str::uuid());
                     Image::create([
                         'relation_id' => NULL,
                         'relation_type' => NULL,

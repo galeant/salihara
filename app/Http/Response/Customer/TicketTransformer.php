@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Response\Admin;
+namespace App\Http\Response\Customer;
 
 use Carbon\Carbon;
 
@@ -57,7 +57,7 @@ class TicketTransformer
             'price_usd' => $val->price_usd,
 
             'desc_id' => $val->desc_id,
-            'desc_en' => $val->desc_en,
+            'desc_en' => $val->desc_usd,
 
             'snk_id' => $val->snk_id,
             'snk_en' => $val->snk_en,
@@ -66,6 +66,8 @@ class TicketTransformer
                 'id' => $val->program->id,
                 'name' => $val->program->name,
                 'slug' => $val->program->slug,
+                'desc_id' => $val->program->desc_id,
+                'desc_en' => $val->program->desc_en,
             ],
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
         ];

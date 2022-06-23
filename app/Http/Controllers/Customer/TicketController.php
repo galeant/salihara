@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Program;
+use App\Ticket;
 
-use App\Http\Response\Customer\ProgramTransformer;
+use App\Http\Response\Customer\TicketTransformer;
 
-class ProgramController extends Controller
+class TicketController extends Controller
 {
     public function index(Request $request, $type)
     {
@@ -23,7 +23,7 @@ class ProgramController extends Controller
         $per_page = $request->input('per_page', 10);
 
         try {
-            $data = Program::order($order_by, $sort)
+            $data = Ticket::order($order_by, $sort)
                 ->search($search_by, $keyword)
                 ->when($type == 'luring', function ($q) {
                     $q->luring();
@@ -38,7 +38,7 @@ class ProgramController extends Controller
                 $data = $data->paginate($per_page);
             }
             // dd($data);
-            return ProgramTransformer::getList($data);
+            return TicketTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -47,8 +47,8 @@ class ProgramController extends Controller
     public function detail(Request $request, $slug)
     {
         try {
-            $data = Program::where('slug', $slug)->firstOrFail();
-            return ProgramTransformer::getDetail($data);
+            $data = Ticket::where('slug', $slug)->firstOrFail();
+            return TicketTransformer::getDetail($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

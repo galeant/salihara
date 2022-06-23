@@ -46,5 +46,6 @@ function imageUpload($folder_upload, $image, $resize = null, $name = null)
     }
 
     Storage::put($image_name, $img->encode());
+    $image_name = str_replace('public/', '', $image_name);
     return 'storage/' . $image_name;
 }

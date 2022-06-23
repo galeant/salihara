@@ -11,12 +11,16 @@ class Ticket extends Model
 
     public function scopeLuring($q)
     {
-        $q->where('type', 'luring');
+        $q->whereHas('program', function ($q) {
+            $q->where('type', 'luring');
+        });
     }
 
     public function scopeDaring($q)
     {
-        $q->where('type', 'daring');
+        $q->whereHas('program', function ($q) {
+            $q->where('type', 'daring');
+        });
     }
 
     public function scopeOrder($q, $order_by, $sort = 'ASC')

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Response\Admin;
+namespace App\Http\Response\Customer;
 
-use Carbon\Carbon;
 
-class TicketTransformer
+class PenampilTransformer
 {
 
     public static function getList($data, $message = 'Success')
@@ -51,22 +50,8 @@ class TicketTransformer
             'id' => $val->id,
             'name' => $val->name,
             'slug' => $val->slug,
-            'order' => $val->order,
-
-            'price_idr' => $val->price_idr,
-            'price_usd' => $val->price_usd,
-
             'desc_id' => $val->desc_id,
             'desc_en' => $val->desc_en,
-
-            'snk_id' => $val->snk_id,
-            'snk_en' => $val->snk_en,
-
-            'program' => [
-                'id' => $val->program->id,
-                'name' => $val->program->name,
-                'slug' => $val->program->slug,
-            ],
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
         ];
     }

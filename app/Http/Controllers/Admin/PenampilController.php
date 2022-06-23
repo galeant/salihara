@@ -54,7 +54,7 @@ class PenampilController extends Controller
             ]);
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);
-                $image = imageUpload('penampil/', $request->image, NULL, Str::uuid());
+                $image = imageUpload('public/penampil/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
                     'relation_id' => $data->id,
                     'relation_type' => 'penampil',
@@ -101,7 +101,7 @@ class PenampilController extends Controller
             ]);
 
             if ($request->has('image')) {
-                $image = imageUpload('penampil/', $request->image, NULL, Str::uuid());
+                $image = imageUpload('public/penampil/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
                     'relation_id' => $data->id,
                     'relation_type' => 'penampil',

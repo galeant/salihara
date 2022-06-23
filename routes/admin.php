@@ -70,5 +70,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('{id}', 'CustomerController@detail');
             Route::post('block/{id}', 'CustomerController@block');
         });
+
+        Route::group(['prefix' => 'voucher'], function () {
+            Route::get('/', 'VoucherController@index');
+            Route::get('{id}', 'VoucherController@detail');
+            Route::post('create', 'VoucherController@create');
+            Route::post('update/{id}', 'VoucherController@update');
+            Route::post('delete/{id}', 'VoucherController@delete');
+        });
     });
 });
