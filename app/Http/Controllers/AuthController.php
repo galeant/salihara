@@ -6,13 +6,22 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\LoginRequest;
+use Illuminate\Support\Facades\Route;
 
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
+        $uri = Route::current()->uri;
+        $customer = str_starts_with($uri, 'customer');
+        $admin = str_starts_with($uri, 'admin');
+
         try {
-            $user = User::admin()->where([
+            $user = User::when($customer == true, function ($q) {
+                $q->customer();
+            })->when($admin == true, function ($q) {
+                $q->admin();
+            })->where([
                 'email' => $request->email,
             ])->firstOrFail();
 

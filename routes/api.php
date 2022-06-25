@@ -32,4 +32,5 @@ Route::group(['namespace' => 'Customer'], function () {
         //     Route::get('{program_id}', 'ProgramController@index');
         Route::get('/detail/{slug}', 'PenampilController@detail');
     });
+    Route::get('/banner', 'MiscController@banner');
 });
