@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    header('Location: https://salihara.org/');
+    // return view('welcome');
 });
 
 // Route::get('/storage_link', function () {
