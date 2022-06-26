@@ -55,8 +55,10 @@ class MiscTransformer
         $value_en = NULL;
         if ($data  !== NULL) {
             $image = isset($data->imageBanner) ? url($data->imageBanner->path) : NULL;
-            $value_id = mb_strimwidth($data->value_id, 0, 150, "...");
-            $value_en = mb_strimwidth($data->value_en, 0, 150, "...");
+            $value_id = $data->value_id;
+            $value_en = $data->value_en;
+            // $value_id = mb_strimwidth($data->value_id, 0, 150, "...");
+            // $value_en = mb_strimwidth($data->value_en, 0, 150, "...");
         }
         return response()->json([
             'message' => $message,
