@@ -64,8 +64,8 @@ class MiscTransformer
             'message' => $message,
             'result' => [
                 'image' => $image,
-                'value_id' => $value_id,
-                'value_en' => $value_en
+                'desc_id' => $value_id,
+                'desc_en' => $value_en
             ]
         ]);
     }
