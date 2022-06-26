@@ -47,6 +47,14 @@ class ProgramTransformer
 
     private static function reform($val, $type)
     {
+
+        $desc_id = $val->desc_id;
+        $desc_en = $val->desc_en;
+        if ($type == 'index') {
+            $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
+            $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
+        }
+
         $return = [
             'id' => $val->id,
             'name' => $val->name,
@@ -57,8 +65,8 @@ class ProgramTransformer
             'schedule_date' => Carbon::parse($val->schedule_date)->format('d-m-Y'),
             'duration_hour' => $val->duration_hour,
             'duration_minute' => $val->duration_minute,
-            'desc_id' => $val->desc_id,
-            'desc_en' => $val->desc_en,
+            'desc_id' => $desc_id,
+            'desc_en' => $desc_en,
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
             'penampil' => [],
             'ticket' => [],
@@ -72,17 +80,29 @@ class ProgramTransformer
         }
 
         foreach ($val->penampil as $penampil) {
+            $p_desc_id = $penampil->desc_id;
+            $p_desc_en = $penampil->desc_en;
+            if ($type == 'index') {
+                $p_desc_id = mb_strimwidth($penampil->desc_id, 0, 150, "...");
+                $p_desc_en = mb_strimwidth($penampil->desc_en, 0, 150, "...");
+            }
             $return['penampil'][] = [
                 'id' => $penampil->id,
                 'name' => $penampil->name,
                 'slug' => $penampil->slug,
-                'desc_id' => $penampil->desc_id,
-                'desc_en' => $penampil->desc_en,
+                'desc_id' => $p_desc_id,
+                'desc_en' => $p_desc_en,
                 'banner' => isset($penampil->imageBanner) ? url($penampil->imageBanner->path) : NULL,
             ];
         }
 
         foreach ($val->ticket as $ticket) {
+            $t_desc_id = $ticket->desc_id;
+            $t_desc_en = $ticket->desc_en;
+            if ($type == 'index') {
+                $p_desc_id = mb_strimwidth($ticket->desc_id, 0, 150, "...");
+                $p_desc_en = mb_strimwidth($ticket->desc_en, 0, 150, "...");
+            }
             $return['ticket'][] = [
                 'id' => $ticket->id,
                 'name' => $ticket->name,
@@ -92,8 +112,8 @@ class ProgramTransformer
                 'price_idr' => $ticket->price_idr,
                 'price_usd' => $ticket->price_usd,
 
-                'desc_id' => $ticket->desc_id,
-                'desc_en' => $ticket->desc_usd,
+                'desc_id' => $t_desc_id,
+                'desc_en' => $t_desc_en,
 
                 'snk_id' => $ticket->snk_id,
                 'snk_en' => $ticket->snk_en,

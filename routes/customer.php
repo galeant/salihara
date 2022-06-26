@@ -20,4 +20,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'AuthController@logout');
 
     Route::get('cart', 'Customer\MiscController@cart');
+    Route::post('cart', 'Customer\MiscController@addCart');
 });

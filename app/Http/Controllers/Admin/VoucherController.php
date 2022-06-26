@@ -44,7 +44,7 @@ class VoucherController extends Controller
         DB::beginTransaction();
         try {
             $data = Voucher::create([
-                'unique_code' => $request->code,
+                'code' => $request->code,
                 'discount' => $request->discount,
                 'quota' => $request->quota,
             ]);

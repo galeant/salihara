@@ -11,7 +11,7 @@ class TicketTransformer
     {
         if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
             $items = collect($data->items())->transform(function ($v) {
-                return self::reform($v);
+                return self::reform($v, 'index');
             });
             $return = [
                 'data' => $items,
@@ -26,7 +26,7 @@ class TicketTransformer
 
             $return = [
                 'data' => $data->transform(function ($v) {
-                    return self::reform($v);
+                    return self::reform($v, 'index');
                 }),
                 'total' => count($data)
             ];
@@ -41,12 +41,18 @@ class TicketTransformer
     {
         return response()->json([
             'message' => $message,
-            'result' => self::reform($data)
+            'result' => self::reform($data, 'detail')
         ]);
     }
 
-    private static function reform($val)
+    private static function reform($val, $type)
     {
+        $desc_id = $val->desc_id;
+        $desc_en = $val->desc_en;
+        if ($type == 'index') {
+            $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
+            $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
+        }
         return [
             'id' => $val->id,
             'name' => $val->name,
@@ -56,8 +62,8 @@ class TicketTransformer
             'price_idr' => $val->price_idr,
             'price_usd' => $val->price_usd,
 
-            'desc_id' => $val->desc_id,
-            'desc_en' => $val->desc_en,
+            'desc_id' => $desc_id,
+            'desc_en' => $desc_en,
 
             'snk_id' => $val->snk_id,
             'snk_en' => $val->snk_en,

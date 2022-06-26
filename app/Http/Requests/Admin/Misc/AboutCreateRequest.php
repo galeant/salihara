@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin\Misc;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BannerCreateRequest extends FormRequest
+class AboutCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class BannerCreateRequest extends FormRequest
         return [
             // 'banner' => 'array|required',
             // 'banner.*' => 'required',
-            'banner' => 'required',
-            'desc_id' => 'required',
+            'value_id' => 'required',
         ];
     }
 }

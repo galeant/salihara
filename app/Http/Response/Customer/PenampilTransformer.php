@@ -10,7 +10,7 @@ class PenampilTransformer
     {
         if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
             $items = collect($data->items())->transform(function ($v) {
-                return self::reform($v);
+                return self::reform($v, 'list');
             });
             $return = [
                 'data' => $items,
@@ -25,7 +25,7 @@ class PenampilTransformer
 
             $return = [
                 'data' => $data->transform(function ($v) {
-                    return self::reform($v);
+                    return self::reform($v, 'list');
                 }),
                 'total' => count($data)
             ];
@@ -40,18 +40,24 @@ class PenampilTransformer
     {
         return response()->json([
             'message' => $message,
-            'result' => self::reform($data)
+            'result' => self::reform($data, 'detail')
         ]);
     }
 
-    private static function reform($val)
+    private static function reform($val, $type)
     {
+        $desc_id = $val->desc_id;
+        $desc_en = $val->desc_en;
+        if ($type == 'list') {
+            $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
+            $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
+        }
         return [
             'id' => $val->id,
             'name' => $val->name,
             'slug' => $val->slug,
-            'desc_id' => $val->desc_id,
-            'desc_en' => $val->desc_en,
+            'desc_id' => $desc_id,
+            'desc_en' => $desc_en,
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
         ];
     }

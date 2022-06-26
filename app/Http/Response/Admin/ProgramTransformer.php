@@ -11,7 +11,7 @@ class ProgramTransformer
     {
         if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
             $items = collect($data->items())->transform(function ($v) {
-                return self::reform($v);
+                return self::reform($v, 'index');
             });
             $return = [
                 'data' => $items,
@@ -26,7 +26,7 @@ class ProgramTransformer
 
             $return = [
                 'data' => $data->transform(function ($v) {
-                    return self::reform($v);
+                    return self::reform($v, 'index');
                 }),
                 'total' => count($data)
             ];
@@ -41,12 +41,18 @@ class ProgramTransformer
     {
         return response()->json([
             'message' => $message,
-            'result' => self::reform($data)
+            'result' => self::reform($data, 'detail')
         ]);
     }
 
-    private static function reform($val)
+    private static function reform($val, $type)
     {
+        $desc_id = $val->desc_id;
+        $desc_en = $val->desc_en;
+        if ($type == 'index') {
+            $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
+            $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
+        }
         $return = [
             'id' => $val->id,
             'name' => $val->name,
@@ -57,8 +63,8 @@ class ProgramTransformer
             'schedule_date' => Carbon::parse($val->schedule_date)->format('d-m-Y'),
             'duration_hour' => $val->duration_hour,
             'duration_minute' => $val->duration_minute,
-            'desc_id' => $val->desc_id,
-            'desc_en' => $val->desc_en,
+            'desc_id' => $desc_id,
+            'desc_en' => $desc_en,
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
             'penampil' => [],
             'only_indo' => (bool)$val->only_indo,

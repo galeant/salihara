@@ -53,7 +53,10 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['prefix' => 'misc'], function () {
             Route::get('banner', 'MiscController@banner');
-            Route::post('banner', 'MiscController@Postbanner');
+            Route::post('banner', 'MiscController@postBanner');
+
+            Route::get('about', 'MiscController@about');
+            Route::post('about', 'MiscController@postAbout');
         });
 
         Route::group(['prefix' => 'user'], function () {
