@@ -72,6 +72,7 @@ class ProgramTransformer
             'ticket' => [],
             'only_indo' => (bool)$val->only_indo,
             'video_url' => $val->video_url,
+            'color' => $val->color,
         ];
         if ($type == 'index') {
             unset($return['penampil']);

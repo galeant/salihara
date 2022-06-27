@@ -69,6 +69,7 @@ class ProgramTransformer
             'penampil' => [],
             'only_indo' => (bool)$val->only_indo,
             'video_url' => $val->video_url,
+            'color' => $val->color,
         ];
 
         foreach ($val->penampil as $penampil) {

@@ -33,6 +33,7 @@ class CreateRequest extends FormRequest
             'penampil_id' => 'array',
             'type' => 'required|in:daring,luring',
             'video_url' => 'required',
+            'color' => 'required',
         ];
     }
 }

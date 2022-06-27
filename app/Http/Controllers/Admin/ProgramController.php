@@ -68,6 +68,7 @@ class ProgramController extends Controller
                 'only_indo' => $only_indo,
                 'video_url' => $request->video_url,
                 'type' => $request->type,
+                'color' => $request->color,
             ]);
 
             if ($request->has('image')) {
@@ -136,6 +137,7 @@ class ProgramController extends Controller
                 'only_indo' => $only_indo,
                 'video_url' => $request->video_url,
                 'type' => $request->type,
+                'color' => $request->color,
             ]);
 
             if ($request->has('image')) {
