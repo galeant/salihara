@@ -47,6 +47,7 @@ class Program extends Model
     public function scopeSearch($q, $field, $keyword)
     {
         $column = $this->getField();
+        $column[] = 'penampil';
         if (is_array($field) && is_array($keyword)) {
             $max = count($field);
             if (count($keyword) > $max) {
@@ -54,7 +55,13 @@ class Program extends Model
             }
             for ($i = 0; $i < $max; $i++) {
                 if (in_array($field[$i], $column) && isset($field[$i]) && isset($keyword[$i])) {
-                    $q->where($field[$i], $keyword[$i]);
+                    if ($field[$i] == 'penampil') {
+                        $q->whereHas('penampil', function ($q) use ($keyword) {
+                            $q->whereIn('id', $keyword);
+                        });
+                    } else {
+                        $q->where($field[$i], $keyword[$i]);
+                    }
                 }
             }
         }
