@@ -21,13 +21,12 @@ class CreateTransacationTable extends Migration
             $table->string('user_phone');
 
             $table->string('user_address');
-            $table->bigInteger('program_id');
-            $table->string('program_name');
-
-            $table->bigInteger('ticket_id');
-            $table->string('ticket_name');
-            $table->string('ticket_price_idr');
-            $table->string('ticket_price_usd');
+            // $table->bigInteger('program_id');
+            // $table->string('program_name');
+            // $table->bigInteger('ticket_id');
+            // $table->string('ticket_name');
+            // $table->string('ticket_price_idr');
+            // $table->string('ticket_price_usd');
 
             $table->bigInteger('voucher_id');
             $table->string('voucher_code');

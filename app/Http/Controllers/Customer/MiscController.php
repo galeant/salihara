@@ -76,4 +76,9 @@ class MiscController extends Controller
             throw new \Exception($e->getMessage());
         }
     }
+
+    public function checkout(Request $request)
+    {
+        dd('ini checkout');
+    }
 }

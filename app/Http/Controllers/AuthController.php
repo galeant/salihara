@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Admin\LoginRequest;
 use Illuminate\Support\Facades\Route;
+use DB;
 
 class AuthController extends Controller
 {
@@ -73,5 +74,52 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function test()
+    {
+        $data = DB::table('recurve')->get();
+        // $c = $this->buildTree($data);
+        $d = $this->buildtier($data);
+        dd($d);
+    }
+
+    private function buildTree($elements, $parent_id  = 0)
+    {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element->parent_id == $parent_id) {
+                $children = $this->buildTree($elements, $element->id);
+                if ($children) {
+                    $element->children = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+
+        return $branch;
+    }
+
+    private function buildtier($data, $parent_id = [])
+    {
+        $return = [];
+
+        // dd($return);
+
+        if (count($parent_id) == 0) {
+            $ap_return = collect($data)->filter(function ($v) {
+                if ($v->parent_id == NULL) {
+                    return $v;
+                }
+            });
+            // dd($ap_return);
+            $return[] = $ap_return;
+            $parent_id = $ap_return->pluck('id');
+        } else {
+            $this->buildtier($data, $parent_id);
+        }
+        dd($return);
+        dd('qwdqdq');
     }
 }

@@ -21,4 +21,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('cart', 'Customer\MiscController@cart');
     Route::post('cart', 'Customer\MiscController@addCart');
+
+    Route::post('checkout', 'Customer\MiscController@checkout');
 });
