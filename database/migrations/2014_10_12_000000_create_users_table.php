@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
 
             $table->bigInteger('province_id');
             $table->bigInteger('city_id');
-            $table->bigInteger('urban_id'); //kelurahan
+            $table->bigInteger('district_id'); //kelurahan di data source urban
             $table->bigInteger('sub_district_id'); //kecamatan
 
             $table->boolean('is_disabled')->default(false);
