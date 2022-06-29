@@ -23,12 +23,12 @@ class CreateUsersTable extends Migration
             $table->enum('role', ['admin', 'customer']);
 
             $table->string('phone')->nullable();
-            $table->text('address');
+            $table->text('address')->nullable();
 
-            $table->bigInteger('province_id');
-            $table->bigInteger('city_id');
-            $table->bigInteger('district_id'); //kelurahan di data source urban
-            $table->bigInteger('sub_district_id'); //kecamatan
+            $table->bigInteger('province_id')->nullable();
+            $table->bigInteger('city_id')->nullable();
+            $table->bigInteger('district_id')->nullable(); //kelurahan di data source urban
+            $table->bigInteger('sub_district_id')->nullable(); //kecamatan
 
             $table->boolean('is_disabled')->default(false);
 
