@@ -9,6 +9,8 @@ use App\Http\Response\Admin\MiscTransformer;
 use App\Cart;
 use App\Misc;
 
+use Illuminate\Support\Facades\Log;
+
 class MiscController extends Controller
 {
 
@@ -80,5 +82,17 @@ class MiscController extends Controller
     public function checkout(Request $request)
     {
         dd('ini checkout');
+    }
+
+    public function paymentTest(Request $request)
+    {
+        Log::info(json_encode($request->all()));
+        dd('ini url penerima');
+    }
+
+    public function paymentRedirect(Request $request)
+    {
+        Log::info(json_encode($request->all()));
+        dd('ini url redirect');
     }
 }

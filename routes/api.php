@@ -34,4 +34,7 @@ Route::group(['namespace' => 'Customer'], function () {
     });
     Route::get('/banner', 'MiscController@banner');
     Route::get('/about', 'MiscController@about');
+
+    Route::get('recieve_payment_test', 'MiscController@paymentTest');
+    Route::get('redirect_payment_test', 'MiscController@paymentRedirect');
 });
