@@ -14,10 +14,12 @@ use Illuminate\Http\Request;
 */
 
 
+Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', 'AuthController@profile');
-    Route::get('logout', 'AuthController@logout');
+    Route::post('profile', 'AuthController@updateProfile');
+    Route::post('logout', 'AuthController@logout');
 
     Route::get('cart', 'Customer\MiscController@cart');
     Route::post('cart', 'Customer\MiscController@addCart');

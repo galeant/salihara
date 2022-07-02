@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
 
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('birth_year')->nullable();
 
             $table->bigInteger('province_id')->nullable();
             $table->bigInteger('city_id')->nullable();
@@ -31,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('sub_district_id')->nullable(); //kecamatan
 
             $table->boolean('is_disabled')->default(false);
-
+            $table->string('email_token')->nullable();
             $table->timestamps();
         });
     }

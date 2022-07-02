@@ -62,86 +62,93 @@ class Payment
 
     public function paymentRequest($payload)
     {
-        $amount = $payload['amount'];
-        $currency = $payload['currency'];
+        // $ref_no = $payload['RefNo'];
+        $ref_no = '10182019103003AM';
+
+        // $amount = $payload['amount'];
+        $amount = '500000';
+        // $currency = $payload['currency'];
+        $currency = 'IDR';
+
         $request = [
             'ApiVersion' => '2.0',
-            'MerchantCode' => '2',
-            'PaymentId' => '2',
-            'Currency' => 'IDR',
-            'RefNo' => '2',
-            'Amount' => '2',
+            'MerchantCode' => ENV('MerchantCode'),
+            'PaymentId' => '25',
+            'Currency' => $currency,
+            'RefNo' => $ref_no,
+            'Amount' => $amount,
             'ProdDesc' => 'TIcket',
 
-            'UserName' => '2',
-            'UserEmail' => '2',
-            'UserContact' => '2',
+            'UserName' => 'saliharatest',
+            'UserEmail' => 'saliharatest@mail.com',
+            'UserContact' => '1233321123321',
 
-            'RequestType' => '2',
-            'Remark' => '2',
+            'RequestType' => 'Seamless',
+            'Remark' => '',
             'Lang' => 'UTF-8',
 
-            'ResponseURL' => '2',
-            'BackendURL' => '2',
+            'ResponseURL' => ENV('PAYMENT_RECEIVE_URL'),
+            'BackendURL' => ENV('PAYMENT_RECEIVE_URL'),
 
             'Signature' => $this->getSignature([
-                'RefNo' => $payload['RefNo'],
+                'RefNo' => $ref_no,
                 'Amount' => $amount,
                 'Currency' => $currency
             ]),
 
             'ItemTransactions' => [
                 [
-                    'Id' => '2',
-                    'Name' => '2',
-                    'Quantity' => '2',
-                    'Amount' => '2',
+                    'Id' => '1',
+                    'Name' => 'tiket test',
+                    'Quantity' => '1',
+                    'Amount' => $amount,
                     'ParentType' => 'ITEM',
                 ]
             ],
 
             'ShippingAddress' => [
-                'FirstName' => 'as',
-                'LastName' => 'as',
-                'Address' => 'as',
-                'City' => 'as',
-                'State' => 'as',
-                'PostalCode' => 'as',
-                'Phone' => 'as',
+                'FirstName' => 'test',
+                'LastName' => 'test',
+                'Address' => 'test',
+                'City' => 'test',
+                'State' => 'test',
+                'PostalCode' => '15810',
+                'Phone' => '1233321123321',
                 'CountryCode' => 'ID',
 
             ],
 
             'BillingAddress' => [
-                'FirstName' => 'as',
-                'LastName' => 'as',
-                'Address' => 'as',
-                'City' => 'as',
-                'State' => 'as',
-                'PostalCode' => 'as',
-                'Phone' => 'as',
+                'FirstName' => 'test',
+                'LastName' => 'test',
+                'Address' => 'test',
+                'City' => 'test',
+                'State' => 'test',
+                'PostalCode' => '15810',
+                'Phone' => '12333211123321',
                 'CountryCode' => 'ID',
 
             ],
 
             'Sellers' => [
-                'Id' => 'as',
-                'Name' => 'as',
-                'SelleridNumber' => 'as',
-                'Email' => 'as',
+                'Id' => 'test',
+                'Name' => 'test',
+                'SelleridNumber' => '123332111233321',
+                'Email' => 'test@mail.com',
                 'Address' => [
-                    'FirstName' => 'wd',
-                    'LastName' => 'wd',
-                    'Address' => 'wd',
-                    'City' => 'wd',
-                    'State' => 'wd',
-                    'PostalCode' => 'wd',
-                    'Phone' => 'wd',
+                    'FirstName' => 'test',
+                    'LastName' => 'test',
+                    'Address' => 'test',
+                    'City' => 'test',
+                    'State' => 'test',
+                    'PostalCode' => '15810',
+                    'Phone' => '1233321123321',
                     'CountryCode' => 'ID',
                 ]
 
             ],
         ];
+        return $request;
     }
 
     public function redirectRequest($payload)
@@ -179,7 +186,7 @@ class Payment
             $sign_payload['TransactionStatus'] = $signer['TransactionStatus'];
         }
 
-        $str_sign = '||' . implode('||', $signer) . '||';
+        $str_sign = '||' . implode('||', $sign_payload) . '||';
         $signature = hash('sha256', $str_sign);
         return $signature;
     }

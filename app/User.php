@@ -20,7 +20,9 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name', 'email', 'password',
         'role', 'phone', 'address',
-        'is_disabled'
+        'is_disabled', 'gender', 'birth_year',
+        'province_id', 'city_id', 'district_id',
+        'sub_district_id', 'email_token'
     ];
 
     /**
@@ -71,6 +73,11 @@ class User extends Authenticatable implements JWTSubject
         return $query->where('role', 'customer');
     }
 
+    public function scopeVerified($query)
+    {
+        return $query->whereNull('email_token');
+    }
+
     public function scopeOrder($q, $order_by, $sort)
     {
         $column = $this->getField();
@@ -101,5 +108,25 @@ class User extends Authenticatable implements JWTSubject
                 }
             }
         }
+    }
+
+    public function province()
+    {
+        return $this->belongsTo('App\Province', 'province_id', 'id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('App\City', 'city_id', 'id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo('App\District', 'district_id', 'id');
+    }
+
+    public function subDistrict()
+    {
+        return $this->belongsTo('App\SubDistrict', 'sub_district_id', 'id');
     }
 }

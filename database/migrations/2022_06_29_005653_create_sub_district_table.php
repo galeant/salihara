@@ -16,7 +16,8 @@ class CreateSubDistrictTable extends Migration
         Schema::create('sub_district', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('district_id');
-            $table->string('name');
+            $table->string('name_id');
+            $table->string('name_en');
             $table->timestamps();
         });
     }

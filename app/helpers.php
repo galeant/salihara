@@ -1,12 +1,5 @@
 <?php
 
-use App\Models\Classroom;
-use App\Models\ClassTermSchedules;
-use App\Models\EmailTemplate;
-use App\Models\MasterScheduleNotes;
-use App\Models\Student;
-use App\Models\Teacher;
-use App\Models\TeacherScheduleReminder;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Intervention\Image\ImageManagerStatic as ImageManipulation;
@@ -14,6 +7,8 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 
 function imageUpload($folder_upload, $image, $resize = null, $name = null)
@@ -48,4 +43,17 @@ function imageUpload($folder_upload, $image, $resize = null, $name = null)
     Storage::put($image_name, $img->encode());
     $image_name = str_replace('public/', '', $image_name);
     return 'storage/' . $image_name;
+}
+
+function tokenize($payload)
+{
+    $key = ENV('JWT_SECRET');
+    return JWT::encode($payload, $key, 'HS256');
+}
+
+
+function parseTokenize($token)
+{
+    $key = ENV('JWT_SECRET');
+    return (array)JWT::decode($token, new Key($key, 'HS256'));
 }

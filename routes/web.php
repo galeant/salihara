@@ -13,8 +13,8 @@
 
 Route::get('/', function () {
     header('Location: https://salihara.org/');
-    // return view('welcome');
 });
+Route::get('loc', 'AuthController@loc');
 
 // Route::get('/storage_link', function () {
 //     Artisan::call('storage:link');
