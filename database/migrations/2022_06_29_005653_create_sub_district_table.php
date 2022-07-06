@@ -18,6 +18,7 @@ class CreateSubDistrictTable extends Migration
             $table->bigInteger('district_id');
             $table->string('name_id');
             $table->string('name_en');
+            $table->string('postal');
             $table->timestamps();
         });
     }

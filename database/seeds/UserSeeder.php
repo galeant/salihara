@@ -42,7 +42,15 @@ class UserSeeder extends Seeder
             'email' => 'customer@mail.com'
         ], [
             'password' => Hash::make('customer'),
-            'role' => 'customer'
+            'role' => 'customer',
+            'phone' => '12345',
+            'address' => 'addrss test',
+            'gender' => '1',
+            'birth_year' => '1999',
+            'province_id' => 11,
+            'city_id' => '1',
+            'district_id' => '1',
+            'sub_district_id' => '1',
         ]);
     }
 }

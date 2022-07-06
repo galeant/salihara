@@ -16,14 +16,23 @@ class CreateTransactionDetailTable extends Migration
         Schema::create('transaction_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->bigInteger('transaction_id');
+
+
             $table->bigInteger('program_id');
             $table->string('program_name');
 
             $table->bigInteger('ticket_id');
             $table->string('ticket_name');
 
+
             $table->string('ticket_price_idr');
-            $table->string('ticket_price_usd');
+            $table->string('ticket_price_usd')->nullable();
+
+            $table->bigInteger('qty');
+
+            $table->decimal('total_price_idr');
+            $table->decimal('total_price_usd')->nullable();
 
             $table->timestamps();
         });

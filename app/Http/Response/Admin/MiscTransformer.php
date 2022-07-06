@@ -36,18 +36,6 @@ class MiscTransformer
         ]);
     }
 
-    public static function cart($data, $message = 'Success')
-    {
-        $data = $data->transform(function ($v) {
-            $return = [];
-            return $return;
-        });
-        return response()->json([
-            'message' => $message,
-            'result' => $data
-        ]);
-    }
-
     public static function about($data, $message = 'Success')
     {
         $image = NULL;

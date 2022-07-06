@@ -43,47 +43,6 @@ class MiscController extends Controller
         }
     }
 
-    public function cart(Request $request)
-    {
-        $user = auth()->user();
-        try {
-            $data = Cart::with('user', 'ticket.program')->where('user_id', $user->id)->get();
-            return MiscTransformer::cart($data);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-    }
-
-    public function addCart(Request $request)
-    {
-        $user = auth()->user();
-        try {
-            $data = Cart::where([
-                'user_id' => $user->id,
-                'ticket_id' => $request->ticket_id
-            ])->first();
-            if ($data == NULL) {
-                $data->update([
-                    'qty' => ($data->qty + 1)
-                ]);
-            } else {
-                $data = Cart::create([
-                    'user_id' => $user->id,
-                    'ticket_id' => $request->ticket_id,
-                    'qty' => 1
-                ]);
-            }
-            return $this->cart($request);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-    }
-
-    public function checkout(Request $request)
-    {
-        dd('ini checkout');
-    }
-
     public function paymentTest(Request $request)
     {
         Log::info(json_encode($request->all()));

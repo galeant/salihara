@@ -66,11 +66,15 @@ class LocationQueue implements ShouldQueue
                     $field = 'district_id';
                     break;
             }
-            $dtf = $model->firstOrCreate([
+            $fill = [
                 $field => $ref,
                 'name_id' => $rc['name_id'],
                 'name_en' => $rc['name_en'],
-            ]);
+            ];
+            if (isset($rc['postal'])) {
+                $fill['postal']  = $rc['postal'];
+            }
+            $dtf = $model->updateOrCreate($fill);
         }
     }
 }

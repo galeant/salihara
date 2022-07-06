@@ -21,8 +21,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('profile', 'AuthController@updateProfile');
     Route::post('logout', 'AuthController@logout');
 
-    Route::get('cart', 'Customer\MiscController@cart');
-    Route::post('cart', 'Customer\MiscController@addCart');
+    Route::get('cart', 'Customer\TransactionController@cart');
+    Route::post('cart', 'Customer\TransactionController@addCart');
 
-    Route::post('checkout', 'Customer\MiscController@checkout');
+    Route::post('checkout', 'Customer\TransactionController@checkout');
+
+    Route::get('transaction', 'Customer\TransactionController@transaction');
 });

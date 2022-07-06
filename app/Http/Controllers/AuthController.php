@@ -148,8 +148,6 @@ class AuthController extends Controller
 
     public function test()
     {
-        $payment = (new Payment)->paymentRequest([]);
-        dd(json_encode($payment));
         // $data = DB::table('recurve')->get();
         // // $c = $this->buildTree($data);
         // $d = $this->buildtier($data);
@@ -245,6 +243,7 @@ class AuthController extends Controller
                         'district_name' => ucwords(strtolower($if_ct)),
                         'name_id' => ucwords(strtolower($ff_ct->urban)),
                         'name_en' => ucwords(strtolower($ff_ct->urban)),
+                        'postal' => $ff_ct->postal_code,
                     ];
                     // $sub_district = SubDistrict::firstOrCreate([
                     //     'district_id' => $disrict->id,
