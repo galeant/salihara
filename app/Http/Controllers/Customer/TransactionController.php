@@ -43,9 +43,9 @@ class TransactionController extends Controller
                 'ticket_id' => $request->ticket_id
             ])->first();
             if ($data !== NULL) {
-                $data->update([
-                    'qty' => ($data->qty + 1)
-                ]);
+                // $data->update([
+                //     'qty' => ($data->qty + 1)
+                // ]);
             } else {
                 $data = Cart::create([
                     'user_id' => $user->id,
@@ -143,7 +143,7 @@ class TransactionController extends Controller
 
                 'payment_method_id' => $request->payment_method_id,
                 'payment_method_name' => $payment_method['name'],
-                'payment_status' => Payment::PAYMENT_METHOD[0],
+                'payment_status' => Payment::PAYMENT_STATUS[0],
             ];
 
             $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
@@ -153,16 +153,14 @@ class TransactionController extends Controller
             $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
             $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
             $trans_fill['reff_id'] = $payment_gateway->RefNo;
-
             $transaction = Transaction::create($trans_fill);
             foreach ($trans_detail as $tr_detail) {
                 $tr_detail['transaction_id'] = $transaction->id;
                 TransactionDetail::create($tr_detail);
             }
             DB::commit();
-
-            dd($trans_detail);
-            dd($voucher_id);
+            $data = Transaction::where('id', $transaction->id)->first();
+            return TransactionTransformer::getDetail($data);
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
