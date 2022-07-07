@@ -6,11 +6,13 @@ use Carbon\Carbon;
 
 class ProgramTransformer
 {
+    private static $user;
+    private static $access = [];
 
     public static function getList($data, $message = 'Success')
     {
-        $user = auth()->user();
-        $access = $user->access->pluck('id')->toArray();
+        self::getAuth();
+        $access = self::$access;
 
         if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
             $items = collect($data->items())->transform(function ($v) use ($access) {
@@ -42,8 +44,8 @@ class ProgramTransformer
 
     public static function getDetail($data, $message = 'Success')
     {
-        $user = auth()->user();
-        $access = $user->access->pluck('id')->toArray();
+        self::getAuth();
+        $access = self::$access;
 
         return response()->json([
             'message' => $message,
@@ -134,5 +136,14 @@ class ProgramTransformer
             ];
         }
         return $return;
+    }
+
+    private static function getAuth()
+    {
+        $user = auth()->user();
+        if ($user !== NULL) {
+            self::$access = $user->access->pluck('id')->toArray();
+            self::$user = auth()->user();
+        }
     }
 }
