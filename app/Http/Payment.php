@@ -74,6 +74,10 @@ class Payment
             'name' => 'DANA',
             'logo' => '',
         ],
+        [
+            'id' => 75,
+            'name' => ' ShopeePay QRIS '
+        ]
     ];
 
 

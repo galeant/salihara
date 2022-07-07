@@ -11,15 +11,16 @@ class RegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $user, $url;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $token)
     {
         $this->user = $user;
+        $this->url = route('activation', $token);
     }
 
     /**

@@ -47,13 +47,14 @@ class AuthController extends Controller
                 'exp' => strtotime(Carbon::now()->addHours(6)),
                 'user_id' => $user->id,
                 'created_at' => $user->created_at,
+                'redirect_url' => ENV('REGISTER_REDIRECT_URL')
             ];
             $token = tokenize($token);
             $user->update([
                 'email_token' => $token
             ]);
             $user = $user->fresh();
-            SendRegisterEmailJob::dispatch($user);
+            SendRegisterEmailJob::dispatch($user, $token);
             DB::commit();
             return AuthTransformer::profile($user);
         } catch (\Exception $e) {
@@ -70,18 +71,27 @@ class AuthController extends Controller
             $user = User::where([
                 'email_token' => $token,
                 'id' => $parse_token['user_id']
-            ])->firstOrFail();
-            $user->update([
-                'email_token' => NULL
-            ]);
-            if (isset($parse_token['redirect_url'])) {
-                header('Location: ' . $parse_token['redirect_url']);
+            ])->first();
+            if ($user == NULL) {
+                header('Location: ' . ENV('REGISTER_ERR_REDIRECT_URL'));
+            } else {
+                $user->update([
+                    'email_token' => NULL
+                ]);
+                DB::commit();
+                if (isset($parse_token['redirect_url'])) {
+                    header('Location: ' . $parse_token['redirect_url']);
+                }
+                header('Location: https://salihara.org/');
             }
-            header('Location: https://salihara.org/');
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function forgetPassword(Request $request)
+    {
     }
 
     public function login(LoginRequest $request)

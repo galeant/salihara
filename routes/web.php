@@ -10,7 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('404', function () {
+    abort(404);
+});
+Route::get('bebek', function () {
+    $user = [
+        'name' => 'kadal'
+    ];
+    return view('email.register', [
+        'url' => 'url',
+        'user' => (object)$user
+    ]);
+});
 Route::get('/', function () {
     header('Location: https://salihara.org/');
 });

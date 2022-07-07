@@ -57,6 +57,7 @@ class Handler extends ExceptionHandler
             $exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException ||
             $exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
         ) {
+            return parent::render($request, $exception);
             $message = 'Route Not Found';
         } else if ($exception instanceof \Illuminate\Validation\ValidationException) {
             $code = 422;
@@ -76,6 +77,6 @@ class Handler extends ExceptionHandler
             'result' => NULL
         ], $code);
         // }
-        return parent::render($request, $exception);
+
     }
 }
