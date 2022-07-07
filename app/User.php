@@ -129,4 +129,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\SubDistrict', 'sub_district_id', 'id');
     }
+
+    public function access()
+    {
+        return $this->belongsToMany('App\Program', 'user_access', 'user_id', 'program_id');
+    }
 }

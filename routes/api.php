@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::group(['namespace' => 'Customer'], function () {
+Route::group(['middleware' => ['nullable_token'], 'namespace' => 'Customer'], function () {
 
     Route::group(['prefix' => 'program'], function () {
         Route::get('{type}', 'ProgramController@index');

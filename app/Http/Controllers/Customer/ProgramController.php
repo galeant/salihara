@@ -12,6 +12,7 @@ class ProgramController extends Controller
 {
     public function index(Request $request, $type)
     {
+
         // $order_by = $request->input('order_by', 'id');
         // $sort = $request->input('sort', 'asc');
         $order_by = 'order';

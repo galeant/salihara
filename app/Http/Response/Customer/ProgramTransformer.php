@@ -9,9 +9,12 @@ class ProgramTransformer
 
     public static function getList($data, $message = 'Success')
     {
+        $user = auth()->user();
+        $access = $user->access->pluck('id')->toArray();
+
         if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
-            $items = collect($data->items())->transform(function ($v) {
-                return self::reform($v, 'index');
+            $items = collect($data->items())->transform(function ($v) use ($access) {
+                return self::reform($v, 'index', $access);
             });
             $return = [
                 'data' => $items,
@@ -25,8 +28,8 @@ class ProgramTransformer
         } else {
 
             $return = [
-                'data' => $data->transform(function ($v) {
-                    return self::reform($v, 'index');
+                'data' => $data->transform(function ($v) use ($access) {
+                    return self::reform($v, 'index', $access);
                 }),
                 'total' => count($data)
             ];
@@ -39,13 +42,16 @@ class ProgramTransformer
 
     public static function getDetail($data, $message = 'Success')
     {
+        $user = auth()->user();
+        $access = $user->access->pluck('id')->toArray();
+
         return response()->json([
             'message' => $message,
-            'result' => self::reform($data, 'detail')
+            'result' => self::reform($data, 'detail', $access)
         ]);
     }
 
-    private static function reform($val, $type)
+    private static function reform($val, $type, $access)
     {
 
         $desc_id = $val->desc_id;
@@ -53,6 +59,11 @@ class ProgramTransformer
         if ($type == 'index') {
             $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
             $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
+        }
+
+        $video_url = $val->video_url;
+        if (!in_array($val->id, $access)) {
+            $video_url = 401;
         }
 
         $return = [
@@ -71,7 +82,7 @@ class ProgramTransformer
             'penampil' => [],
             'ticket' => [],
             'only_indo' => (bool)$val->only_indo,
-            'video_url' => $val->video_url,
+            'video_url' => $video_url,
             'color' => $val->color,
         ];
         if ($type == 'index') {

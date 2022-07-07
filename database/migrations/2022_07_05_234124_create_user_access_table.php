@@ -15,7 +15,7 @@ class CreateUserAccessTable extends Migration
     {
         Schema::create('user_access', function (Blueprint $table) {
             $table->bigInteger('user_id');
-            $table->bigInteger('ticket_id');
+            $table->bigInteger('program_id');
         });
     }
 
