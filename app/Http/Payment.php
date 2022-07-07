@@ -20,6 +20,16 @@ class Payment
 
     const PAYMENT_METHOD = [
         [
+            'id' => 35,
+            'name' => 'Credit Card',
+            'logo' => '',
+        ],
+        [
+            'id' => 83,
+            'name' => 'BNI VA',
+            'logo' => '',
+        ],
+        [
             'id' => 9,
             'name' => 'Maybank VA',
             'logo' => '',
@@ -39,21 +49,21 @@ class Payment
             'name' => 'BCA VA',
             'logo' => '',
         ],
-        [
-            'id' => 61,
-            'name' => 'BRI VA',
-            'logo' => '',
-        ],
-        [
-            'id' => 26,
-            'name' => 'BNI VA',
-            'logo' => '',
-        ],
-        [
-            'id' => 86,
-            'name' => 'CIMB VA',
-            'logo' => '',
-        ],
+        // [
+        //     'id' => 61,
+        //     'name' => 'BRI VA',
+        //     'logo' => '',
+        // ],
+        // [
+        //     'id' => 26,
+        //     'name' => 'BNI VA',
+        //     'logo' => '',
+        // ],
+        // [
+        //     'id' => 86,
+        //     'name' => 'CIMB VA',
+        //     'logo' => '',
+        // ],
         [
             'id' => 63,
             'name' => 'OVO',

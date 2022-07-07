@@ -36,6 +36,14 @@ class TransactionTransformer
         ]);
     }
 
+    public static function paymentMethodList($data, $message = 'Success')
+    {
+        return response()->json([
+            'message' => $message,
+            'result' => $data
+        ]);
+    }
+
     public static function getDetail($data, $message = 'Success')
     {
         $data = self::transactionReform($data);

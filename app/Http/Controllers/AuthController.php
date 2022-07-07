@@ -44,9 +44,9 @@ class AuthController extends Controller
                 'sub_district_id' => $request->sub_district_id,
             ]);
             $token = [
-                'exp' => Carbon::now()->format('Y-m-d H:i:s'),
+                'exp' => strtotime(Carbon::now()->addHours(6)),
                 'user_id' => $user->id,
-                'created_at' => $user->created_at
+                'created_at' => $user->created_at,
             ];
             $token = tokenize($token);
             $user->update([
@@ -56,6 +56,28 @@ class AuthController extends Controller
             SendRegisterEmailJob::dispatch($user);
             DB::commit();
             return AuthTransformer::profile($user);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function activation(Request $request, $token)
+    {
+        DB::beginTransaction();
+        try {
+            $parse_token = parseTokenize($token);
+            $user = User::where([
+                'email_token' => $token,
+                'id' => $parse_token['user_id']
+            ])->firstOrFail();
+            $user->update([
+                'email_token' => NULL
+            ]);
+            if (isset($parse_token['redirect_url'])) {
+                header('Location: ' . $parse_token['redirect_url']);
+            }
+            header('Location: https://salihara.org/');
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());

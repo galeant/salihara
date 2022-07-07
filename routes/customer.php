@@ -28,4 +28,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('checkout', 'Customer\TransactionController@checkout');
 
     Route::get('transaction', 'Customer\TransactionController@transaction');
+    Route::get('transaction/payment_method', 'Customer\TransactionController@paymentMethod');
 });

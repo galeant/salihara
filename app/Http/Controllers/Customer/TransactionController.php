@@ -183,6 +183,16 @@ class TransactionController extends Controller
         }
     }
 
+    public function paymentMethod(Request $request)
+    {
+        try {
+            $list = Payment::PAYMENT_METHOD;
+            return TransactionTransformer::paymentMethodList($list);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     public function paymentTest(Request $request)
     {
         Log::info(json_encode($request->all()));
