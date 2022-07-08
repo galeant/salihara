@@ -54,7 +54,7 @@ class CreateTransacationTable extends Migration
             $table->dateTime('payment_expired');
             $table->string('epoch_time_payment_expired');
 
-            $table->string('virtual_account_assign');
+            $table->string('virtual_account_assign')->nullable();
 
             $table->timestamps();
         });
