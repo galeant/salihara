@@ -28,6 +28,8 @@ class BannerCreateRequest extends FormRequest
             // 'banner.*' => 'required',
             'banner' => 'required',
             'desc_id' => 'required',
+            'title_id' => 'required',
+            'sub_title_id' => 'required',
         ];
     }
 }

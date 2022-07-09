@@ -18,13 +18,7 @@ class MiscController extends Controller
     public function banner(Request $request)
     {
         try {
-            $data = Image::where([
-                'function_type' => 'main_banner'
-            ])
-                ->whereNull('relation_type')
-                ->whereNull('relation_id')
-                ->first();
-
+            $data = Misc::with('mainImageBanner')->mainBanner()->first();
             return MiscTransformer::banner($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -35,60 +29,35 @@ class MiscController extends Controller
     {
         DB::beginTransaction();
         try {
-            $req_banner = $request->banner;
-            $data = Image::where([
-                'function_type' => 'main_banner'
-            ])
-                ->whereNull('relation_type')
-                ->whereNull('relation_id')
-                ->first();
+            $value_id = [
+                'title' => $request->title_id,
+                'sub_title' => $request->sub_title_id,
+                'desc' => $request->desc_id,
+            ];
 
-            $image = imageUpload('public/main_banner/', $req_banner, NULL, Str::uuid());
-            if ($data == NULL) {
-                $data = Image::create([
-                    'function_type' => 'main_banner',
+            $value_en = [
+                'title' => $request->input('title_en', NULL),
+                'sub_title' => $request->input('sub_title_en', NULL),
+                'desc' => $request->input('desc_en', NULL),
+            ];
+            $data = Misc::updateOrCreate([
+                'segment' => 'main_banner',
+            ], [
+                'value_id' => json_encode($value_id),
+                'value_en' => json_encode($value_en)
+            ]);
+            if ($request->has('banner')) {
+                $image = imageUpload('public/main_banner/', $request->banner, NULL, Str::uuid());
+                Image::updateOrCreate([
+                    'relation_id' => $data->id,
                     'relation_type' => NULL,
-                    'relation_id' => NULL,
-                    'path' => $image,
-                    'desc_id' => $request->desc_id,
-                    'desc_en' => $request->desc_en
-                ]);
-            } else {
-                $data->update([
-                    'path' => $image,
-                    'desc_id' => $request->desc_id,
-                    'desc_en' => $request->desc_en
+                    'function_type' => 'main_banner',
+                ], [
+                    'path' => $image
                 ]);
             }
-            // $exist = Image::where([
-            //     'function_type' => 'main_banner'
-            // ])
-            //     ->whereNull('relation_type')
-            //     ->whereNull('relation_id')
-            //     ->get();
-            // $max_count = count($exist);
-            // if (count($req_banner) > $max_count) {
-            //     $max_count = count($request->banner);
-            // }
 
-            // for ($i = 0; $i < $max_count; $i++) {
-            //     if (isset($req_banner[$i]) && isset($exist[$i])) {
-            //         $image = imageUpload('main_banner/', $req_banner[$i], NULL, Str::uuid());
-            //         $exist[$i]->update([
-            //             'path' => $image
-            //         ]);
-            //     } else if (!isset($req_banner[$i]) && isset($exist[$i])) {
-            //         $exist[$i]->delete();
-            //     } else if (isset($req_banner[$i]) && !isset($exist[$i])) {
-            //         $image = imageUpload('public/main_banner/', $req_banner[$i], NULL, Str::uuid());
-            //         Image::create([
-            //             'relation_id' => NULL,
-            //             'relation_type' => NULL,
-            //             'function_type' => 'main_banner',
-            //             'path' => $image
-            //         ]);
-            //     }
-            // }
+
             DB::commit();
             return $this->banner($request);
         } catch (\Exception $e) {
@@ -100,9 +69,7 @@ class MiscController extends Controller
     public function about(Request $request)
     {
         try {
-            $data = Misc::where([
-                'segment' => 'about'
-            ])->first();
+            $data = Misc::with('aboutImageBanner')->about()->first();
             return MiscTransformer::about($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

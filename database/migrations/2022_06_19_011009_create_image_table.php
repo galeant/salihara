@@ -20,8 +20,8 @@ class CreateImageTable extends Migration
             $table->string('function_type');
             $table->string('path');
 
-            $table->text('desc_id')->nullable();
-            $table->text('desc_en')->nullable();
+            // $table->text('desc_id')->nullable();
+            // $table->text('desc_en')->nullable();
 
             $table->timestamps();
         });

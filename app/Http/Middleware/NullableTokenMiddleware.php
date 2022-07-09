@@ -20,7 +20,10 @@ class NullableTokenMiddleware
         $header = $request->header('Authorization');
         if ($header) {
             $token = str_replace('Bearer ', '', $header);
-            JWTAuth::setToken($token)->toUser();
+            try {
+                JWTAuth::setToken($token)->toUser();
+            } catch (\Exception $e) {;
+            }
         }
         return $next($request);
     }

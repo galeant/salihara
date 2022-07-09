@@ -16,26 +16,34 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::group(['middleware' => ['nullable_token'], 'namespace' => 'Customer'], function () {
+Route::group(['middleware' => ['nullable_token']], function () {
 
-    Route::group(['prefix' => 'program'], function () {
-        Route::get('{type}', 'ProgramController@index');
-        Route::get('/detail/{slug}', 'ProgramController@detail');
+    Route::group(['namespace' => 'Customer'], function () {
+        Route::group(['prefix' => 'program'], function () {
+            Route::get('{type}', 'ProgramController@index');
+            Route::get('/detail/{slug}', 'ProgramController@detail');
+        });
+
+        Route::group(['prefix' => 'ticket'], function () {
+            Route::get('{type}', 'TicketController@index');
+            Route::get('/detail/{slug}', 'TicketController@detail');
+        });
+
+        Route::group(['prefix' => 'penampil'], function () {
+            //     Route::get('{program_id}', 'ProgramController@index');
+            Route::get('/detail/{slug}', 'PenampilController@detail');
+        });
+        Route::get('/banner', 'MiscController@banner');
+        Route::get('/about', 'MiscController@about');
+
+
+        Route::post('recieve_payment_test', 'MiscController@paymentTest');
+        Route::post('redirect_payment_test', 'MiscController@paymentRedirect');
     });
 
-    Route::group(['prefix' => 'ticket'], function () {
-        Route::get('{type}', 'TicketController@index');
-        Route::get('/detail/{slug}', 'TicketController@detail');
-    });
 
-    Route::group(['prefix' => 'penampil'], function () {
-        //     Route::get('{program_id}', 'ProgramController@index');
-        Route::get('/detail/{slug}', 'PenampilController@detail');
-    });
-    Route::get('/banner', 'MiscController@banner');
-    Route::get('/about', 'MiscController@about');
-
-
-    Route::post('recieve_payment_test', 'MiscController@paymentTest');
-    Route::post('redirect_payment_test', 'MiscController@paymentRedirect');
+    Route::get('province', 'LocationController@province');
+    Route::get('city', 'LocationController@city');
+    Route::get('district', 'LocationController@district');
+    Route::get('sub_district', 'LocationController@subDistrict');
 });

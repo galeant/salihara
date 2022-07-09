@@ -17,12 +17,7 @@ class MiscController extends Controller
     public function banner(Request $request)
     {
         try {
-            $data = Image::where([
-                'function_type' => 'main_banner'
-            ])
-                ->whereNull('relation_type')
-                ->whereNull('relation_id')
-                ->first();
+            $data = Misc::with('mainImageBanner')->mainBanner()->first();
             return MiscTransformer::banner($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -32,11 +27,7 @@ class MiscController extends Controller
     public function about(Request $request)
     {
         try {
-            $data = Misc::where([
-                'segment' => 'about'
-            ])
-                ->first();
-            // dd($data);
+            $data = Misc::with('aboutImageBanner')->about()->first();
             return MiscTransformer::about($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

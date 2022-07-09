@@ -18,18 +18,43 @@ class MiscTransformer
         //     ];
         // });
         $url = NULL;
+
+        $title_id = NULL;
+        $title_en = NULL;
+
+        $sub_title_id = NULL;
+        $sub_title_en = NULL;
+
         $desc_id = NULL;
         $desc_en = NULL;
-        if ($data !== NULL && $data->path !== NULL) {
-            $url = url($data->path);
-            $desc_id = $data->desc_id;
-            $desc_en = $data->desc_en;
+
+        if ($data !== NULL) {
+            $val_id = json_decode($data->value_id);
+            $val_en = json_decode($data->value_en);
+
+            $url = isset($data->mainImageBanner) ? url($data->mainImageBanner->path) : NULL;
+
+            $title_id = isset($val_id->title) ? $val_id->title : NULL;
+            $title_en = isset($val_en->title) ? $val_en->title : NULL;
+
+            $sub_title_id = isset($val_id->sub_title) ? $val_id->sub_title : NULL;
+            $sub_title_en = isset($val_en->sub_title) ? $val_en->sub_title : NULL;
+
+            $desc_id = isset($val_id->desc) ? $val_id->desc : NULL;
+            $desc_en = isset($val_en->desc) ? $val_en->desc : NULL;
         }
 
         return response()->json([
             'message' => $message,
             'result' => [
                 'url' => $url,
+
+                'title_id' => $title_id,
+                'title_en' => $title_en,
+
+                'sub_title_id' => $sub_title_id,
+                'sub_title_en' => $sub_title_en,
+
                 'desc_id' => $desc_id,
                 'desc_en' => $desc_en,
             ]
@@ -42,7 +67,7 @@ class MiscTransformer
         $value_id = NULL;
         $value_en = NULL;
         if ($data  !== NULL) {
-            $image = isset($data->imageBanner) ? url($data->imageBanner->path) : NULL;
+            $image = isset($data->aboutImageBanner) ? url($data->aboutImageBanner->path) : NULL;
             $value_id = $data->value_id;
             $value_en = $data->value_en;
             // $value_id = mb_strimwidth($data->value_id, 0, 150, "...");
