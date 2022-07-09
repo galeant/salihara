@@ -115,8 +115,8 @@ class Payment
             'Remark' => $remark,
             'Lang' => 'UTF-8',
 
-            'ResponseURL' => ENV('PAYMENT_RECEIVE_URL'),
-            'BackendURL' => ENV('PAYMENT_RECEIVE_URL'),
+            'ResponseURL' => ENV('PAYMENT_RESPONSE_URL'),
+            'BackendURL' => ENV('PAYMENT_BACKEND_URL'),
 
             'Signature' => $this->getSignature([
                 'RefNo' => $ref_no,
@@ -222,8 +222,8 @@ class Payment
             'Remark' => $remark,
             // 'Lang' => 'UTF-8',
 
-            'ResponseURL' => ENV('PAYMENT_RECEIVE_URL'),
-            'BackendURL' => ENV('PAYMENT_RECEIVE_URL'),
+            'ResponseURL' => ENV('PAYMENT_RESPONSE_URL'),
+            'BackendURL' => ENV('PAYMENT_BACKEND_URL'),
 
             'Signature' => $this->getSignatureBeta([
                 'RefNo' => $ref_no,
@@ -283,6 +283,9 @@ class Payment
 
     public function redirectRequest($payload)
     {
+        $apiCall = $this->apiPaymentCall($payload, $this->redirectUrl);
+        return $apiCall;
+        dd($apiCall);
     }
 
     public function requeryRequest($payload)

@@ -30,7 +30,7 @@ class AuthController extends Controller
         try {
 
             $user = User::create([
-                'role' => 'customer',
+                'role' => User::role[1],
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -97,8 +97,8 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $uri = Route::current()->uri;
-        $customer = str_starts_with($uri, 'customer');
-        $admin = str_starts_with($uri, 'admin');
+        $customer = str_starts_with($uri, User::role[1]);
+        $admin = str_starts_with($uri, User::role[0]);
 
         try {
             $user = User::when($customer == true, function ($q) {

@@ -44,10 +44,10 @@ class CreateTransacationTable extends Migration
             $table->string('voucher_discount')->nullable();
 
             $table->string('discount_value');
-            $table->decimal('gross_value_idr', 25, 15);
-            $table->decimal('gross_value_usd', 25, 15);
-            $table->decimal('net_value_idr', 25, 15);
-            $table->decimal('net_value_usd', 25, 15);
+            $table->decimal('gross_value_idr', 25, 5);
+            $table->decimal('gross_value_usd', 25, 5);
+            $table->decimal('net_value_idr', 25, 5);
+            $table->decimal('net_value_usd', 25, 5);
 
             $table->string('signature_payment');
             $table->string('checkout_id');

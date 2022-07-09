@@ -84,7 +84,7 @@ class UserController extends Controller
             ])->firstOrfail();
 
             $fill = [
-                'role' => 'admin',
+                'role' => User::role[0],
                 'email' => $request->email,
                 'name' => $request->name,
             ];

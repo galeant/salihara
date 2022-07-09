@@ -23,11 +23,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('profile', 'AuthController@updateProfile');
     Route::post('logout', 'AuthController@logout');
 
-    Route::get('cart', 'Customer\TransactionController@cart');
-    Route::post('cart', 'Customer\TransactionController@addCart');
+    Route::get('cart', 'TransactionController@cart');
+    Route::post('cart', 'TransactionController@addCart');
 
-    Route::post('checkout', 'Customer\TransactionController@checkout');
+    Route::post('checkout', 'TransactionController@checkout');
 
-    Route::get('transaction', 'Customer\TransactionController@transaction');
-    Route::get('transaction/payment_method', 'Customer\TransactionController@paymentMethod');
+    Route::get('transaction', 'TransactionController@transaction');
+    Route::get('transaction/payment_method', 'TransactionController@paymentMethod');
 });

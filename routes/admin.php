@@ -83,4 +83,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('delete/{id}', 'VoucherController@delete');
         });
     });
+    Route::group(['prefix' => 'transaction'], function () {
+        Route::get('/', 'TransactionController@transaction');
+        Route::get('{id}', 'TransactionController@transaction');
+    });
 });

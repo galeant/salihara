@@ -33,16 +33,4 @@ class MiscController extends Controller
             throw new \Exception($e->getMessage());
         }
     }
-
-    public function paymentTest(Request $request)
-    {
-        Log::info(json_encode($request->all()));
-        dd('ini url penerima');
-    }
-
-    public function paymentRedirect(Request $request)
-    {
-        Log::info(json_encode($request->all()));
-        dd('ini url redirect');
-    }
 }

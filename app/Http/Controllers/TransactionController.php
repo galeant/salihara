@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,6 +18,8 @@ use Carbon\Carbon;
 use App\Transaction;
 use App\TransactionDetail;
 use App\Http\Payment;
+use App\User;
+use App\PaymentLog;
 
 class TransactionController extends Controller
 {
@@ -63,7 +65,6 @@ class TransactionController extends Controller
 
     public function checkout(CheckoutRequest $request)
     {
-        // dd('ini checkout');
         DB::beginTransaction();
         try {
             $user = auth()->user();
@@ -159,6 +160,12 @@ class TransactionController extends Controller
                 $tr_detail['transaction_id'] = $transaction->id;
                 TransactionDetail::create($tr_detail);
             }
+            PaymentLog::firstOrCreate([
+                'transaction_id' => $transaction->id,
+                'status' => Payment::PAYMENT_STATUS[0],
+                'payload_request' => json_encode($trans_fill),
+                'payload_response' => json_encode($payment_gateway)
+            ]);
             DB::commit();
             $data = Transaction::where('id', $transaction->id)->first();
             return TransactionTransformer::getDetail($data);
@@ -168,16 +175,32 @@ class TransactionController extends Controller
         }
     }
 
-    public function transaction(Request $request)
+    public function transaction(Request $request, $id = NULL)
     {
+        $order_by = $request->input('order_by', 'created_at');
+        $sort = $request->input('sort', 'desc');
+
+        $search_by = $request->search_by;
+        $keyword = $request->keyword;
+
         try {
             $user = auth()->user();
-            $data = Transaction::with('detail')->where('user_id', $user->id);
-            if ($request->filled('reff_id')) {
-                $data = $data->where('reff_id', $request->reff_id)->first();
+            $data = Transaction::with('detail')->when($user !== NULL && $user->role !== User::role[0], function ($q) use ($user, $request) {
+                $q->where('user_id', $user->id);
+            });
+            if ($request->filled('reff_id') || $id !== NULL) {
+                $key = 'reff_id';
+                $val = $request->reff_id;
+                if ($id !== NULL) {
+                    $key = 'id';
+                    $val = $request->id;
+                }
+                $data = $data->where($key, $val)->firstOrFail();
                 return TransactionTransformer::getDetail($data);
             }
-            $data = $data->get();
+            $data = $data->order($order_by, $sort)
+                ->search($search_by, $keyword)
+                ->paginate(10);
             return TransactionTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -194,15 +217,27 @@ class TransactionController extends Controller
         }
     }
 
-    public function paymentTest(Request $request)
+    public function responseUrl(Request $request)
     {
         Log::info(json_encode($request->all()));
-        dd('ini url penerima');
+        dd('ini response url');
     }
 
-    public function paymentRedirect(Request $request)
+    public function backendUrl(Request $request)
     {
         Log::info(json_encode($request->all()));
-        dd('ini url redirect');
+        dd('ini backend_url');
     }
+
+
+    // public function redirect(Request $request)
+    // {
+    //     $res = (new Payment)->redirectRequest([
+    //         'CheckoutID' => '6bb13baf8dc8149cf9daa52540f0d27580ce87c6fa5bf21ec8e20a3a809e89c4',
+    //         'Signature' => 'fe567a0f586713d5690852876d0f3c79e1d6346d903309ee912c08910dbe328e'
+    //     ]);
+    //     echo $res;
+    //     // dd($res);
+    //     dd('badak');
+    // }
 }

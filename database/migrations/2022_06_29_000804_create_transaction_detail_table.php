@@ -31,8 +31,8 @@ class CreateTransactionDetailTable extends Migration
 
             $table->bigInteger('qty');
 
-            $table->decimal('total_price_idr');
-            $table->decimal('total_price_usd')->nullable();
+            $table->decimal('total_price_idr', 25, 5);
+            $table->decimal('total_price_usd', 25, 5)->nullable();
 
             $table->timestamps();
         });

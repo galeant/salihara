@@ -35,12 +35,10 @@ Route::group(['middleware' => ['nullable_token']], function () {
         });
         Route::get('/banner', 'MiscController@banner');
         Route::get('/about', 'MiscController@about');
-
-
-        Route::post('recieve_payment_test', 'MiscController@paymentTest');
-        Route::post('redirect_payment_test', 'MiscController@paymentRedirect');
     });
 
+    Route::post('backend_url', 'TransactionController@backendUrl');
+    Route::post('response_url', 'TransactionController@responseUrl');
 
     Route::get('province', 'LocationController@province');
     Route::get('city', 'LocationController@city');

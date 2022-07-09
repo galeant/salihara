@@ -2,6 +2,8 @@
 
 namespace App\Http\Response\Customer;
 
+use App\User;
+
 
 class TransactionTransformer
 {
@@ -27,12 +29,31 @@ class TransactionTransformer
 
     public static function getList($data, $message = 'Success')
     {
-        $data = $data->transform(function ($v) {
-            return self::transactionReform($v);
-        });
+        if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+            $items = collect($data->items())->transform(function ($v) {
+                return self::transactionReform($v);
+            });
+            $return = [
+                'data' => $items,
+                'current_page' => $data->currentPage(),
+                'next_page_url' => $data->nextPageUrl(),
+                'prev_page_url' => $data->previousPageUrl(),
+                'total' => $data->total(),
+                'total_page' => $data->lastPage(),
+                'per_page' => $data->perPage()
+            ];
+        } else {
+
+            $return = [
+                'data' => $data->transform(function ($v) {
+                    return self::transactionReform($v);
+                }),
+                'total' => count($data)
+            ];
+        }
         return response()->json([
             'message' => $message,
-            'result' => $data
+            'result' => $return
         ]);
     }
 
@@ -71,8 +92,32 @@ class TransactionTransformer
             'payment_method_id' => $v->payment_method_id,
             'payment_method_name' => $v->payment_method_name,
             'virtual_account_assign' => $v->virtual_account_assign,
+            'payment_status' => $v->payment_status,
             'item' => []
         ];
+        if (auth()->user()->role == user::role[0]) {
+            $return['customer']['user_id'] = $v->user_id;
+            $return['customer']['user_name'] = $v->user_name;
+            $return['customer']['user_email'] = $v->user_email;
+            $return['customer']['user_phone'] = $v->user_phone;
+            $return['customer']['user_address'] = $v->user_address;
+            $return['customer']['province_id'] = $v->province_id;
+            $return['customer']['province_name'] = $v->province_name;
+            $return['customer']['city_id'] = $v->city_id;
+            $return['customer']['city_name'] = $v->city_name;
+            $return['customer']['district_id'] = $v->district_id;
+            $return['customer']['district_name'] = $v->district_name;
+            $return['customer']['sub_district_id'] = $v->sub_district_id;
+            $return['customer']['sub_district_name'] = $v->sub_district_name;
+            $return['customer']['postal'] = $v->postal;
+
+            $return['log'] = $v->paymentLog->transform(function ($v) {
+                return [
+                    'status' => $v->status,
+                    'created_at' => $v->created_at
+                ];
+            });
+        }
         foreach ($v->detail as $dtl) {
             $return['item'][] = [
                 'program_id' => $dtl->program_id,

@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('badak', 'Customer\TransactionController@redirect');
 Route::get('404', function () {
     abort(404);
 });
