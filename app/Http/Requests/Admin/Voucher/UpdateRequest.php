@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:voucher,unique_code,' . $this->id,
+            'code' => 'required|unique:voucher,code,' . $this->id,
             'discount' => 'required',
             'quota'  => 'required|numeric',
         ];
