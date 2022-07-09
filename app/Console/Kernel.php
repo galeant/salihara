@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $schedule->command('queue:work --tries=3 --stop-when-empty')->withoutOverlapping();
+        // $schedule->command('queue:work --tries=3 --stop-when-empty')->withoutOverlapping();
 
         $schedule->call(function () {
             Log::info('test cron');
