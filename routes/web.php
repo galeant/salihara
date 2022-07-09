@@ -18,7 +18,7 @@ Route::get('bebek', function () {
     $user = [
         'name' => 'kadal'
     ];
-    return view('email.register', [
+    return view('email.transaction', [
         'url' => 'url',
         'user' => (object)$user
     ]);
