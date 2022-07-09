@@ -8,8 +8,8 @@ use App\User;
 use DB;
 
 use App\Http\Response\Admin\CustomerTransformer;
-
-
+use App\Http\Controllers\AuthController;
+use App\Http\Requests\Admin\RegisterRequest;
 
 class CustomerController extends Controller
 {
@@ -36,6 +36,11 @@ class CustomerController extends Controller
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function create(RegisterRequest $request)
+    {
+        return (new AuthController)->register($request);
     }
 
 

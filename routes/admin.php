@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'CustomerController@index');
             Route::get('{id}', 'CustomerController@detail');
             Route::post('block/{id}', 'CustomerController@block');
+            Route::post('create', 'CustomerController@create');
         });
 
         Route::group(['prefix' => 'voucher'], function () {
