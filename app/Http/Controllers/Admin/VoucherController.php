@@ -77,7 +77,7 @@ class VoucherController extends Controller
                 'id' => $id
             ])->firstOrfail();
             $data->update([
-                'unique_code' => $request->code,
+                'code' => $request->code,
                 'discount' => $request->discount,
                 'quota' => $request->quota,
             ]);
