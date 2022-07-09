@@ -24,7 +24,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:voucher,unique_code',
+            'code' => 'required|unique:voucher,code',
             'discount' => 'required',
             'quota'  => 'required|numeric',
         ];

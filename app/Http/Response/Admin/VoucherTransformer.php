@@ -48,7 +48,7 @@ class VoucherTransformer
     private static function reform($val)
     {
         return [
-            'code' => $val->unique_code,
+            'code' => $val->code,
             'discount' => $val->discount,
             'quota' => $val->quota,
         ];
