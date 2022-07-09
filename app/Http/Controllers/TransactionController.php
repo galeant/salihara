@@ -220,13 +220,13 @@ class TransactionController extends Controller
 
     public function responseUrl(Request $request)
     {
-        Log::info(json_encode($request->all()));
+        Log::channel('payment_log')->info(json_encode($request->all()));
         dd('ini response url');
     }
 
     public function backendUrl(Request $request)
     {
-        Log::info(json_encode($request->all()));
+        Log::channel('payment_log')->info(json_encode($request->all()));
         dd('ini backend_url');
     }
 
