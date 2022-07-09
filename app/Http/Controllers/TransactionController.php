@@ -163,6 +163,7 @@ class TransactionController extends Controller
             PaymentLog::firstOrCreate([
                 'transaction_id' => $transaction->id,
                 'status' => Payment::PAYMENT_STATUS[0],
+            ], [
                 'payload_request' => json_encode($trans_fill),
                 'payload_response' => json_encode($payment_gateway)
             ]);

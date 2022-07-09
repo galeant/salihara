@@ -43,13 +43,21 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/error/laravel.log'),
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/error/laravel.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
+
+        'payment_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/payment/payment.log'),
             'level' => 'debug',
             'days' => 14,
         ],
@@ -97,7 +105,7 @@ return [
         ],
 
         'emergency' => [
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/error/laravel.log'),
         ],
     ],
 

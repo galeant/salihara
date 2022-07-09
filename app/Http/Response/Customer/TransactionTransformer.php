@@ -114,7 +114,8 @@ class TransactionTransformer
             $return['log'] = $v->paymentLog->transform(function ($v) {
                 return [
                     'status' => $v->status,
-                    'created_at' => $v->created_at
+                    'created_at' => $v->created_at,
+                    'epoch_created_at' => strtotime($v->created_at)
                 ];
             });
         }
