@@ -56,12 +56,12 @@ class ProgramTransformer
     private static function reform($val, $type, $access)
     {
 
-        $desc_id = $val->desc_id;
-        $desc_en = $val->desc_en;
-        if ($type == 'index') {
-            $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
-            $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
-        }
+        // $desc_id = $val->desc_id;
+        // $desc_en = $val->desc_en;
+        // if ($type == 'index') {
+        $short_desc_id = mb_strimwidth(strip_tags($val->desc_id), 0, 150, "...");
+        $short_desc_en = mb_strimwidth(strip_tags($val->desc_en), 0, 150, "...");
+        // }
 
         $video_url = $val->video_url;
         if (!in_array($val->id, $access)) {
@@ -79,8 +79,12 @@ class ProgramTransformer
             'schedule_date' => Carbon::parse($val->schedule_date)->format('d-m-Y H:i:s'),
             'duration_hour' => $val->duration_hour,
             'duration_minute' => $val->duration_minute,
-            'desc_id' => $desc_id,
-            'desc_en' => $desc_en,
+            'desc_id' => $val->desc_id,
+            'desc_en' => $val->desc_en,
+
+            'short_desc_id' => $short_desc_id,
+            'short_desc_en' => $short_desc_en,
+
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
             'penampil' => [],
             'ticket' => [],
@@ -122,16 +126,20 @@ class ProgramTransformer
         foreach ($val->penampil as $penampil) {
             $p_desc_id = $penampil->desc_id;
             $p_desc_en = $penampil->desc_en;
-            if ($type == 'index') {
-                $p_desc_id = mb_strimwidth($penampil->desc_id, 0, 150, "...");
-                $p_desc_en = mb_strimwidth($penampil->desc_en, 0, 150, "...");
-            }
+            // if ($type == 'index') {
+            $short_p_desc_id = mb_strimwidth(strip_tags($penampil->desc_id), 0, 150, "...");
+            $short_p_desc_en = mb_strimwidth(strip_tags($penampil->desc_en), 0, 150, "...");
+            // }
             $return['penampil'][] = [
                 'id' => $penampil->id,
                 'name' => $penampil->name,
                 'slug' => $penampil->slug,
                 'desc_id' => $p_desc_id,
                 'desc_en' => $p_desc_en,
+
+                'short_desc_id' => $short_p_desc_id,
+                'short_desc_en' => $short_p_desc_en,
+
                 'banner' => isset($penampil->imageBanner) ? url($penampil->imageBanner->path) : NULL,
             ];
         }

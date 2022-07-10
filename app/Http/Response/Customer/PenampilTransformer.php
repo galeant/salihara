@@ -46,18 +46,20 @@ class PenampilTransformer
 
     private static function reform($val, $type)
     {
-        $desc_id = $val->desc_id;
-        $desc_en = $val->desc_en;
-        if ($type == 'list') {
-            $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
-            $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
-        }
+        // $desc_id = $val->desc_id;
+        // $desc_en = $val->desc_en;
+        // if ($type == 'list') {
+        $short_desc_id = mb_strimwidth(strip_tags($val->desc_id), 0, 150, "...");
+        $short_desc_en = mb_strimwidth(strip_tags($val->desc_en), 0, 150, "...");
+        // }
         return [
             'id' => $val->id,
             'name' => $val->name,
             'slug' => $val->slug,
-            'desc_id' => $desc_id,
-            'desc_en' => $desc_en,
+            'desc_id' => $val->desc_id,
+            'desc_en' => $val->desc_en,
+            'short_desc_id' => $short_desc_id,
+            'short_desc_en' => $short_desc_en,
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
         ];
     }
