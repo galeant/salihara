@@ -30,6 +30,8 @@ class RegisterMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.register');
+        return $this
+            ->subject('Verifikasi Email Musim Seni Salihara / Email verification')
+            ->view('email.register');
     }
 }
