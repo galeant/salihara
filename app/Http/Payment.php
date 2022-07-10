@@ -373,7 +373,6 @@ class Payment
     private function apiPaymentCall($payload, $url, $type = 'json')
     {
         try {
-            dd(json_encode($payload));
             $data_payload = [
                 RequestOptions::JSON => $payload
             ];
