@@ -20,12 +20,12 @@ Route::group(['middleware' => ['nullable_token']], function () {
 
     Route::group(['namespace' => 'Customer'], function () {
         Route::group(['prefix' => 'program'], function () {
-            Route::get('{type}', 'ProgramController@index');
+            Route::get('/{type?}', 'ProgramController@index');
             Route::get('/detail/{slug}', 'ProgramController@detail');
         });
 
         Route::group(['prefix' => 'ticket'], function () {
-            Route::get('{type}', 'TicketController@index');
+            Route::get('{type?}', 'TicketController@index');
             Route::get('/detail/{slug}', 'TicketController@detail');
         });
 

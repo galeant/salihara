@@ -10,7 +10,7 @@ use App\Http\Response\Customer\ProgramTransformer;
 
 class ProgramController extends Controller
 {
-    public function index(Request $request, $type)
+    public function index(Request $request, $type = NULL)
     {
 
         // $order_by = $request->input('order_by', 'id');

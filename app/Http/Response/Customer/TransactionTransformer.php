@@ -95,7 +95,7 @@ class TransactionTransformer
             'payment_status' => $v->payment_status,
             'item' => []
         ];
-        if (auth()->user()->role == user::role[0]) {
+        if (auth()->user()->role == user::ROLE[0]) {
             $return['customer']['user_id'] = $v->user_id;
             $return['customer']['user_name'] = $v->user_name;
             $return['customer']['user_email'] = $v->user_email;

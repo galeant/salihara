@@ -10,7 +10,7 @@ use App\Http\Response\Customer\TicketTransformer;
 
 class TicketController extends Controller
 {
-    public function index(Request $request, $type)
+    public function index(Request $request, $type = NULL)
     {
         // $order_by = $request->input('order_by', 'id');
         // $sort = $request->input('sort', 'asc');

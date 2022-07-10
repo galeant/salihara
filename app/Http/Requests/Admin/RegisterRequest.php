@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\User;
 
 class RegisterRequest extends FormRequest
 {
@@ -23,6 +24,8 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
+        $gender = array_keys(User::GENDER);
+        $gender = implode(',', $gender);
         return [
             'name' => 'required',
             'email' => 'required|unique:users,email',

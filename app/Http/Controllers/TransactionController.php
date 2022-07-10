@@ -192,7 +192,7 @@ class TransactionController extends Controller
             if ($request->has('user')) {
                 $user = $request->user;
             }
-            $data = Transaction::with('detail')->when($user !== NULL && $user->role !== User::role[0], function ($q) use ($user, $request) {
+            $data = Transaction::with('detail')->when($user !== NULL && $user->role !== User::ROLE[0], function ($q) use ($user, $request) {
                 $q->where('user_id', $user->id);
             });
             if ($request->filled('reff_id') || $id !== NULL) {

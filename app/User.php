@@ -12,9 +12,15 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    const role = [
+    const ROLE = [
         'admin',
         'customer'
+    ];
+
+    const GENDER = [
+        1 => 'Laki-laki',
+        2 => 'Perempuan',
+        3 => 'Lainnya'
     ];
 
     /**
