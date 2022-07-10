@@ -144,7 +144,7 @@ class TransactionController extends Controller
 
                 'payment_method_id' => $request->payment_method_id,
                 'payment_method_name' => $payment_method['name'],
-                'payment_status' => Payment::PAYMENT_STATUS[0],
+                'payment_status' => Payment::PAYMENT_STATUS[1],
             ];
 
             $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
@@ -162,7 +162,7 @@ class TransactionController extends Controller
             }
             PaymentLog::firstOrCreate([
                 'transaction_id' => $transaction->id,
-                'status' => Payment::PAYMENT_STATUS[0],
+                'status' => Payment::PAYMENT_STATUS[1],
             ], [
                 'payload_request' => json_encode($trans_fill),
                 'payload_response' => json_encode($payment_gateway)
@@ -223,14 +223,60 @@ class TransactionController extends Controller
 
     public function responseUrl(Request $request)
     {
-        Log::channel('payment_log')->info(json_encode($request->all()));
-        dd('ini response url');
+        Log::channel('payment_log')->info('reponseUrl log: ' . json_encode($request->all()));
+        // dd('ini response url');
     }
 
     public function backendUrl(Request $request)
     {
-        Log::channel('payment_log')->info(json_encode($request->all()));
-        dd('ini backend_url');
+        // $msg = [
+        //     '1' => [
+        //         'Indonesian' => 'Pembayaran diterima',
+        //         'English' => 'Status Received',
+        //     ],
+        //     '6' => [
+        //         'Indonesian' => 'Pembayaran di tangguhkan',
+        //         'English' => 'Status Pending',
+        //     ],
+        //     '0' => [
+        //         'Indonesian' => 'Pembayaran gagal',
+        //         'English' => 'Status failed',
+        //     ]
+        // ];
+        // $data = Transaction::where('reff_id', $request->RefNo)
+        //     ->where('payment_status', Payment::PAYMENT_STATUS[1])
+        //     ->first();
+        // if ($data != NULL) {
+        //     switch ($request->TransactionStatus) {
+        //         case '1':
+        //             $payment_status = Payment::PAYMENT_STATUS[0];
+        //             break;
+        //         case '6':
+        //             $payment_status = Payment::PAYMENT_STATUS[1];
+        //             break;
+        //         case '0':
+        //             $payment_status = Payment::PAYMENT_STATUS[2];
+        //             break;
+        //     }
+        //     $data->update([
+        //         'payment_status' => $payment_status
+        //     ]);
+        //     PaymentLog::firstOrCreate([
+        //         'transaction_id' => $data->id,
+        //         'status' => $payment_status,
+        //     ], [
+        //         'payload_request' => 'Payment Notification',
+        //         'payload_response' => json_encode($request->all()),
+        //     ]);
+        //     Log::channel('payment_log')->info('backendUrl log: data ketemu' . json_encode($request->all()));
+        // } else {
+        //     Log::channel('payment_log')->info('backendUrl log: data tidak ketemu' . json_encode($request->all()));
+        // }
+        Log::channel('payment_log')->info('backendUrl log: data tidak ketemu' . json_encode($request->all()));
+        // return response()->json([
+        //     'code' => $request->TransactionStatus,
+        //     'message' => $msg[$request->TransactionStatus]
+        // ], 200);
     }
 
 

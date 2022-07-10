@@ -16,8 +16,14 @@ class Payment
     private $requeryUrl = '/epayment/enquiry.asp';
 
     const PAYMENT_STATUS = [
-        'pending', 'paid', 'cancel'
+        'paid', 'pending', 'fail', 'cancel'
     ];
+
+    // 1 =>  success, 6 => pending, 0 => fail
+    const PAYMENT_STATUS_GATEWAY = [
+        1, 6, 0
+    ];
+
 
     const PAYMENT_METHOD = [
         [
@@ -367,6 +373,7 @@ class Payment
     private function apiPaymentCall($payload, $url, $type = 'json')
     {
         try {
+            dd(json_encode($payload));
             $data_payload = [
                 RequestOptions::JSON => $payload
             ];
@@ -375,6 +382,7 @@ class Payment
                     'form_params' => $payload
                 ];
             }
+
             $client = new Client([
                 'base_uri' => ENV('IPAY88SANDBOX'),
             ]);

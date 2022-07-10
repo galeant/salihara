@@ -46,7 +46,7 @@ class CancelTransactionCommand extends Command
         // dd(Carbon::parse(1657472220)->format('Y-m-d H:i:s'));
         $now = time();
         // $now = 1657472221;
-        $data = Transaction::where('payment_status', Payment::PAYMENT_STATUS[0])
+        $data = Transaction::where('payment_status', Payment::PAYMENT_STATUS[1])
             ->where('epoch_time_payment_expired', '<', $now)
             ->get();
 
@@ -55,12 +55,12 @@ class CancelTransactionCommand extends Command
                 Log::channel('payment_log')->info('begin:' . json_encode($dt->toArray()));
                 // dd($dt);
                 $dt->update([
-                    'payment_status' => Payment::PAYMENT_STATUS[2]
+                    'payment_status' => Payment::PAYMENT_STATUS[3]
                 ]);
 
                 PaymentLog::firstOrCreate([
                     'transaction_id' => $dt->id,
-                    'status' => Payment::PAYMENT_STATUS[2],
+                    'status' => Payment::PAYMENT_STATUS[3],
                 ], [
                     'payload_request' => 'Payment Expired',
                     'payload_response' => 'Payment Expired'

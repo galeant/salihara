@@ -49,6 +49,7 @@ class CreateTransacationTable extends Migration
             $table->decimal('net_value_idr', 25, 5);
             $table->decimal('net_value_usd', 25, 5);
 
+            $table->string('payment_gateway_trans_id')->nullable();
             $table->string('signature_payment');
             $table->string('checkout_id');
             $table->dateTime('payment_expired');
