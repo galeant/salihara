@@ -20,6 +20,9 @@ use App\TransactionDetail;
 use App\Http\Payment;
 use App\User;
 use App\PaymentLog;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\TransactionSuccessMail;
 
 class TransactionController extends Controller
 {
@@ -243,40 +246,55 @@ class TransactionController extends Controller
                 'English' => 'Status failed',
             ]
         ];
-        $data = Transaction::where('reff_id', $request->RefNo)
-            ->where('payment_status', Payment::PAYMENT_STATUS[1])
-            ->first();
-        if ($data != NULL) {
-            switch ($request->TransactionStatus) {
-                case '1':
-                    $payment_status = Payment::PAYMENT_STATUS[0];
-                    break;
-                case '6':
-                    $payment_status = Payment::PAYMENT_STATUS[1];
-                    break;
-                case '0':
-                    $payment_status = Payment::PAYMENT_STATUS[2];
-                    break;
+        DB::beginTransaction();
+        try {
+            $data = Transaction::where('reff_id', $request->RefNo)
+                ->where('payment_status', Payment::PAYMENT_STATUS[1])
+                ->first();
+            if ($data != NULL) {
+                switch ($request->TransactionStatus) {
+                    case '1':
+                        $payment_status = Payment::PAYMENT_STATUS[0];
+                        break;
+                    case '6':
+                        $payment_status = Payment::PAYMENT_STATUS[1];
+                        break;
+                    case '0':
+                        $payment_status = Payment::PAYMENT_STATUS[2];
+                        break;
+                }
+                $data->update([
+                    'payment_status' => $payment_status
+                ]);
+                PaymentLog::firstOrCreate([
+                    'transaction_id' => $data->id,
+                    'status' => $payment_status,
+                ], [
+                    'payload_request' => 'Payment Notification',
+                    'payload_response' => json_encode($request->all()),
+                ]);
+                Log::channel('payment_log')->info('backendUrl log: data ketemu' . json_encode($request->all()));
+                if ($request->TransactionStatus == 1) {
+                    Mail::to($data->user_email)->queue(new TransactionSuccessMail($data->customer));
+                }
+            } else {
+                Log::channel('payment_log')->info('backendUrl log: data tidak ditemukan' . json_encode($request->all()));
             }
-            $data->update([
-                'payment_status' => $payment_status
-            ]);
-            PaymentLog::firstOrCreate([
-                'transaction_id' => $data->id,
-                'status' => $payment_status,
-            ], [
-                'payload_request' => 'Payment Notification',
-                'payload_response' => json_encode($request->all()),
-            ]);
-            Log::channel('payment_log')->info('backendUrl log: data ketemu' . json_encode($request->all()));
-        } else {
-            Log::channel('payment_log')->info('backendUrl log: data tidak ditemukan' . json_encode($request->all()));
+            // Log::channel('payment_log')->info('backendUrl log: data tidak ketemu' . json_encode($request->all()));
+            DB::commit();
+            return response()->json([
+                'code' => $request->TransactionStatus,
+                'message' => $msg[$request->TransactionStatus]
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('payment_log')->info('backendUrl log: error' . json_encode($request->all()) . '||' . $e->getMessage());
+            return response()->json([
+                'code' => $request->TransactionStatus,
+                'message' => $e->getMessage()
+            ], 200);
+            // throw new \Exception($e->getMessage());
         }
-        // Log::channel('payment_log')->info('backendUrl log: data tidak ketemu' . json_encode($request->all()));
-        return response()->json([
-            'code' => $request->TransactionStatus,
-            'message' => $msg[$request->TransactionStatus]
-        ], 200);
     }
 
 
