@@ -72,6 +72,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['prefix' => 'customer'], function () {
             Route::get('/', 'CustomerController@index');
             Route::get('{id}', 'CustomerController@detail');
+            Route::post('{id}/program_access', 'CustomerController@programAccess');
+            Route::get('{id}/transaction', 'CustomerController@transaction');
             Route::post('block/{id}', 'CustomerController@block');
             Route::post('create', 'CustomerController@create');
         });

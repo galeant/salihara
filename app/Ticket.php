@@ -10,6 +10,10 @@ class Ticket extends Model
 {
     protected $table = 'ticket';
     protected $guarded = [];
+    protected $casts = [
+        'price_idr' => 'integer',
+        'price_usd' => 'integer',
+    ];
 
     private function getField()
     {
@@ -76,5 +80,23 @@ class Ticket extends Model
                 'relation_type' => 'ticket',
                 'function_type' => 'banner'
             ]);
+    }
+
+    public function getPriceIdrAttribute($v)
+    {
+        return (int)$v;
+        // if ($v !== NULL) {
+        //     return number_format($v, 0, ",", ".");
+        // }
+        // return $v;
+    }
+
+    public function getPriceUsdAttribute($v)
+    {
+        return (int)$v;
+        // if ($v !== NULL) {
+        //     return number_format($v, 0, ",", ".");
+        // }
+        // return $v;
     }
 }

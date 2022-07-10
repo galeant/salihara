@@ -9,6 +9,13 @@ class Transaction extends Model
 {
     protected $table = 'transaction';
     protected $guarded = [];
+    protected $casts = [
+        'gross_value_idr' => 'integer',
+        'gross_value_usd' => 'integer',
+        'net_value_idr' => 'integer',
+        'net_value_usd' => 'integer',
+        'epoch_time_payment_expired' => 'integer',
+    ];
 
     private function getField()
     {
@@ -49,6 +56,11 @@ class Transaction extends Model
         }
     }
 
+    public function customer()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
     public function detail()
     {
         return $this->hasMany('App\TransactionDetail', 'transaction_id', 'id');
@@ -58,4 +70,45 @@ class Transaction extends Model
     {
         return $this->hasMany('App\PaymentLog', 'transaction_id', 'id')->orderBy('created_at', 'asc');
     }
+
+    // public function getEpochTimePaymentExpiredAttribute($v)
+    // {
+    //     return (int)$v;
+    // }
+
+    // public function getGrossValueIdrAttribute($v)
+    // {
+    //     return (int)$v;
+    //     // if ($v !== NULL) {
+    //     //     return number_format($v, 0, ",", ".");
+    //     // }
+    //     // return $v;
+    // }
+
+    // public function getGrossValueUsdAttribute($v)
+    // {
+    //     return (int)$v;
+    //     // if ($v !== NULL) {
+    //     //     return number_format($v, 0, ",", ".");
+    //     // }
+    //     // return $v;
+    // }
+
+    // public function getNetValueIdrAttribute($v)
+    // {
+    //     return (int)$v;
+    //     // if ($v !== NULL) {
+    //     //     return number_format($v, 0, ",", ".");
+    //     // }
+    //     // return $v;
+    // }
+
+    // public function getNetValueUsdAttribute($v)
+    // {
+    //     return (int)$v;
+    //     // if ($v !== NULL) {
+    //     //     return number_format($v, 0, ",", ".");
+    //     // }
+    //     // return $v;
+    // }
 }

@@ -26,8 +26,8 @@ class CreateTransactionDetailTable extends Migration
             $table->string('ticket_name');
 
 
-            $table->string('ticket_price_idr');
-            $table->string('ticket_price_usd')->nullable();
+            $table->decimal('ticket_price_idr', 25, 5);
+            $table->decimal('ticket_price_usd', 25, 5)->nullable();
 
             $table->bigInteger('qty');
 

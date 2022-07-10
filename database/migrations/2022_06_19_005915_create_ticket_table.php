@@ -19,8 +19,8 @@ class CreateTicketTable extends Migration
             $table->integer('order');
             $table->string('name');
             $table->string('slug');
-            $table->double('price_idr', 18, 6);
-            $table->double('price_usd', 18, 6)->nullable();
+            $table->decimal('price_idr', 18, 6);
+            $table->decimal('price_usd', 18, 6)->nullable();
             $table->text('desc_id');
             $table->text('desc_en')->nullable();
 

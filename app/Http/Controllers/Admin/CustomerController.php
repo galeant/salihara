@@ -10,6 +10,8 @@ use DB;
 use App\Http\Response\Admin\CustomerTransformer;
 use App\Http\Controllers\AuthController;
 use App\Http\Requests\Admin\RegisterRequest;
+use App\Http\Requests\Admin\User\ProgramAccessRequest;
+use App\Http\Controllers\TransactionController;
 
 class CustomerController extends Controller
 {
@@ -72,6 +74,39 @@ class CustomerController extends Controller
             DB::commit();
             return $this->index($request);
         } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function programAccess($id, ProgramAccessRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $user = User::customer()->where('id', $id)->firstOrfail();
+            $akses_request = $request->program_id;
+            $exist_access = $user->access->pluck('id')->toArray();
+
+            $final_access = array_diff($akses_request, $exist_access);
+            $user->access()->attach($final_access);
+            return $this->detail($request, $id);
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function transaction(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $user = User::customer()->where('id', $id)->firstOrfail();
+            $request->request->add(['user' => $user]);
+            return (new TransactionController)->transaction($request);
+        } catch (\Exception $e) {
+
             DB::rollBack();
             throw new \Exception($e->getMessage());
         }

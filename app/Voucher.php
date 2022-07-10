@@ -9,6 +9,9 @@ class Voucher extends Model
 {
     protected $table = 'voucher';
     protected $guarded = [];
+    protected $casts = [
+        'discount' => 'integer',
+    ];
 
     private function getField()
     {
@@ -48,4 +51,9 @@ class Voucher extends Model
             }
         }
     }
+
+    // public function getDiscountAttribute($v)
+    // {
+    //     return (int)$v;
+    // }
 }
