@@ -42,15 +42,17 @@ class CancelTransactionCommand extends Command
      */
     public function handle()
     {
+        // Log::info('bebek');
         // dd(Carbon::parse(1657472220)->format('Y-m-d H:i:s'));
         $now = time();
-        $now = 1657472221;
+        // $now = 1657472221;
         $data = Transaction::where('payment_status', Payment::PAYMENT_STATUS[0])
             ->where('epoch_time_payment_expired', '<', $now)
             ->get();
 
         if (count($data) > 0) {
             foreach ($data as $dt) {
+                Log::channel('payment_log')->info('begin:' . json_encode($dt->toArray()));
                 // dd($dt);
                 $dt->update([
                     'payment_status' => Payment::PAYMENT_STATUS[2]
@@ -64,7 +66,7 @@ class CancelTransactionCommand extends Command
                     'payload_response' => 'Payment Expired'
                 ]);
 
-                Log::channel('payment_log')->info(json_encode($data->fresh()->toArray()));
+                Log::channel('payment_log')->info('end:' . json_encode($dt->fresh()->toArray()));
             }
         }
     }

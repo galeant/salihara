@@ -6,6 +6,8 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
 
+use App\Console\Commands\CancelTransactionCommand;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -30,9 +32,10 @@ class Kernel extends ConsoleKernel
 
         // $schedule->command('queue:work --tries=3 --stop-when-empty')->withoutOverlapping();
 
-        $schedule->call(function () {
-            Log::info('test cron');
-        })->everyFiveMinutes();
+        $schedule->command(CancelTransactionCommand::class)->withoutOverlapping();
+        // $schedule->call(function () {
+        //     Log::info('test cron');
+        // })->everyFiveMinutes();
     }
 
     /**
