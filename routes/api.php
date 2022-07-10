@@ -30,7 +30,7 @@ Route::group(['middleware' => ['nullable_token']], function () {
         });
 
         Route::group(['prefix' => 'penampil'], function () {
-            //     Route::get('{program_id}', 'ProgramController@index');
+            Route::get('/', 'PenampilController@index');
             Route::get('/detail/{slug}', 'PenampilController@detail');
         });
         Route::get('/banner', 'MiscController@banner');
