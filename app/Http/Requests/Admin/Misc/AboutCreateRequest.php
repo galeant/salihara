@@ -26,7 +26,9 @@ class AboutCreateRequest extends FormRequest
         return [
             // 'banner' => 'array|required',
             // 'banner.*' => 'required',
-            'value_id' => 'required',
+            'desc_id' => 'required',
+            'title_id' => 'required',
+            'sub_title_id' => 'required',
         ];
     }
 }

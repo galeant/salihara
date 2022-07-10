@@ -25,13 +25,14 @@ class CreateRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:program,name',
-            'schedule_date'  => 'required|date',
+            'schedule_date'  => 'required|date_format:Y-m-d H:i:s',
             'duration_hour' => 'required',
             'duration_minute' => 'nullable',
             'desc_id' => 'required',
             'only_indo' => 'nullable|in:' . true . ',' . false,
             'penampil_id' => 'array',
             'type' => 'required|in:daring,luring',
+            'category' => 'required',
             'video_url' => 'required',
             'color' => 'required',
         ];

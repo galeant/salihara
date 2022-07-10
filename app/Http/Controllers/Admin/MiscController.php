@@ -79,12 +79,22 @@ class MiscController extends Controller
     public function postAbout(AboutCreateRequest $request)
     {
         try {
+            $value_id = [
+                'title' => $request->title_id,
+                'sub_title' => $request->sub_title_id,
+                'desc' => $request->desc_id,
+            ];
 
+            $value_en = [
+                'title' => $request->input('title_en', NULL),
+                'sub_title' => $request->input('sub_title_en', NULL),
+                'desc' => $request->input('desc_en', NULL),
+            ];
             $data = Misc::updateOrCreate([
                 'segment' => 'about'
             ], [
-                'value_id' => $request->value_id,
-                'value_en' => $request->value_en
+                'value_id' => json_encode($value_id),
+                'value_en' => json_encode($value_en)
             ]);
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);

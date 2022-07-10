@@ -32,6 +32,7 @@ class UpdateRequest extends FormRequest
             'only_indo' => 'nullable|in:' . true . ',' . false,
             'penampil_id' => 'array',
             'type' => 'required|in:daring,luring',
+            'category' => 'required',
             'video_url' => 'required',
             'color' => 'required',
         ];

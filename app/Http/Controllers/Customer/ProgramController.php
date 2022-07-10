@@ -38,7 +38,6 @@ class ProgramController extends Controller
             } else {
                 $data = $data->paginate($per_page);
             }
-            // dd($data);
             return ProgramTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -48,7 +47,7 @@ class ProgramController extends Controller
     public function detail(Request $request, $slug)
     {
         try {
-            $data = Program::where('slug', $slug)->firstOrFail();
+            $data = Program::with('ticket')->where('slug', $slug)->firstOrFail();
             return ProgramTransformer::getDetail($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

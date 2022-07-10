@@ -74,8 +74,9 @@ class ProgramTransformer
             'slug' => $val->slug,
             'order' => $val->order,
             'type' => $val->type,
+            'category' => $val->category,
             'schedule_unix' => $val->schedule_unix,
-            'schedule_date' => Carbon::parse($val->schedule_date)->format('d-m-Y'),
+            'schedule_date' => Carbon::parse($val->schedule_date)->format('d-m-Y H:i:s'),
             'duration_hour' => $val->duration_hour,
             'duration_minute' => $val->duration_minute,
             'desc_id' => $desc_id,
@@ -87,29 +88,6 @@ class ProgramTransformer
             'video_url' => $video_url,
             'color' => $val->color,
         ];
-        if ($type == 'index') {
-            unset($return['penampil']);
-            unset($return['ticket']);
-            return $return;
-        }
-
-        foreach ($val->penampil as $penampil) {
-            $p_desc_id = $penampil->desc_id;
-            $p_desc_en = $penampil->desc_en;
-            if ($type == 'index') {
-                $p_desc_id = mb_strimwidth($penampil->desc_id, 0, 150, "...");
-                $p_desc_en = mb_strimwidth($penampil->desc_en, 0, 150, "...");
-            }
-            $return['penampil'][] = [
-                'id' => $penampil->id,
-                'name' => $penampil->name,
-                'slug' => $penampil->slug,
-                'desc_id' => $p_desc_id,
-                'desc_en' => $p_desc_en,
-                'banner' => isset($penampil->imageBanner) ? url($penampil->imageBanner->path) : NULL,
-            ];
-        }
-
         foreach ($val->ticket as $ticket) {
             $t_desc_id = $ticket->desc_id;
             $t_desc_en = $ticket->desc_en;
@@ -135,6 +113,29 @@ class ProgramTransformer
                 'banner' => isset($ticket->imageBanner) ? url($ticket->imageBanner->path) : NULL,
             ];
         }
+        if ($type == 'index') {
+            unset($return['penampil']);
+            // unset($return['ticket']);
+            return $return;
+        }
+
+        foreach ($val->penampil as $penampil) {
+            $p_desc_id = $penampil->desc_id;
+            $p_desc_en = $penampil->desc_en;
+            if ($type == 'index') {
+                $p_desc_id = mb_strimwidth($penampil->desc_id, 0, 150, "...");
+                $p_desc_en = mb_strimwidth($penampil->desc_en, 0, 150, "...");
+            }
+            $return['penampil'][] = [
+                'id' => $penampil->id,
+                'name' => $penampil->name,
+                'slug' => $penampil->slug,
+                'desc_id' => $p_desc_id,
+                'desc_en' => $p_desc_en,
+                'banner' => isset($penampil->imageBanner) ? url($penampil->imageBanner->path) : NULL,
+            ];
+        }
+
         return $return;
     }
 

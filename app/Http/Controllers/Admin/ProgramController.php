@@ -68,6 +68,7 @@ class ProgramController extends Controller
                 'only_indo' => $only_indo,
                 'video_url' => $request->video_url,
                 'type' => $request->type,
+                'category' => $request->category,
                 'color' => $request->color,
             ]);
 
@@ -137,6 +138,7 @@ class ProgramController extends Controller
                 'only_indo' => $only_indo,
                 'video_url' => $request->video_url,
                 'type' => $request->type,
+                'category' => $request->category,
                 'color' => $request->color,
             ]);
 
