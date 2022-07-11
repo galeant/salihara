@@ -12,7 +12,6 @@
 */
 // Route::get('badak', 'Customer\TransactionController@redirect');
 Route::get('404', function () {
-    return 'Musim Seni Salihara API';
     abort(404);
 });
 Route::get('bebek', function () {
@@ -25,7 +24,8 @@ Route::get('bebek', function () {
     ]);
 });
 Route::get('/', function () {
-    header('Location: https://salihara.org/');
+    return 'Musim Seni Salihara API';
+    // header('Location: https://salihara.org/');
 });
 Route::get('loc', 'AuthController@loc');
 
