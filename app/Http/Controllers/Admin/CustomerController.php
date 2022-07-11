@@ -90,6 +90,7 @@ class CustomerController extends Controller
 
             $final_access = array_diff($akses_request, $exist_access);
             $user->access()->attach($final_access);
+            DB::commit();
             return $this->detail($request, $id);
         } catch (\Exception $e) {
 
