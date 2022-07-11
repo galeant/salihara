@@ -12,6 +12,7 @@
 */
 // Route::get('badak', 'Customer\TransactionController@redirect');
 Route::get('404', function () {
+    return 'Musim Seni Salihara API';
     abort(404);
 });
 Route::get('bebek', function () {
