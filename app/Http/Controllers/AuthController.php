@@ -152,7 +152,12 @@ class AuthController extends Controller
                 // $key = str_replace('city', 'city_id', $key);
                 // $key = str_replace('district', 'district_id', $key);
                 // $key = str_replace('sub_district', 'sub_district', $key);
-                $data->$isc =  $request->$isc;
+
+                if($isc == 'password'){
+                    $data->$isc = Hash::make($request->$isc);
+                }else{
+                    $data->$isc =  $request->$isc;
+                }
             }
             $data->save();
             DB::commit();

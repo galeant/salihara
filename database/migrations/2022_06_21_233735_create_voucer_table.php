@@ -16,7 +16,7 @@ class CreateVoucerTable extends Migration
         Schema::create('voucher', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code');
-            $table->decimal('discount', 2, 2);
+            $table->decimal('discount', 15, 2);
             $table->integer('quota');
             $table->integer('used_qouta')->default(0);
             $table->timestamps();

@@ -8,22 +8,40 @@ use App\User;
 class TransactionTransformer
 {
 
-    public static function cart($data, $message = 'Success')
+    public static function cart($data,$sub_total = NULL,$total = NULL,$discount = NULL,$message = 'Success')
     {
         $data = $data->transform(function ($v) {
             $return = [
                 'cart_id' => $v->id,
                 'program_id' => $v->ticket->program_id,
                 'program_name' => $v->ticket->program->name,
+                'program_date' => $v->ticket->schedule_date,
+                'program_date_unix' => $v->ticket->schedule_unix,
+                'program_duration_hours' => $v->ticket->duration_hour,
+                'program_duration_minutes' => $v->ticket->duration_minute,
                 'ticket_id' => $v->ticket_id,
                 'ticket_name' => $v->ticket->name,
+                'ticket_price_idr' => $v->ticket->price_idr,
+                'ticket_price_usd' => $v->ticket->price_usd,
                 'qty' => $v->qty
             ];
             return $return;
         });
+        if($sub_total == NULL){
+            $sub_total = $data->sum('ticket_price_idr');
+        }
+        if($total == NULL){
+            $total = $data->sum('ticket_price_idr');
+        }
+
         return response()->json([
             'message' => $message,
-            'result' => $data
+            'result' => [
+                'data' => $data,
+                'sub_total' => $sub_total,
+                'total' => $total,
+                'discount' => $discount
+            ]
         ]);
     }
 

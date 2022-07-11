@@ -23,7 +23,7 @@ use App\PaymentLog;
 use Illuminate\Support\Facades\Mail;
 
 use App\Mail\TransactionSuccessMail;
-
+use App\Http\Requests\Customer\CheckVoucherRequest;
 class TransactionController extends Controller
 {
 
@@ -57,6 +57,25 @@ class TransactionController extends Controller
                     'ticket_id' => $request->ticket_id,
                     'qty' => 1
                 ]);
+            }
+            DB::commit();
+            return $this->cart($request);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function removeCart(CartRequest $request){
+        DB::beginTransaction();
+        $user = auth()->user();
+        try {
+            $data = Cart::where([
+                'user_id' => $user->id,
+                'ticket_id' => $request->ticket_id
+            ])->first();
+            if ($data !== NULL) {
+                $data->delete();
             }
             DB::commit();
             return $this->cart($request);
@@ -294,6 +313,32 @@ class TransactionController extends Controller
                 'message' => $e->getMessage()
             ], 200);
             // throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function checkVoucher(CheckVoucherRequest $request){
+        $user = auth()->user();
+        try{
+            $voucher = Voucher::where('code',$request->voucher_code)
+                ->where('quota','>',0)
+                ->first();
+
+            if($voucher == NULL){
+                throw new \Exception('Voucer Not found');
+            }
+            $ticket = array_column($request->cart,'ticket_id');
+            $data = Cart::with('user', 'ticket.program')
+                ->where('user_id', $user->id)
+                ->whereIn('ticket_id',$ticket)
+                ->get();
+
+            $ticket_list = $data->pluck('ticket');
+            $discount = $voucher->discount;
+            $sub_total = $ticket_list->sum('price_idr') - $discount;
+            $total = $ticket_list->sum('price_idr') - $discount;
+            return TransactionTransformer::cart($data,$sub_total,$total,$discount);
+        }catch(\Exception $e){
+            throw new \Exception($e->getMessage());
         }
     }
 
