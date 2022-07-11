@@ -56,7 +56,7 @@ class AuthController extends Controller
             $user = $user->fresh();
             SendRegisterEmailJob::dispatch($user, $token);
             DB::commit();
-            return AuthTransformer::profile($user);
+            return AuthTransformer::profile($user,'Success, silahkan cek email anda untuk melakukan verifikasi email');
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
