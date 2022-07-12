@@ -173,6 +173,7 @@ class Payment
 
             ],
         ];
+        return $request;
         $apiCall = $this->apiPaymentCall($request, $this->paymentUrl);
         if($request['PaymentId'] == 35 || $request['PaymentId'] == 63 || $request['PaymentId'] == 77){
             $redirect = $this->redirectRequest([
