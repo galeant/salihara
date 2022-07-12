@@ -174,6 +174,12 @@ class Payment
             ],
         ];
         $apiCall = $this->apiPaymentCall($request, $this->paymentUrl);
+        if($request['PaymentId'] == 35 || $request['PaymentId'] == 63 || $request['PaymentId'] == 77){
+            $redirect = $this->redirectRequest([
+                'CheckoutID' => $apiCall->CheckoutID,
+                'Signature' =>  $apiCall->Signature,
+            ]);
+        }
 
         if ($request['PaymentId'] == 75) { //ini qris, vartual number response dari apicall bentuknnya url untuk di download qrnya
             $url = $apiCall->VirtualAccountAssigned;
@@ -290,8 +296,8 @@ class Payment
     public function redirectRequest($payload)
     {
         $apiCall = $this->apiPaymentCall($payload, $this->redirectUrl);
-        return $apiCall;
-        dd($apiCall);
+        Log::info($apiCall);
+        return true;
     }
 
     public function requeryRequest($payload)
@@ -381,7 +387,6 @@ class Payment
                     'form_params' => $payload
                 ];
             }
-
             $client = new Client([
                 'base_uri' => ENV('IPAY88SANDBOX'),
             ]);
