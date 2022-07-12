@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('sub_district_id')->nullable(); //kecamatan
 
             $table->boolean('is_disabled')->default(false);
-            $table->string('email_token')->nullable();
+            $table->text('email_token')->nullable();
             $table->timestamps();
         });
     }

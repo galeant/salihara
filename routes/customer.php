@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 
 Route::post('register', 'AuthController@register');
 Route::get('activation/{token}', 'AuthController@activation')->name('activation');
+Route::post('forgot_password', 'AuthController@forgetPassword');
+Route::post('forgot_password_post', 'AuthController@postForgetPassword');
 
 Route::post('login', 'AuthController@login');
 Route::group(['middleware' => 'auth'], function () {
