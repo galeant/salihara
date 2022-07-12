@@ -117,11 +117,11 @@ class ProgramTransformer
                 'banner' => isset($ticket->imageBanner) ? url($ticket->imageBanner->path) : NULL,
             ];
         }
-        if ($type == 'index') {
-            unset($return['penampil']);
-            // unset($return['ticket']);
-            return $return;
-        }
+        // if ($type == 'index') {
+        //     // unset($return['penampil']);
+        //     // unset($return['ticket']);
+        //     return $return;
+        // }
 
         foreach ($val->penampil as $penampil) {
             $p_desc_id = $penampil->desc_id;
