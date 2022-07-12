@@ -168,7 +168,7 @@ class TransactionController extends Controller
                 'payment_method_name' => $payment_method['name'],
                 'payment_status' => Payment::PAYMENT_STATUS[1],
             ];
-
+            return $trans_fill;
             $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
             return $payment_gateway;
             // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
