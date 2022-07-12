@@ -395,7 +395,9 @@ class Payment
             $response = $client->post($url, $data_payload);
             $body = $response->getBody();
             $content = $body->getContents();
-            $content = json_decode($content);
+            if(!is_object($content)){
+                $content = json_decode($content);
+            }
             return $content;
             if ($content->Code != 1) {
                 Log::error('Payment error:' . $content->Message);
