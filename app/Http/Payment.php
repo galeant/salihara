@@ -175,7 +175,7 @@ class Payment
         ];
 
         $apiCall = $this->apiPaymentCall($request, $this->paymentUrl);
-        return $apiCall;
+        // return $apiCall;
         if($request['PaymentId'] == 35 || $request['PaymentId'] == 63 || $request['PaymentId'] == 77){
             $redirect = $this->redirectRequest([
                 'CheckoutID' => $apiCall->CheckoutID,
@@ -395,13 +395,13 @@ class Payment
             $response = $client->post($url, $data_payload);
             $body = $response->getBody();
             $content = $body->getContents();
-            if(!is_object($content)){
+
+            if($url !== $this->redirectUrl){
                 $content = json_decode($content);
-            }
-            return $content;
-            if ($content->Code != 1) {
-                Log::error('Payment error:' . $content->Message);
-                throw new \Exception('Error on Call payment');
+                if ($content->Code != 1) {
+                    Log::error('Payment error:' . $content->Message);
+                    throw new \Exception('Error on Call payment');
+                }
             }
             return $content;
         } catch (\Exception $e) {
