@@ -170,6 +170,7 @@ class TransactionController extends Controller
             ];
 
             $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
+            return $payment_gateway;
             // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
             $trans_fill['signature_payment'] = $payment_gateway->Signature;
             $trans_fill['checkout_id'] = $payment_gateway->CheckoutID;
