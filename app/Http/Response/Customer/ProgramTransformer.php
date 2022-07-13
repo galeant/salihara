@@ -89,7 +89,7 @@ class ProgramTransformer
             'penampil' => [],
             'ticket' => [],
             'only_indo' => (bool)$val->only_indo,
-            'triller_url' => $val->triller_url,
+            'trailer_url' => $val->trailer_url,
             'video_url' => $video_url,
             'color' => $val->color,
         ];

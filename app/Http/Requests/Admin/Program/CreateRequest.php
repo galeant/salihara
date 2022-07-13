@@ -33,7 +33,7 @@ class CreateRequest extends FormRequest
             'penampil_id' => 'array',
             'type' => 'required|in:daring,luring',
             'category' => 'required',
-            'triller_url' => 'required',
+            'trailer_url' => 'required',
             'video_url' => 'required',
             'color' => 'required',
         ];
