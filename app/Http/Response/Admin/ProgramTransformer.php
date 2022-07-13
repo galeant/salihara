@@ -71,6 +71,7 @@ class ProgramTransformer
             'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
             'penampil' => [],
             'only_indo' => (bool)$val->only_indo,
+            'triller_url' => $val->triller_url,
             'video_url' => $val->video_url,
             'color' => $val->color,
         ];

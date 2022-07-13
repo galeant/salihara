@@ -31,6 +31,7 @@ class CreateProgramTable extends Migration
 
             $table->boolean('only_indo')->defaul(false);
 
+            $table->text('triller_url')->nullable();
             $table->text('video_url')->nullable();
 
             $table->boolean('is_publish')->default(true);
