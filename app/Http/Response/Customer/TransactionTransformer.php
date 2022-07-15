@@ -8,7 +8,7 @@ use App\User;
 class TransactionTransformer
 {
 
-    public static function cart($data,$sub_total = NULL,$total = NULL,$discount = NULL,$message = 'Success')
+    public static function cart($data, $sub_total = NULL, $total = NULL, $discount = NULL, $message = 'Success')
     {
         $data = $data->transform(function ($v) {
             $return = [
@@ -27,10 +27,10 @@ class TransactionTransformer
             ];
             return $return;
         });
-        if($sub_total == NULL){
+        if ($sub_total == NULL) {
             $sub_total = $data->sum('ticket_price_idr');
         }
-        if($total == NULL){
+        if ($total == NULL) {
             $total = $data->sum('ticket_price_idr');
         }
 
@@ -103,6 +103,8 @@ class TransactionTransformer
             'voucher_code' => $v->voucher_code,
             'discount_value' => $v->discount_value,
 
+            'checkout_id' => $v->checkout_id,
+            'signature_payment' => $v->signature_payment,
 
             'payment_expired' => $v->payment_expired,
             'epoch_time_payment_expired' => $v->epoch_time_payment_expired,

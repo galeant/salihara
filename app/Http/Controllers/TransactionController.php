@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Mail\TransactionSuccessMail;
 use App\Http\Requests\Customer\CheckVoucherRequest;
+
 class TransactionController extends Controller
 {
 
@@ -66,7 +67,8 @@ class TransactionController extends Controller
         }
     }
 
-    public function removeCart(CartRequest $request){
+    public function removeCart(CartRequest $request)
+    {
         DB::beginTransaction();
         $user = auth()->user();
         try {
@@ -172,9 +174,9 @@ class TransactionController extends Controller
             // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
             $trans_fill['signature_payment'] = $payment_gateway->Signature;
             $trans_fill['checkout_id'] = $payment_gateway->CheckoutID;
-            $trans_fill['payment_expired'] = Carbon::parse($payment_gateway->TransactionExpiryDate);
-            $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
-            $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
+            // $trans_fill['payment_expired'] = Carbon::parse($payment_gateway->TransactionExpiryDate);
+            // $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
+            // $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
             $trans_fill['reff_id'] = $payment_gateway->RefNo;
             $transaction = Transaction::create($trans_fill);
             foreach ($trans_detail as $tr_detail) {
@@ -315,28 +317,29 @@ class TransactionController extends Controller
         }
     }
 
-    public function checkVoucher(CheckVoucherRequest $request){
+    public function checkVoucher(CheckVoucherRequest $request)
+    {
         $user = auth()->user();
-        try{
-            $voucher = Voucher::where('code',$request->voucher_code)
-                ->where('quota','>',0)
+        try {
+            $voucher = Voucher::where('code', $request->voucher_code)
+                ->where('quota', '>', 0)
                 ->first();
 
-            if($voucher == NULL){
+            if ($voucher == NULL) {
                 throw new \Exception('Voucer Not found');
             }
-            $ticket = array_column($request->cart,'ticket_id');
+            $ticket = array_column($request->cart, 'ticket_id');
             $data = Cart::with('user', 'ticket.program')
                 ->where('user_id', $user->id)
-                ->whereIn('ticket_id',$ticket)
+                ->whereIn('ticket_id', $ticket)
                 ->get();
 
             $ticket_list = $data->pluck('ticket');
             $discount = $voucher->discount;
-            $sub_total = $ticket_list->sum('price_idr') - $discount;
+            $sub_total = $ticket_list->sum('price_idr');
             $total = $ticket_list->sum('price_idr') - $discount;
-            return TransactionTransformer::cart($data,$sub_total,$total,$discount);
-        }catch(\Exception $e){
+            return TransactionTransformer::cart($data, $sub_total, $total, $discount);
+        } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }

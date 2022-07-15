@@ -126,7 +126,7 @@ class Payment
         $request = [
             'ApiVersion' => '2.0',
             'MerchantCode' => ENV('MerchantCode'),
-            'PaymentId' => (string)$trans['payment_method_id'],
+            'PaymentId' => ''/*(string)$trans['payment_method_id']*/,
             'Currency' => $currency,
             'RefNo' => $ref_no,
             'Amount' => (string)$amount,
@@ -136,7 +136,7 @@ class Payment
             'UserEmail' => 'tiket@salihara.org',
             'UserContact' => '+628170771913',
 
-            'RequestType' => 'Seamless',
+            'RequestType' => 'Redirect',
             'Remark' => $remark,
             'Lang' => 'UTF-8',
 
@@ -195,31 +195,31 @@ class Payment
 
         $apiCall = $this->apiPaymentCall($request, $this->paymentUrl);
         // return $apiCall;
-        if($request['PaymentId'] == 35 || $request['PaymentId'] == 63 || $request['PaymentId'] == 77){
-            $redirect = $this->redirectRequest([
-                'CheckoutID' => $apiCall->CheckoutID,
-                'Signature' =>  $apiCall->Signature,
-            ]);
-        }
+        // if ($request['PaymentId'] == 35 || $request['PaymentId'] == 63 || $request['PaymentId'] == 77) {
+        //     $redirect = $this->redirectRequest([
+        //         'CheckoutID' => $apiCall->CheckoutID,
+        //         'Signature' =>  $apiCall->Signature,
+        //     ]);
+        // }
 
-        if ($request['PaymentId'] == 75) { //ini qris, vartual number response dari apicall bentuknnya url untuk di download qrnya
-            $url = $apiCall->VirtualAccountAssigned;
-            $file_name = 'qr-' . $request['RefNo'] . '.png';
-            if (!file_put_contents($file_name, file_get_contents($url))) {
-                Log::error('qris qr ' . $file_name . ' error');
-                throw new \Exception('error on qr generator');
-            }
-            $apiCall->VirtualAccountAssigned = asset($file_name);
-        }
+        // if ($request['PaymentId'] == 75) { //ini qris, vartual number response dari apicall bentuknnya url untuk di download qrnya
+        //     $url = $apiCall->VirtualAccountAssigned;
+        //     $file_name = 'qr-' . $request['RefNo'] . '.png';
+        //     if (!file_put_contents($file_name, file_get_contents($url))) {
+        //         Log::error('qris qr ' . $file_name . ' error');
+        //         throw new \Exception('error on qr generator');
+        //     }
+        //     $apiCall->VirtualAccountAssigned = asset($file_name);
+        // }
 
-        $non_va = [35, 63, 77];
-        if (in_array($request['PaymentId'], $non_va)) {
-            $apiCall->VirtualAccountAssigned = NULL;
-        }
+        // $non_va = [35, 63, 77];
+        // if (in_array($request['PaymentId'], $non_va)) {
+        //     $apiCall->VirtualAccountAssigned = NULL;
+        // }
 
-        if (!isset($apiCall->TransactionExpiryDate)) {
-            $apiCall->TransactionExpiryDate = Carbon::parse(time())->addDays(1)->format('d-m-Y H:i');
-        }
+        // if (!isset($apiCall->TransactionExpiryDate)) {
+        //     $apiCall->TransactionExpiryDate = Carbon::parse(time())->addDays(1)->format('d-m-Y H:i');
+        // }
         return $apiCall;
     }
 
@@ -310,7 +310,6 @@ class Payment
 
         $apiCall = $this->apiPaymentCall($request, $this->paymentUrlBeta, 'form');
 
-        dd($apiCall);
         return $apiCall;
     }
 
@@ -415,7 +414,7 @@ class Payment
             $body = $response->getBody();
             $content = $body->getContents();
 
-            if($url !== $this->redirectUrl){
+            if ($url !== $this->redirectUrl) {
                 $content = json_decode($content);
                 if ($content->Code != 1) {
                     Log::error('Payment error:' . $content->Message);

@@ -52,8 +52,8 @@ class CreateTransacationTable extends Migration
             $table->string('payment_gateway_trans_id')->nullable();
             $table->string('signature_payment');
             $table->string('checkout_id');
-            $table->dateTime('payment_expired');
-            $table->string('epoch_time_payment_expired');
+            $table->dateTime('payment_expired')->nullable();
+            $table->string('epoch_time_payment_expired')->nullable();
 
             $table->string('virtual_account_assign')->nullable();
 
