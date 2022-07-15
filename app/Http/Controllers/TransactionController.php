@@ -95,15 +95,15 @@ class TransactionController extends Controller
             $voucher_id = NULL;
             $voucher_code = NULL;
             $voucher_discount = 0;
-            // if ($request->filled('voucher_code')) {
-            //     $voucher = Voucher::where('code', $request->voucher_code)->firstOrFail();
-            //     $voucher_id = $voucher->id;
-            //     $voucher_code = $voucher->code;
-            //     $voucher_discount = $voucher->discount;
-            //     $voucher->update([
-            //         'used_quota' => $voucher->used_quota + 1
-            //     ]);
-            // }
+            if ($request->filled('voucher_code')) {
+                $voucher = Voucher::where('code', $request->voucher_code)->firstOrFail();
+                $voucher_id = $voucher->id;
+                $voucher_code = $voucher->code;
+                $voucher_discount = $voucher->discount;
+                $voucher->update([
+                    'used_qouta' => ($voucher->used_qouta + 1)
+                ]);
+            }
             $gross_value_idr = 0;
             $gross_value_usd = 0;
             $trans_detail = [];
