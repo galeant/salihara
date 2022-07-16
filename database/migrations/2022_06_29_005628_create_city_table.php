@@ -15,10 +15,10 @@ class CreateCityTable extends Migration
     {
         Schema::create('city', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('province_id');
             $table->string('name_id');
             $table->string('name_en');
             $table->timestamps();
+            $table->bigInteger('province_id');
         });
     }
 
