@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Program;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Program;
 
 class UpdateRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $return = [
             'name' => 'required|unique:program,name,' . $this->id,
             'schedule_date'  => 'required|date',
             'duration_hour' => 'required',
@@ -31,11 +32,16 @@ class UpdateRequest extends FormRequest
             'desc_id' => 'required',
             'only_indo' => 'nullable|in:' . true . ',' . false,
             'penampil_id' => 'array',
-            'type' => 'required|in:daring,luring',
+            'type' => 'required|in:' . implode(',', Program::type),
             'category' => 'required',
             'trailer_url' => 'required',
             'video_url' => 'required',
             'color' => 'required',
         ];
+        if ($this->type == Program::type[1]) {
+            $return['luring_url'] = 'required';
+        }
+
+        return $return;
     }
 }

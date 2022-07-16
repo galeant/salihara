@@ -24,12 +24,18 @@ class BannerCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'banner' => 'array|required',
-            // 'banner.*' => 'required',
-            'banner' => 'required',
-            'desc_id' => 'required',
-            'title_id' => 'required',
-            'sub_title_id' => 'required',
+            'banner' => 'array|required',
+            'banner.*.title_id' => 'required',
+            'banner.*.title_en' => 'required',
+            'banner.*.sub_title_id' => 'required',
+            'banner.*.sub_title_en' => 'required',
+            'banner.*.desc_id' => 'required',
+            'banner.*.desc_en' => 'required',
+            'banner.*.image' => 'required',
+            // 'banner' => 'required',
+            // 'desc_id' => 'required',
+            // 'title_id' => 'required',
+            // 'sub_title_id' => 'required',
         ];
     }
 }

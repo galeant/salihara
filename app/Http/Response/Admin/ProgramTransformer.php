@@ -74,6 +74,7 @@ class ProgramTransformer
             'trailer_url' => $val->trailer_url,
             'video_url' => $val->video_url,
             'color' => $val->color,
+            'luring_url' => $val->luring_url
         ];
 
         foreach ($val->penampil as $penampil) {

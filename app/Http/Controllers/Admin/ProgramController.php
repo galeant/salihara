@@ -55,7 +55,7 @@ class ProgramController extends Controller
             $schedule = strtotime($schedule_date);
             $only_indo = $request->input('only_indo', false);
 
-            $data = Program::create([
+            $fill_prog = [
                 'order' => $order,
                 'name' => $request->name,
                 'slug' => $slug,
@@ -71,7 +71,13 @@ class ProgramController extends Controller
                 'type' => $request->type,
                 'category' => $request->category,
                 'color' => $request->color,
-            ]);
+                'luring_url' => NULL
+            ];
+            if ($request->type == Program::type[1]) {
+                $fill_prog['luring_url'] = $request->luring_url;
+            }
+
+            $data = Program::create($fill_prog);
 
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);
@@ -126,7 +132,7 @@ class ProgramController extends Controller
             $schedule = strtotime($schedule_date);
             $only_indo = $request->input('only_indo', false);
 
-            $data->update([
+            $fill_prog = [
                 'order' => $order,
                 'name' => $request->name,
                 'slug' => $slug,
@@ -142,7 +148,12 @@ class ProgramController extends Controller
                 'type' => $request->type,
                 'category' => $request->category,
                 'color' => $request->color,
-            ]);
+                'luring_url' => NULL,
+            ];
+            if ($request->type == Program::type[1]) {
+                $fill_prog['luring_url'] = $request->luring_url;
+            }
+            $data->update($fill_prog);
 
             if ($request->has('image')) {
                 // $delete_path = str_replace('storage', '', $image);

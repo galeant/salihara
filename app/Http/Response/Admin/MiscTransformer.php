@@ -8,45 +8,35 @@ class MiscTransformer
 
     public static function banner($data, $message = 'Success')
     {
-        // $data = $data->transform(function ($v) {
-        //     $url = url($v->path);
-        //     if ($v->path == NULL) {
-        //         $url = NULL;
-        //     }
-        //     return [
-        //         'url' => $url
-        //     ];
-        // });
-        $url = NULL;
+        $data = $data->transform(function ($v) {
+            $url = NULL;
 
-        $title_id = NULL;
-        $title_en = NULL;
+            $title_id = NULL;
+            $title_en = NULL;
 
-        $sub_title_id = NULL;
-        $sub_title_en = NULL;
+            $sub_title_id = NULL;
+            $sub_title_en = NULL;
 
-        $desc_id = NULL;
-        $desc_en = NULL;
+            $desc_id = NULL;
+            $desc_en = NULL;
 
-        if ($data !== NULL) {
-            $val_id = json_decode($data->value_id);
-            $val_en = json_decode($data->value_en);
+            if ($v !== NULL) {
+                $val_id = json_decode($v->value_id);
+                $val_en = json_decode($v->value_en);
 
-            $url = isset($data->mainImageBanner) ? url($data->mainImageBanner->path) : NULL;
+                $url = isset($v->mainImageBanner) ? url($v->mainImageBanner->path) : NULL;
 
-            $title_id = isset($val_id->title) ? $val_id->title : NULL;
-            $title_en = isset($val_en->title) ? $val_en->title : NULL;
+                $title_id = isset($val_id->title) ? $val_id->title : NULL;
+                $title_en = isset($val_en->title) ? $val_en->title : NULL;
 
-            $sub_title_id = isset($val_id->sub_title) ? $val_id->sub_title : NULL;
-            $sub_title_en = isset($val_en->sub_title) ? $val_en->sub_title : NULL;
+                $sub_title_id = isset($val_id->sub_title) ? $val_id->sub_title : NULL;
+                $sub_title_en = isset($val_en->sub_title) ? $val_en->sub_title : NULL;
 
-            $desc_id = isset($val_id->desc) ? $val_id->desc : NULL;
-            $desc_en = isset($val_en->desc) ? $val_en->desc : NULL;
-        }
+                $desc_id = isset($val_id->desc) ? $val_id->desc : NULL;
+                $desc_en = isset($val_en->desc) ? $val_en->desc : NULL;
+            }
 
-        return response()->json([
-            'message' => $message,
-            'result' => [
+            return [
                 'url' => $url,
 
                 'title_id' => $title_id,
@@ -57,7 +47,12 @@ class MiscTransformer
 
                 'desc_id' => $desc_id,
                 'desc_en' => $desc_en,
-            ]
+            ];
+        });
+
+        return response()->json([
+            'message' => $message,
+            'result' => $data
         ]);
     }
 

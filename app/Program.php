@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Schema;
 
 class Program extends Model
 {
+    const type = [
+        'daring',
+        'luring'
+    ];
     protected $table = 'program';
     protected $guarded = [];
 

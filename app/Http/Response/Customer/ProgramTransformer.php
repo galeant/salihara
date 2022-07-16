@@ -92,6 +92,7 @@ class ProgramTransformer
             'trailer_url' => $val->trailer_url,
             'video_url' => $video_url,
             'color' => $val->color,
+            'luring_url' => $val->luring_url
         ];
         foreach ($val->ticket as $ticket) {
             $t_desc_id = $ticket->desc_id;
