@@ -36,7 +36,7 @@ class MiscTransformer
                 $desc_id = isset($val_id->desc) ? $val_id->desc : NULL;
                 $desc_en = isset($val_en->desc) ? $val_en->desc : NULL;
 
-                $hyperlink = $val_id->hyperlink;
+                $hyperlink = isset($val_id->hyperlink) ? $val_id->hyperlink : NULL;
             }
 
             return [
