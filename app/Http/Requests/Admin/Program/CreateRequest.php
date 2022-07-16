@@ -34,12 +34,13 @@ class CreateRequest extends FormRequest
             'penampil_id' => 'array',
             'type' => 'required|in:' . implode(',', Program::type),
             'category' => 'required',
-            'trailer_url' => 'required',
-            'video_url' => 'required',
             'color' => 'required',
         ];
         if ($this->type == Program::type[1]) {
             $return['luring_url'] = 'required';
+        } else if ($this->type == Program::type[0]) {
+            $return['trailer_url'] = 'required';
+            $return['video_url'] = 'required';
         }
 
         return $return;
