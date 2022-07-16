@@ -19,6 +19,7 @@ class MiscTransformer
 
             $desc_id = NULL;
             $desc_en = NULL;
+            $hyperlink = NULL;
 
             if ($v !== NULL) {
                 $val_id = json_decode($v->value_id);
@@ -34,6 +35,8 @@ class MiscTransformer
 
                 $desc_id = isset($val_id->desc) ? $val_id->desc : NULL;
                 $desc_en = isset($val_en->desc) ? $val_en->desc : NULL;
+
+                $hyperlink = $val_id->hyperlink;
             }
 
             return [
@@ -47,6 +50,7 @@ class MiscTransformer
 
                 'desc_id' => $desc_id,
                 'desc_en' => $desc_en,
+                'hyperlink' => $hyperlink
             ];
         });
 

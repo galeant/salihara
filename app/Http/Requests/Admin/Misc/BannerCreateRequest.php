@@ -32,6 +32,7 @@ class BannerCreateRequest extends FormRequest
             'banner.*.desc_id' => 'required',
             'banner.*.desc_en' => 'required',
             'banner.*.image' => 'required',
+            'banner.*.hyperlink' => 'required',
             // 'banner' => 'required',
             // 'desc_id' => 'required',
             // 'title_id' => 'required',

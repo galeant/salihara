@@ -17,7 +17,7 @@ class MiscController extends Controller
     public function banner(Request $request)
     {
         try {
-            $data = Misc::with('mainImageBanner')->mainBanner()->first();
+            $data = Misc::with('mainImageBanner')->mainBanner()->get();
             return MiscTransformer::banner($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

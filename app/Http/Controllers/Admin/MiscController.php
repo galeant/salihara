@@ -43,12 +43,14 @@ class MiscController extends Controller
                         'title' => $vbn->title_id,
                         'sub_title' => $vbn->sub_title_id,
                         'desc' => $vbn->desc_id,
+                        'hyperlink' => $vbn->hyperlink,
                     ];
 
                     $value_en = [
                         'title' => isset($vbn->title_en) ? $vbn->title_en : NULL,
                         'sub_title' => isset($vbn->sub_title_en) ? $vbn->sub_title_en : NULL,
                         'desc' => isset($vbn->desc_en) ? $vbn->desc_en : NULL,
+                        'hyperlink' => $vbn->hyperlink,
                     ];
                     $misc[$i]->update([
                         'value_id' => json_encode($value_id),
@@ -68,12 +70,14 @@ class MiscController extends Controller
                         'title' => $vbn->title_id,
                         'sub_title' => $vbn->sub_title_id,
                         'desc' => $vbn->desc_id,
+                        'hyperlink' => $vbn->hyperlink,
                     ];
 
                     $value_en = [
                         'title' => isset($vbn->title_en) ? $vbn->title_en : NULL,
                         'sub_title' => isset($vbn->sub_title_en) ? $vbn->sub_title_en : NULL,
                         'desc' => isset($vbn->desc_en) ? $vbn->desc_en : NULL,
+                        'hyperlink' => $vbn->hyperlink,
                     ];
                     $data = Misc::create([
                         'segment' => 'main_banner',
