@@ -58,8 +58,8 @@ class ProgramController extends Controller
                 $tmp = [
                     'date' => Carbon::parse($sch['date']),
                     'unix_date' => strtotime(Carbon::parse($sch['date'])),
-                    'hour' => $sch['hour'],
-                    'minute' => $sch['minute'],
+                    'hour' => (int)$sch['hour'],
+                    'minute' => (int)$sch['minute'],
                 ];
                 $schedule[] = $tmp;
             }
