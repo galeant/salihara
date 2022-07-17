@@ -82,7 +82,7 @@ class TicketTransformer
                 'desc_id' => $p_desc_id,
                 'desc_en' => $p_desc_en,
             ],
-            'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
+            'banner' => (isset($val->imageBanner) && isset($val->imageBanner->path)) ? url($val->imageBanner->path) : NULL,
         ];
     }
 }

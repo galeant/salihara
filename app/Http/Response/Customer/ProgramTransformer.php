@@ -85,7 +85,7 @@ class ProgramTransformer
             'short_desc_id' => $short_desc_id,
             'short_desc_en' => $short_desc_en,
 
-            'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
+            'banner' => (isset($val->imageBanner) && isset($val->imageBanner->path)) ? url($val->imageBanner->path) : NULL,
             'penampil' => [],
             'ticket' => [],
             'only_indo' => (bool)$val->only_indo,
@@ -116,7 +116,7 @@ class ProgramTransformer
                 'snk_id' => $ticket->snk_id,
                 'snk_en' => $ticket->snk_en,
 
-                'banner' => isset($ticket->imageBanner) ? url($ticket->imageBanner->path) : NULL,
+                'banner' => (isset($ticket->imageBanner) && isset($val->imageBanner->path)) ? url($ticket->imageBanner->path) : NULL,
             ];
         }
         // if ($type == 'index') {
@@ -142,7 +142,7 @@ class ProgramTransformer
                 'short_desc_id' => $short_p_desc_id,
                 'short_desc_en' => $short_p_desc_en,
 
-                'banner' => isset($penampil->imageBanner) ? url($penampil->imageBanner->path) : NULL,
+                'banner' => (isset($penampil->imageBanner) && isset($val->imageBanner->path)) ? url($penampil->imageBanner->path) : NULL,
             ];
         }
 

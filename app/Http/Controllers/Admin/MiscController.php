@@ -134,17 +134,18 @@ class MiscController extends Controller
                 'value_id' => json_encode($value_id),
                 'value_en' => json_encode($value_en)
             ]);
-            if ($request->has('image')) {
+            $image = NULL;
+            if ($request->filled('image')) {
                 // $delete_path = str_replace('storage', '', $image);
                 $image = imageUpload('public/misc/', $request->image, NULL, Str::uuid());
-                Image::updateOrCreate([
-                    'relation_id' => $data->id,
-                    'relation_type' => NULL,
-                    'function_type' => 'about',
-                ], [
-                    'path' => $image
-                ]);
             }
+            Image::updateOrCreate([
+                'relation_id' => $data->id,
+                'relation_type' => NULL,
+                'function_type' => 'about',
+            ], [
+                'path' => $image
+            ]);
             return $this->about($request);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());

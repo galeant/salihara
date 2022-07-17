@@ -34,11 +34,11 @@ class RegisterRequest extends FormRequest
             'birth_year' => 'required',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
-            'address' => 'required',
-            'province_id' => 'required|exists:province,id',
-            'city_id' => 'required|exists:city,id',
-            'district_id' => 'required|exists:district,id',
-            'sub_district_id' => 'required|exists:sub_district,id',
+            // 'address' => 'required',
+            // 'province_id' => 'required|exists:province,id',
+            // 'city_id' => 'required|exists:city,id',
+            // 'district_id' => 'required|exists:district,id',
+            // 'sub_district_id' => 'required|exists:sub_district,id',
         ];
     }
 }

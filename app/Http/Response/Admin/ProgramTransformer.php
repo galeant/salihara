@@ -68,7 +68,7 @@ class ProgramTransformer
             'desc_en' => $val->desc_en,
             'short_desc_id' => $short_desc_id,
             'short_desc_en' => $short_desc_en,
-            'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
+            'banner' => (isset($val->imageBanner) && isset($val->imageBanner->path)) ? url($val->imageBanner->path) : NULL,
             'penampil' => [],
             'only_indo' => (bool)$val->only_indo,
             'trailer_url' => $val->trailer_url,

@@ -73,7 +73,7 @@ class TicketTransformer
                 'name' => $val->program->name,
                 'slug' => $val->program->slug,
             ],
-            'banner' => isset($val->imageBanner) ? url($val->imageBanner->path) : NULL,
+            'banner' => (isset($val->imageBanner) && isset($val->imageBanner->path)) ? url($val->imageBanner->path) : NULL,
         ];
     }
 }

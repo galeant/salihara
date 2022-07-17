@@ -63,7 +63,7 @@ class TicketController extends Controller
 
             ]);
 
-            if ($request->has('image')) {
+            if ($request->filled('image') && isset($request->image)) {
                 // $delete_path = str_replace('storage', '', $image);
                 $image = imageUpload('public/ticket/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
@@ -122,18 +122,18 @@ class TicketController extends Controller
                 'snk_id' => $request->snk_id,
                 'snk_en' => $request->snk_en,
             ]);
-
-            if ($request->has('image')) {
+            $image = NULL;
+            if ($request->filled('image') && isset($request->image)) {
                 // $delete_path = str_replace('storage', '', $image);
                 $image = imageUpload('public/ticket/', $request->image, NULL, Str::uuid());
-                Image::updateOrCreate([
-                    'relation_id' => $data->id,
-                    'relation_type' => 'ticket',
-                    'function_type' => 'banner',
-                ], [
-                    'path' => $image
-                ]);
             }
+            Image::updateOrCreate([
+                'relation_id' => $data->id,
+                'relation_type' => 'ticket',
+                'function_type' => 'banner',
+            ], [
+                'path' => $image
+            ]);
 
             DB::commit();
             return TicketTransformer::getDetail($data->fresh());

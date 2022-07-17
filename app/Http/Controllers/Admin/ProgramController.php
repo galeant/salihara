@@ -79,7 +79,7 @@ class ProgramController extends Controller
 
             $data = Program::create($fill_prog);
 
-            if ($request->has('image')) {
+            if ($request->filled('image') && isset($request->image)) {
                 // $delete_path = str_replace('storage', '', $image);
                 $image = imageUpload('public/program/', $request->image, NULL, Str::uuid());
                 Image::updateOrCreate([
@@ -155,17 +155,18 @@ class ProgramController extends Controller
             }
             $data->update($fill_prog);
 
-            if ($request->has('image')) {
+            $image = NULL;
+            if ($request->filled('image') && isset($request->image)) {
                 // $delete_path = str_replace('storage', '', $image);
                 $image = imageUpload('public/program/', $request->image, NULL, Str::uuid());
-                Image::updateOrCreate([
-                    'relation_id' => $data->id,
-                    'relation_type' => 'program',
-                    'function_type' => 'banner',
-                ], [
-                    'path' => $image
-                ]);
             }
+            Image::updateOrCreate([
+                'relation_id' => $data->id,
+                'relation_type' => 'program',
+                'function_type' => 'banner',
+            ], [
+                'path' => $image
+            ]);
 
             $get_penampil = Penampil::select('id')->get();
             $get_penampil = $get_penampil->pluck('id')->toArray();

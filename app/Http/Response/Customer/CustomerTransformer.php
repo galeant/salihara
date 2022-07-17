@@ -52,7 +52,7 @@ class CustomerTransformer
             'name' => $val->name,
             'email' => $val->email,
             'phone' => $val->phone,
-            'address' => $val->address,
+            // 'address' => $val->address,
             'disabled' => (bool)$val->is_disabled
         ];
     }

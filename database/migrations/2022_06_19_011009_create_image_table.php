@@ -18,7 +18,7 @@ class CreateImageTable extends Migration
             $table->bigInteger('relation_id')->nullable();
             $table->string('relation_type')->nullable();
             $table->string('function_type');
-            $table->string('path');
+            $table->string('path')->nullable();
 
             // $table->text('desc_id')->nullable();
             // $table->text('desc_en')->nullable();

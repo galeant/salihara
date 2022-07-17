@@ -37,13 +37,13 @@ class AuthTransformer
             'name' => $data->name,
             'email' => $data->email,
             'phone' => $data->phone,
-            'address' => $data->address,
+            // 'address' => $data->address,
             'gender' => $data->gender,
             'birth_year' => $data->birth_year,
-            'province_id' => $data->province_id,
-            'city_id' => $data->city_id,
-            'district_id' => $data->district_id,
-            'sub_district_id' => $data->sub_district_id,
+            // 'province_id' => $data->province_id,
+            // 'city_id' => $data->city_id,
+            // 'district_id' => $data->district_id,
+            // 'sub_district_id' => $data->sub_district_id,
             // 'postal' => $data->subDistrict->postal,
         ];
     }

@@ -130,11 +130,11 @@ class Payment
             'Currency' => $currency,
             'RefNo' => $ref_no,
             'Amount' => (string)$amount,
-            'ProdDesc' => 'TIcket',
+            'ProdDesc' => 'Ticket',
 
-            'UserName' => 'salihara',
-            'UserEmail' => 'tiket@salihara.org',
-            'UserContact' => '+628170771913',
+            'UserName' => '',
+            'UserEmail' => '',
+            'UserContact' => '',
 
             'RequestType' => 'Redirect',
             'Remark' => $remark,
@@ -152,42 +152,60 @@ class Payment
             'ItemTransactions' => $trans_detail_payload,
 
             'ShippingAddress' => [
-                'FirstName' => $trans['user_name'],
+                // 'FirstName' => $trans['user_name'],
+                // 'LastName' => '',
+                // 'Address' => $trans['user_address'],
+                // 'City' => $trans['city_name'],
+                // 'State' => '',
+                // 'PostalCode' => $trans['postal'],
+                // 'Phone' => $trans['user_phone'],
+                // 'CountryCode' => 'ID',
+
+                'FirstName' => '',
                 'LastName' => '',
-                'Address' => $trans['user_address'],
-                'City' => $trans['city_name'],
+                'Address' => '',
+                'City' => '',
                 'State' => '',
-                'PostalCode' => $trans['postal'],
-                'Phone' => $trans['user_phone'],
-                'CountryCode' => 'ID',
+                'PostalCode' => '',
+                'Phone' => '',
+                'CountryCode' => '',
 
             ],
 
             'BillingAddress' => [
-                'FirstName' => $trans['user_name'],
+                // 'FirstName' => $trans['user_name'],
+                // 'LastName' => '',
+                // 'Address' => $trans['user_address'],
+                // 'City' => $trans['city_name'],
+                // 'State' => '',
+                // 'PostalCode' => $trans['postal'],
+                // 'Phone' => $trans['user_phone'],
+                // 'CountryCode' => 'ID',
+
+                'FirstName' => '',
                 'LastName' => '',
-                'Address' => $trans['user_address'],
-                'City' => $trans['city_name'],
+                'Address' => '',
+                'City' => '',
                 'State' => '',
-                'PostalCode' => $trans['postal'],
-                'Phone' => $trans['user_phone'],
-                'CountryCode' => 'ID',
+                'PostalCode' => '',
+                'Phone' => '',
+                'CountryCode' => '',
             ],
 
             'Sellers' => [
-                'Id' => 'salihara',
-                'Name' => 'salihara',
-                'SelleridNumber' => 'salihara',
-                'Email' => 'tiket@salihara.org',
+                'Id' => '',
+                'Name' => '',
+                'SelleridNumber' => '',
+                'Email' => '',
                 'Address' => [
-                    'FirstName' => 'salihara',
-                    'LastName' => 'salihara',
-                    'Address' => 'address',
-                    'City' => 'test',
-                    'State' => 'test',
-                    'PostalCode' => '15810',
-                    'Phone' => '1233321123321',
-                    'CountryCode' => 'ID',
+                    'FirstName' => '',
+                    'LastName' => '',
+                    'Address' => '',
+                    'City' => '',
+                    'State' => '',
+                    'PostalCode' => '',
+                    'Phone' => '',
+                    'CountryCode' => '',
                 ]
 
             ],
@@ -407,6 +425,7 @@ class Payment
                     'form_params' => $payload
                 ];
             }
+            // dd(json_encode($payload));
             $client = new Client([
                 'base_uri' => ENV('IPAY88SANDBOX'),
             ]);

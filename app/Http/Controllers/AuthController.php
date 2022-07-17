@@ -39,11 +39,11 @@ class AuthController extends Controller
                 "gender" => $request->gender,
                 "birth_year" => $request->birth_year,
                 'password' => Hash::make($request->password),
-                'address' => $request->address,
-                'province_id' => $request->province_id,
-                'city_id' => $request->city_id,
-                'district_id' => $request->district_id,
-                'sub_district_id' => $request->sub_district_id,
+                // 'address' => $request->address,
+                // 'province_id' => $request->province_id,
+                // 'city_id' => $request->city_id,
+                // 'district_id' => $request->district_id,
+                // 'sub_district_id' => $request->sub_district_id,
             ]);
             $token = [
                 'exp' => strtotime(Carbon::now()->addHours(6)),
@@ -201,9 +201,7 @@ class AuthController extends Controller
             $data = User::where('id', $user->id)->firstOrFail();
             $field = [
                 'name', 'password', 'phone', 'gender',
-                'birth_year', 'address', 'province',
-                'city', 'district', 'sub_district',
-                'postal'
+                'birth_year'
             ];
             $request_key = collect($request->all())->keys();
             $intersect = $request_key->intersect($field);
