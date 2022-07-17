@@ -30,6 +30,7 @@ class CreateRequest extends FormRequest
             'schedule.*.date' => 'required|date',
             'schedule.*.hour' => 'required',
             'schedule.*.minute' => 'required',
+            'schedule.*.unix_date' => 'required',
             // 'schedule_date'  => 'required|date_format:Y-m-d H:i:s',
             // 'duration_hour' => 'required',
             // 'duration_minute' => 'nullable',

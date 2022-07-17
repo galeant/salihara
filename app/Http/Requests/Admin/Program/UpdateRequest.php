@@ -30,6 +30,7 @@ class UpdateRequest extends FormRequest
             'schedule.*.date' => 'required|date',
             'schedule.*.hour' => 'required',
             'schedule.*.minute' => 'required',
+            'schedule.*.unix_date' => 'required',
             // 'schedule_date'  => 'required|date',
             // 'duration_hour' => 'required',
             // 'duration_minute' => 'nullable',

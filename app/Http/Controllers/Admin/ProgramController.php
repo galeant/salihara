@@ -55,9 +55,10 @@ class ProgramController extends Controller
             $only_indo = $request->input('only_indo', false);
             $schedule = [];
             foreach ($request->schedule as $sch) {
+                $date = Carbon::parse($sch['unix_date']);
                 $tmp = [
-                    'date' => Carbon::parse($sch['date']),
-                    'unix_date' => strtotime(Carbon::parse($sch['date'])),
+                    'date' => $date,
+                    'unix_date' => strtotime($date),
                     'hour' => (int)$sch['hour'],
                     'minute' => (int)$sch['minute'],
                 ];
@@ -142,9 +143,10 @@ class ProgramController extends Controller
             $only_indo = $request->input('only_indo', false);
             $schedule = [];
             foreach ($request->schedule as $sch) {
+                $date = Carbon::parse($sch['unix_date']);
                 $tmp = [
-                    'date' => Carbon::parse($sch['date']),
-                    'unix_date' => strtotime(Carbon::parse($sch['date'])),
+                    'date' => $date,
+                    'unix_date' => strtotime($date),
                     'hour' => $sch['hour'],
                     'minute' => $sch['minute'],
                 ];
