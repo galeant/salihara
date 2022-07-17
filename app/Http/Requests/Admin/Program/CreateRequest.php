@@ -26,9 +26,13 @@ class CreateRequest extends FormRequest
     {
         $return =  [
             'name' => 'required|unique:program,name',
-            'schedule_date'  => 'required|date_format:Y-m-d H:i:s',
-            'duration_hour' => 'required',
-            'duration_minute' => 'nullable',
+            'schedule' => 'required|array',
+            'schedule.*.date' => 'required|date',
+            'schedule.*.hour' => 'required',
+            'schedule.*.minute' => 'required',
+            // 'schedule_date'  => 'required|date_format:Y-m-d H:i:s',
+            // 'duration_hour' => 'required',
+            // 'duration_minute' => 'nullable',
             'desc_id' => 'required',
             'only_indo' => 'nullable|in:' . true . ',' . false,
             'penampil_id' => 'array',

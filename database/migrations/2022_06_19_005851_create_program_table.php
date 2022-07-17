@@ -19,10 +19,11 @@ class CreateProgramTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('category');
-            $table->string('schedule_unix')->comment('unix timestamp ');
-            $table->dateTime('schedule_date');
-            $table->integer('duration_hour')->default(0);
-            $table->integer('duration_minute')->default(0);
+            $table->text('schedule');
+            // $table->string('schedule_unix')->comment('unix timestamp ');
+            // $table->dateTime('schedule_date');
+            // $table->integer('duration_hour')->default(0);
+            // $table->integer('duration_minute')->default(0);
 
             $table->enum('type', ['daring', 'luring']);
 

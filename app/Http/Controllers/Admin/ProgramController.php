@@ -51,18 +51,28 @@ class ProgramController extends Controller
             $order = Program::count() + 1;
             $order = $request->input('order', $order);
             $slug = Str::slug($request->name, '-');
-            $schedule_date = Carbon::parse($request->schedule_date);
-            $schedule = strtotime($schedule_date);
+
             $only_indo = $request->input('only_indo', false);
+            $schedule = [];
+            foreach ($request->schedule as $sch) {
+                $tmp = [
+                    'date' => Carbon::parse($sch['date']),
+                    'unix_date' => strtotime(Carbon::parse($sch['date'])),
+                    'hour' => $sch['hour'],
+                    'minute' => $sch['minute'],
+                ];
+                $schedule[] = $tmp;
+            }
 
             $fill_prog = [
                 'order' => $order,
                 'name' => $request->name,
                 'slug' => $slug,
-                'schedule_unix' => $schedule,
-                'schedule_date' => $schedule_date,
-                'duration_hour' => $request->duration_hour,
-                'duration_minute' => $request->duration_minute,
+                'schedule' => json_encode($schedule),
+                // 'schedule_unix' => $schedule,
+                // 'schedule_date' => $schedule_date,
+                // 'duration_hour' => $request->duration_hour,
+                // 'duration_minute' => $request->duration_minute,
                 'desc_id' => $request->desc_id,
                 'desc_en' => $request->desc_en,
                 'only_indo' => $only_indo,
@@ -128,18 +138,28 @@ class ProgramController extends Controller
             $order = Program::count() + 1;
             $order = $request->input('order', $order);
             $slug = Str::slug($request->name, '-');
-            $schedule_date = Carbon::parse($request->schedule_date);
-            $schedule = strtotime($schedule_date);
+
             $only_indo = $request->input('only_indo', false);
+            $schedule = [];
+            foreach ($request->schedule as $sch) {
+                $tmp = [
+                    'date' => Carbon::parse($sch['date']),
+                    'unix_date' => strtotime(Carbon::parse($sch['date'])),
+                    'hour' => $sch['hour'],
+                    'minute' => $sch['minute'],
+                ];
+                $schedule[] = $tmp;
+            }
 
             $fill_prog = [
                 'order' => $order,
                 'name' => $request->name,
                 'slug' => $slug,
-                'schedule_unix' => $schedule,
-                'schedule_date' => $schedule_date,
-                'duration_hour' => $request->duration_hour,
-                'duration_minute' => $request->duration_minute,
+                'schedule' => json_encode($schedule),
+                // 'schedule_unix' => $schedule,
+                // 'schedule_date' => $schedule_date,
+                // 'duration_hour' => $request->duration_hour,
+                // 'duration_minute' => $request->duration_minute,
                 'desc_id' => $request->desc_id,
                 'desc_en' => $request->desc_en,
                 'only_indo' => $only_indo,

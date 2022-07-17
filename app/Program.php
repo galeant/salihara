@@ -89,4 +89,12 @@ class Program extends Model
                 'function_type' => 'banner'
             ]);
     }
+
+    public function getScheduleAttribute($v)
+    {
+        if ($v == NULL || $v == '') {
+            return [];
+        }
+        return json_decode($v);
+    }
 }
