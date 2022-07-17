@@ -8,7 +8,7 @@ class MiscTransformer
 
     public static function banner($data, $message = 'Success')
     {
-        $data = $data->transform(function ($v) {
+        $data = collect($data)->transform(function ($v) {
             $url = NULL;
 
             $title_id = NULL;
