@@ -56,7 +56,10 @@ class MiscController extends Controller
                         'value_id' => json_encode($value_id),
                         'value_en' => json_encode($value_en)
                     ]);
-                    $image = imageUpload('public/main_banner/', $vbn->image, NULL, Str::uuid());
+                    $image = NULL;
+                    if (isset($vbn->image)) {
+                        $image = imageUpload('public/main_banner/', $vbn->image, NULL, Str::uuid());
+                    }
                     Image::updateOrCreate([
                         'relation_id' => $misc[$i]->id,
                         'relation_type' => NULL,
@@ -84,7 +87,10 @@ class MiscController extends Controller
                         'value_id' => json_encode($value_id),
                         'value_en' => json_encode($value_en)
                     ]);
-                    $image = imageUpload('public/main_banner/', $vbn->image, NULL, Str::uuid());
+                    $image = NULL;
+                    if (isset($vbn->image)) {
+                        $image = imageUpload('public/main_banner/', $vbn->image, NULL, Str::uuid());
+                    }
                     Image::updateOrCreate([
                         'relation_id' => $data->id,
                         'relation_type' => NULL,
