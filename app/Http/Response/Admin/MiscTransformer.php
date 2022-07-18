@@ -25,7 +25,7 @@ class MiscTransformer
                 $val_id = json_decode($v->value_id);
                 $val_en = json_decode($v->value_en);
 
-                $url = (isset($v->mainImageBanner) && isset($v->mainImageBanner->pat)) ? url($v->mainImageBanner->path) : NULL;
+                $url = (isset($v->mainImageBanner) && isset($v->mainImageBanner->path)) ? url($v->mainImageBanner->path) : NULL;
 
                 $title_id = isset($val_id->title) ? $val_id->title : NULL;
                 $title_en = isset($val_en->title) ? $val_en->title : NULL;
