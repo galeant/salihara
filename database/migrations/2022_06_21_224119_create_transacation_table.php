@@ -20,24 +20,24 @@ class CreateTransacationTable extends Migration
             $table->string('user_name');
             $table->string('user_email');
             $table->string('user_phone');
-            $table->string('user_address');
+            $table->string('user_address')->nullable();
 
             $table->bigInteger('payment_method_id');
             $table->string('payment_method_name');
             $table->string('payment_status')->default('pending')->description('pending|paid|cancel');
 
-            $table->bigInteger('province_id');
-            $table->string('province_name');
+            $table->bigInteger('province_id')->nullable();
+            $table->string('province_name')->nullable();
 
-            $table->bigInteger('city_id');
-            $table->string('city_name');
+            $table->bigInteger('city_id')->nullable();
+            $table->string('city_name')->nullable();
 
-            $table->bigInteger('district_id');
-            $table->string('district_name');
+            $table->bigInteger('district_id')->nullable();
+            $table->string('district_name')->nullable();
 
-            $table->bigInteger('sub_district_id');
-            $table->string('sub_district_name');
-            $table->string('postal');
+            $table->bigInteger('sub_district_id')->nullable();
+            $table->string('sub_district_name')->nullable();
+            $table->string('postal')->nullable();
 
             $table->bigInteger('voucher_id')->nullable();
             $table->string('voucher_code')->nullable();

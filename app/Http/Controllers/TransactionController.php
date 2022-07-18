@@ -104,6 +104,7 @@ class TransactionController extends Controller
                     'used_qouta' => ($voucher->used_qouta + 1)
                 ]);
             }
+
             $gross_value_idr = 0;
             $gross_value_usd = 0;
             $trans_detail = [];
@@ -129,6 +130,7 @@ class TransactionController extends Controller
                     ];
                 }
             }
+
             $nett_idr = $gross_value_idr - (float)$voucher_discount;
             $nett_usd = $gross_value_usd - (float)$voucher_discount;
             $payment_method = collect(Payment::PAYMENT_METHOD)->first(function ($v) use ($request) {
@@ -136,25 +138,27 @@ class TransactionController extends Controller
                     return $v;
                 }
             });
+
+
             $trans_fill = [
                 'user_id' => $user->id,
                 'user_name' => $user->name,
                 'user_email' => $user->email,
                 'user_phone' => $user->phone,
-                'user_address' => $user->address,
+                // 'user_address' => $user->address,
 
-                'province_id' => $user->province_id,
-                'province_name' => $user->province->name_id,
+                // 'province_id' => $user->province_id,
+                // 'province_name' => $user->province->name_id,
 
-                'city_id' => $user->city_id,
-                'city_name' => $user->city->name_id,
+                // 'city_id' => $user->city_id,
+                // 'city_name' => $user->city->name_id,
 
-                'district_id' => $user->district_id,
-                'district_name' => $user->district->name_id,
+                // 'district_id' => $user->district_id,
+                // 'district_name' => $user->district->name_id,
 
-                'sub_district_id' => $user->sub_district_id,
-                'sub_district_name' => $user->subDistrict->name_id,
-                'postal' => $user->subDistrict->postal,
+                // 'sub_district_id' => $user->sub_district_id,
+                // 'sub_district_name' => $user->subDistrict->name_id,
+                // 'postal' => $user->subDistrict->postal,
 
                 'voucher_id' => $voucher_id,
                 'voucher_code' => $voucher_code,
