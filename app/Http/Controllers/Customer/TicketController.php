@@ -21,14 +21,13 @@ class TicketController extends Controller
         $keyword = $request->keyword;
 
         $per_page = $request->input('per_page', 10);
-
         try {
             $data = Ticket::order($order_by, $sort)
                 ->search($search_by, $keyword)
-                ->when($type == 'luring', function ($q) {
-                    $q->luring();
+                ->when($type == Ticket::type[1], function ($q) {
+                    $q->external();
                 })
-                ->when($type == 'daring', function ($q) {
+                ->when($type == Ticket::type[0], function ($q) {
                     $q->daring();
                 });
 

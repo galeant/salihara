@@ -53,11 +53,13 @@ class TicketTransformer
             $desc_id = mb_strimwidth($val->desc_id, 0, 150, "...");
             $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
         }
-        return [
+        $return = [
             'id' => $val->id,
             'name' => $val->name,
             'slug' => $val->slug,
             'order' => $val->order,
+            'type' => $val->type,
+            'external_url' => $val->external_url,
 
             'price_idr' => $val->price_idr,
             'price_usd' => $val->price_usd,
@@ -68,12 +70,17 @@ class TicketTransformer
             'snk_id' => $val->snk_id,
             'snk_en' => $val->snk_en,
 
-            'program' => [
-                'id' => $val->program->id,
-                'name' => $val->program->name,
-                'slug' => $val->program->slug,
-            ],
+            'program' => [],
             'banner' => (isset($val->imageBanner) && isset($val->imageBanner->path)) ? url($val->imageBanner->path) : NULL,
         ];
+        foreach ($val->program as $pr) {
+            $return['program'][] = [
+                'id' => $pr->id,
+                'name' => $pr->name,
+                'slug' => $pr->slug,
+            ];
+        }
+
+        return $return;
     }
 }

@@ -45,15 +45,16 @@ class TicketController extends Controller
             $order = $request->input('order', $order);
             $slug = Str::slug($request->name, '-');
 
-
-            $data = Ticket::create([
-                'program_id' => $request->program_id,
+            $fill = [
+                'type' => $request->type,
+                'external_url' => NULL,
+                // 'program_id' => $request->program_id,
                 'order' => $order,
                 'name' => $request->name,
                 'slug' => $slug,
 
-                'price_idr' => $request->price_idr,
-                'price_usd' => $request->price_usd,
+                'price_idr' => NULL,
+                'price_usd' => NULL,
 
                 'desc_id' => $request->desc_id,
                 'desc_en' => $request->desc_en,
@@ -61,7 +62,15 @@ class TicketController extends Controller
                 'snk_id' => $request->snk_id,
                 'snk_en' => $request->snk_en,
 
-            ]);
+            ];
+            if ($request->type == Ticket::type[1]) {
+                $fill['external_url'] = $request->external_url;
+            } else if ($request->type == Ticket::type[0]) {
+                $fill['price_idr'] = $request->price_idr;
+                $fill['price_usd'] = $request->price_usd;
+            }
+
+            $data = Ticket::create($fill);
 
             if ($request->filled('image') && isset($request->image)) {
                 // $delete_path = str_replace('storage', '', $image);
@@ -74,6 +83,8 @@ class TicketController extends Controller
                     'path' => $image
                 ]);
             }
+
+            $data->program()->sync($request->program_id);
 
             DB::commit();
             return TicketTransformer::getDetail($data);
@@ -107,8 +118,10 @@ class TicketController extends Controller
             $order = $request->input('order', $order);
             $slug = Str::slug($request->name, '-');
 
-            $data->update([
-                'program_id' => $request->program_id,
+            $fill = [
+                'type' => $request->type,
+                'external_url' => NULL,
+                // 'program_id' => $request->program_id,
                 'order' => $order,
                 'name' => $request->name,
                 'slug' => $slug,
@@ -121,7 +134,16 @@ class TicketController extends Controller
 
                 'snk_id' => $request->snk_id,
                 'snk_en' => $request->snk_en,
-            ]);
+
+            ];
+            if ($request->type == Ticket::type[1]) {
+                $fill['external_url'] = $request->external_url;
+            } else if ($request->type == Ticket::type[0]) {
+                $fill['price_idr'] = $request->price_idr;
+                $fill['price_usd'] = $request->price_usd;
+            }
+
+            $data->update($fill);
             $image = NULL;
             if ($request->filled('image') && isset($request->image)) {
                 // $delete_path = str_replace('storage', '', $image);
@@ -134,6 +156,8 @@ class TicketController extends Controller
             ], [
                 'path' => $image
             ]);
+
+            $data->program()->sync($request->program_id);
 
             DB::commit();
             return TicketTransformer::getDetail($data->fresh());
@@ -150,6 +174,7 @@ class TicketController extends Controller
             $data = Ticket::where([
                 'id' => $id
             ])->firstOrFail();
+            $data->program()->detach();
             $data->delete();
             DB::commit();
             return TicketTransformer::getDetail($data);

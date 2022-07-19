@@ -21,6 +21,7 @@ class CreateTransactionDetailTable extends Migration
 
             $table->bigInteger('program_id');
             $table->string('program_name');
+            $table->text('program_schedule');
 
             $table->bigInteger('ticket_id');
             $table->string('ticket_name');

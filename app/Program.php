@@ -9,7 +9,7 @@ class Program extends Model
 {
     const type = [
         'daring',
-        'luring'
+        'external'
     ];
     protected $table = 'program';
     protected $guarded = [];
@@ -21,14 +21,14 @@ class Program extends Model
         return $columns;
     }
 
-    public function scopeLuring($q)
+    public function scopeExternal($q)
     {
-        $q->where('type', 'luring');
+        $q->where('type', self::type[1]);
     }
 
     public function scopeDaring($q)
     {
-        $q->where('type', 'daring');
+        $q->where('type', self::type[0]);
     }
 
 
@@ -78,7 +78,7 @@ class Program extends Model
 
     public function ticket()
     {
-        return $this->hasMany('App\Ticket', 'program_id', 'id');
+        return $this->hasMany('App\Ticket', 'program_ticket', 'ticket_id', 'program_id');
     }
 
     public function imageBanner()

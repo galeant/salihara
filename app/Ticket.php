@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Schema;
 
 class Ticket extends Model
 {
+    const type = [
+        'daring',
+        'external'
+    ];
     protected $table = 'ticket';
     protected $guarded = [];
     protected $casts = [
@@ -22,18 +26,20 @@ class Ticket extends Model
         return $columns;
     }
 
-    public function scopeLuring($q)
+    public function scopeExternal($q)
     {
-        $q->whereHas('program', function ($q) {
-            $q->where('type', 'luring');
-        });
+        $q->where('type', self::type[1]);
+        // $q->whereHas('program', function ($q) {
+        //     $q->where('type', 'luring');
+        // });
     }
 
     public function scopeDaring($q)
     {
-        $q->whereHas('program', function ($q) {
-            $q->where('type', 'daring');
-        });
+        $q->where('type', self::type[0]);
+        // $q->whereHas('program', function ($q) {
+        //     $q->where('type', 'daring');
+        // });
     }
 
     public function scopeOrder($q, $order_by, $sort)
@@ -70,7 +76,7 @@ class Ticket extends Model
 
     public function program()
     {
-        return $this->belongsTo('App\Program', 'program_id', 'id');
+        return $this->belongsToMany('App\Program', 'program_ticket', 'ticket_id', 'program_id');
     }
 
     public function imageBanner()

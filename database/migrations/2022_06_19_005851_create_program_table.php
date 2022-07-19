@@ -25,7 +25,7 @@ class CreateProgramTable extends Migration
             // $table->integer('duration_hour')->default(0);
             // $table->integer('duration_minute')->default(0);
 
-            $table->enum('type', ['daring', 'luring']);
+            $table->enum('type', ['daring', 'external']);
 
             $table->text('desc_id')->nullable();
             $table->text('desc_en')->nullable();

@@ -26,10 +26,10 @@ class ProgramController extends Controller
         try {
             $data = Program::order($order_by, $sort)
                 ->search($search_by, $keyword)
-                ->when($type == 'luring', function ($q) {
-                    $q->luring();
+                ->when($type == Program::type[1], function ($q) {
+                    $q->external();
                 })
-                ->when($type == 'daring', function ($q) {
+                ->when($type == Program::type[0], function ($q) {
                     $q->daring();
                 });
 

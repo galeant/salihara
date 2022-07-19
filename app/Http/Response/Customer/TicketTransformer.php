@@ -54,17 +54,13 @@ class TicketTransformer
             $desc_en = mb_strimwidth($val->desc_en, 0, 150, "...");
         }
 
-        $p_desc_id = $val->program->desc_id;
-        $p_desc_en = $val->program->desc_en;
-        if ($type == 'index') {
-            $desc_id = mb_strimwidth($val->program->desc_id, 0, 150, "...");
-            $desc_en = mb_strimwidth($val->program->desc_en, 0, 150, "...");
-        }
-        return [
+        $return = [
             'id' => $val->id,
             'name' => $val->name,
             'slug' => $val->slug,
             'order' => $val->order,
+            'type' => $val->type,
+            'external_url' => $val->external_url,
 
             'price_idr' => $val->price_idr,
             'price_usd' => $val->price_usd,
@@ -75,14 +71,25 @@ class TicketTransformer
             'snk_id' => $val->snk_id,
             'snk_en' => $val->snk_en,
 
-            'program' => [
-                'id' => $val->program->id,
-                'name' => $val->program->name,
-                'slug' => $val->program->slug,
-                'desc_id' => $p_desc_id,
-                'desc_en' => $p_desc_en,
-            ],
+            'program' => [],
             'banner' => (isset($val->imageBanner) && isset($val->imageBanner->path)) ? url($val->imageBanner->path) : NULL,
         ];
+        foreach ($val->program as $pr) {
+            $p_desc_id = $pr->desc_id;
+            $p_desc_en = $pr->desc_en;
+            if ($type == 'index') {
+                $p_desc_id = mb_strimwidth($pr->desc_id, 0, 150, "...");
+                $p_desc_en = mb_strimwidth($pr->desc_en, 0, 150, "...");
+            }
+            $return['program'][] = [
+                'id' => $pr->id,
+                'name' => $pr->name,
+                'slug' => $pr->slug,
+                'desc_id' => $p_desc_id,
+                'desc_en' => $p_desc_en,
+            ];
+        }
+
+        return $return;
     }
 }

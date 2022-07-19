@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Admin\Ticket;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Ticket;
+use App\Program;
 
 class CreateRequest extends FormRequest
 {
@@ -23,12 +25,31 @@ class CreateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $return = [
+            'type' => 'required|in:' . implode(',', Ticket::type),
             'name' => 'required|unique:ticket,name',
-            'program_id' => 'required|exists:program,id',
-            'price_idr'  => 'required|numeric',
+            'program_id' => 'required|array',
+            'program_id.*' => [
+                'required',
+                'exists:program,id',
+                function ($att, $val, $fail) {
+                    $count = Program::where([
+                        'type' => $this->type,
+                        'id' => $val
+                    ])->count();
+                    if ($count == 0) {
+                        $fail('program type not same as ticket type');
+                    }
+                }
+            ],
             'desc_id' => 'required',
         ];
+        if ($this->type == Ticket::type[1]) {
+            $return['external_url'] = 'required';
+        } else if ($this->type == Ticket::type[0]) {
+            $return['price_idr'] = 'required|numeric';
+        }
+        return $return;
     }
 
     public function message()

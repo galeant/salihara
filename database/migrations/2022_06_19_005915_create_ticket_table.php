@@ -15,11 +15,13 @@ class CreateTicketTable extends Migration
     {
         Schema::create('ticket', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('program_id');
+            $table->enum('type', ['daring', 'external']);
+            $table->string('external_url')->nullable();
+            // $table->bigInteger('program_id');
             $table->integer('order');
             $table->string('name');
             $table->string('slug');
-            $table->decimal('price_idr', 18, 6);
+            $table->decimal('price_idr', 18, 6)->nullable();
             $table->decimal('price_usd', 18, 6)->nullable();
             $table->text('desc_id');
             $table->text('desc_en')->nullable();
