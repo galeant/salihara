@@ -266,12 +266,6 @@ class TransactionController extends Controller
     public function responseUrl(Request $request)
     {
         Log::channel('payment_log')->info('reponseUrl log: ' . json_encode($request->all()));
-        // dd('ini response url');
-    }
-
-    public function backendUrl(Request $request)
-    {
-        Log::channel('payment_log')->info(json_encode($request->all()));
         $msg = [
             '1' => [
                 'Indonesian' => 'Pembayaran diterima',
@@ -325,12 +319,12 @@ class TransactionController extends Controller
                 //
 
                 //
-                Log::channel('payment_log')->info('backendUrl log: data ketemu' . json_encode($request->all()));
+                Log::channel('payment_log')->info('reponseUrl log: data ketemu' . json_encode($request->all()));
                 if ($request->TransactionStatus == 1) {
                     Mail::to($data->user_email)->queue(new TransactionSuccessMail($data->customer));
                 }
             } else {
-                Log::channel('payment_log')->info('backendUrl log: data tidak ditemukan' . json_encode($request->all()));
+                Log::channel('payment_log')->info('reponseUrl log: data tidak ditemukan' . json_encode($request->all()));
             }
             // Log::channel('payment_log')->info('backendUrl log: data tidak ketemu' . json_encode($request->all()));
             DB::commit();
@@ -340,13 +334,18 @@ class TransactionController extends Controller
             ], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::channel('payment_log')->info('backendUrl log: error' . json_encode($request->all()) . '||' . $e->getMessage());
+            Log::channel('payment_log')->info('reponseUrl log: error' . json_encode($request->all()) . '||' . $e->getMessage());
             return response()->json([
                 'code' => $request->TransactionStatus,
                 'message' => $e->getMessage()
             ], 200);
             // throw new \Exception($e->getMessage());
         }
+    }
+
+    public function backendUrl(Request $request)
+    {
+        Log::channel('payment_log')->info('backendUrl log: ' . json_encode($request->all()));
     }
 
     public function checkVoucher(CheckVoucherRequest $request)
