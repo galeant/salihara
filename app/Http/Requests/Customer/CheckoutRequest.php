@@ -24,17 +24,30 @@ class CheckoutRequest extends FormRequest
      */
     public function rules()
     {
-        $payment_method = array_column(Payment::PAYMENT_METHOD, 'id');
-        $payment_method = implode(',', $payment_method);
+        // $payment_method = array_column(Payment::PAYMENT_METHOD, 'id');
+        // $payment_method = implode(',', $payment_method);
 
-        return [
+        dd(auth()->user()->cart);
+
+        $return = [
             'cart' => 'required|array',
             'cart.*.ticket_id' => [
-                'required|exists:ticket,id',
+                'required',
+                'exists:ticket,id',
+                function ($attr, $val, $fail) {
+                    $check = Ticket::where([
+                        'id' => $val,
+                        'type' => Ticket::type[1]
+                    ])->count();
+                    if ($check != 0) {
+                        $fail('Ticket is not type daring');
+                    }
+                }
             ],
             'cart.*.qty' => 'required',
             'voucher_code' => 'nullable|exists:voucher,code',
-            'payment_method_id' => 'required|in:' . $payment_method
+            // 'payment_method_id' => 'required|in:' . $payment_method
         ];
+        return $return;
     }
 }
