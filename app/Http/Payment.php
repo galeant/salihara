@@ -241,95 +241,7 @@ class Payment
         return $apiCall;
     }
 
-    public function paymentRequestBeta($trans, $trans_detail)
-    {
-        $ref_no = $this->reffIdGenerator($trans['user_id']);
-        $amount = $trans['net_value_idr'];
 
-        $currency = 'IDR';
-        $remark = $trans['discount_value'] !== NULL ? 'Discount: ' . $trans['discount_value'] : '';
-        // $trans_detail_payload = collect($trans_detail)->transform(function ($v) {
-        //     return [
-        //         'Id' => $v['ticket_id'],
-        //         'Name' => $v['ticket_name'],
-        //         'Quantity' => $v['qty'],
-        //         'Amount' => $v['total_price_idr'],
-        //         'ParentType' => 'ITEM',
-        //     ];
-        // })->toArray();
-        $request = [
-            'MerchantCode' => ENV('MerchantCode'),
-            'PaymentId' => (string)$trans['payment_method_id'],
-            'Currency' => $currency,
-            'RefNo' => $ref_no,
-            'Amount' => (string)$amount,
-            'ProdDesc' => 'TIcket',
-
-            'UserName' => 'salihara',
-            'UserEmail' => 'tiket@salihara.org',
-            'UserContact' => '+628170771913',
-
-            // 'RequestType' => 'Seamless',
-            'Remark' => $remark,
-            // 'Lang' => 'UTF-8',
-
-            'ResponseURL' => ENV('PAYMENT_RESPONSE_URL'),
-            'BackendURL' => ENV('PAYMENT_BACKEND_URL'),
-
-            'Signature' => $this->getSignatureBeta([
-                'RefNo' => $ref_no,
-                'Amount' => (string)$amount,
-                'Currency' => $currency
-            ]),
-
-            // 'ItemTransactions' => $trans_detail_payload,
-
-            // 'ShippingAddress' => [
-            //     'FirstName' => $trans['user_name'],
-            //     'LastName' => '',
-            //     'Address' => $trans['user_address'],
-            //     'City' => $trans['city_name'],
-            //     'State' => '',
-            //     'PostalCode' => $trans['postal'],
-            //     'Phone' => $trans['user_phone'],
-            //     'CountryCode' => 'ID',
-
-            // ],
-
-            // 'BillingAddress' => [
-            //     'FirstName' => $trans['user_name'],
-            //     'LastName' => '',
-            //     'Address' => $trans['user_address'],
-            //     'City' => $trans['city_name'],
-            //     'State' => '',
-            //     'PostalCode' => $trans['postal'],
-            //     'Phone' => $trans['user_phone'],
-            //     'CountryCode' => 'ID',
-            // ],
-
-            // 'Sellers' => [
-            //     'Id' => 'salihara',
-            //     'Name' => 'salihara',
-            //     'SelleridNumber' => 'salihara',
-            //     'Email' => 'tiket@salihara.org',
-            //     'Address' => [
-            //         'FirstName' => 'salihara',
-            //         'LastName' => 'salihara',
-            //         'Address' => 'address',
-            //         'City' => 'test',
-            //         'State' => 'test',
-            //         'PostalCode' => '15810',
-            //         'Phone' => '1233321123321',
-            //         'CountryCode' => 'ID',
-            //     ]
-
-            // ],
-        ];
-
-        $apiCall = $this->apiPaymentCall($request, $this->paymentUrlBeta, 'form');
-
-        return $apiCall;
-    }
 
     public function redirectRequest($payload)
     {
@@ -380,39 +292,7 @@ class Payment
         return $signature;
     }
 
-    private function getSignatureBeta($signer)
-    {
-        /*
-        MerchantKey
-        MerchantCode
-        RefNo
-        Amount
-        Currency
-        TransactionStatus
-        */
-        $sign_payload = [
-            'MerchantKey' => ENV('MerchantKey'),
-            'MerchantCode' => ENV('MerchantCode'),
-            'RefNo' => $signer['RefNo'],
-            'Amount' => $signer['Amount'],
-            'Currency' => $signer['Currency'],
-        ];
 
-        if (isset($signer['TransactionStatus'])) {
-            $sign_payload['TransactionStatus'] = $signer['TransactionStatus'];
-        }
-
-        $str_sign = implode('', $sign_payload);
-        $signature = sha1($str_sign);
-
-        $bin = '';
-        for ($i = 0; $i < strlen($signature); $i = $i + 2) {
-            $bin .= chr(hexdec(substr($signature, $i, 2)));
-        }
-        $aa  = base64_encode($bin);
-        return $aa;
-        return $signature;
-    }
 
     private function apiPaymentCall($payload, $url, $type = 'json')
     {

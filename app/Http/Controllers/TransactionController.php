@@ -260,6 +260,7 @@ class TransactionController extends Controller
 
     public function backendUrl(Request $request)
     {
+        Log::channel('payment_log')->info(json_encode($request->all()));
         $msg = [
             '1' => [
                 'Indonesian' => 'Pembayaran diterima',
@@ -290,6 +291,10 @@ class TransactionController extends Controller
                     case '0':
                         $payment_status = Payment::PAYMENT_STATUS[2];
                         break;
+                }
+                if (!isset($payment_status)) {
+                    header('Location: ' . ENV('TRANSACTION_LIST_URL'));
+                    exit();
                 }
                 $data->update([
                     'payment_status' => $payment_status
