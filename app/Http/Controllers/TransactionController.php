@@ -283,7 +283,12 @@ class TransactionController extends Controller
             if ($data != NULL) {
                 switch ($request->TransactionStatus) {
                     case '1':
+
                         $payment_status = Payment::PAYMENT_STATUS[0];
+                        $exist_access = $data->customer->access->pluck('id')->toArray();
+                        $final_access = array_diff([1], $exist_access);
+                        $data->customer->access()->attach($final_access);
+
                         break;
                     case '6':
                         $payment_status = Payment::PAYMENT_STATUS[1];
