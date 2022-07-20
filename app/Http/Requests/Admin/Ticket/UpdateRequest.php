@@ -45,7 +45,7 @@ class UpdateRequest extends FormRequest
             'desc_id' => 'required',
         ];
         if ($this->type == Ticket::type[1]) {
-            $return['external_url'] = 'required';
+            // $return['external_url'] = 'required';
         } else if ($this->type == Ticket::type[0]) {
             $return['price_idr'] = 'required|numeric';
         }
