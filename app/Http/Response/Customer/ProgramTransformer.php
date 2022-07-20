@@ -69,7 +69,7 @@ class ProgramTransformer
             $video_url = 401;
             $can_paid = true;
         }
-
+        // dd($video_url);
         $return = [
             'id' => $val->id,
             'name' => $val->name,

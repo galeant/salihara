@@ -162,6 +162,7 @@ class TransactionTransformer
                 // KADAL
                 foreach ($dtl as $dt) {
                     $tmp_detail['program'][] = [
+                        'program_slug' => $dt->program->slug,
                         'program_id' => $dt->program_id,
                         'program_name' => $dt->program_name,
                         'program_schedule' => $dt->program_schedule,
