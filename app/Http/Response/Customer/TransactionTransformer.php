@@ -164,6 +164,7 @@ class TransactionTransformer
                         'program_id' => $dt->program_id,
                         'program_name' => $dt->program_name,
                         'program_schedule' => $dt->program_schedule,
+                        'program_banner' => (isset($dt->program->imageBanner) && isset($dt->program->imageBanner->path)) ? url($dt->program->imageBanner->path) : NULL,
                     ];
                 }
                 $return['item'][] = $tmp_detail;

@@ -21,6 +21,11 @@ class TransactionDetail extends Model
         return $this->belongsTo('App\Transaction', 'transaction_id', 'id');
     }
 
+    public function program()
+    {
+        return $this->belongsTo('App\Program', 'program_id', 'id');
+    }
+
     public function getProgramScheduleAttribute($v)
     {
         if ($v == NULL || $v == '') {
