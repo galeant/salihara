@@ -44,7 +44,7 @@ class CreateRequest extends FormRequest
         if ($this->type == Program::type[1]) {
             $return['luring_url'] = 'required';
         } else if ($this->type == Program::type[0]) {
-            $return['trailer_url'] = 'required';
+            // $return['trailer_url'] = 'required';
             $return['video_url'] = 'required';
         }
 
