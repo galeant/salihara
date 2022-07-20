@@ -79,6 +79,11 @@ class Ticket extends Model
         return $this->belongsToMany('App\Program', 'program_ticket', 'ticket_id', 'program_id');
     }
 
+    public function cart()
+    {
+        return $this->hasMany('App\Cart', 'ticket_id', 'id');
+    }
+
     public function imageBanner()
     {
         return $this->hasOne('App\Image', 'relation_id', 'id')

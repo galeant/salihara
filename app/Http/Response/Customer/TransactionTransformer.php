@@ -100,6 +100,7 @@ class TransactionTransformer
     private static function transactionReform($v)
     {
         $return = [
+            'reff_id' => $v->reff_id,
             'gross_value_idr' => $v->gross_value_idr,
             'gross_value_usd' => $v->gross_value_usd,
             'net_value_idr' => $v->net_value_idr,
@@ -144,19 +145,32 @@ class TransactionTransformer
                 ];
             });
         }
-        foreach ($v->detail as $dtl) {
-            $return['item'][] = [
-                'program_id' => $dtl->program_id,
-                'program_name' => $dtl->program_name,
-                'ticket_id' => $dtl->ticket_id,
-                'ticket_name' => $dtl->ticket_name,
-                'ticket_price_idr' => $dtl->ticket_price_idr,
-                'ticket_price_usd' => $dtl->ticket_price_usd,
-                'qty' => $dtl->qty,
-                'total_price_idr' => $dtl->total_price_idr,
-                'total_price_usd' => $dtl->total_price_usd,
-            ];
+
+        if (count($v->detail) > 0) {
+            $detail = $v->detail->groupBy('ticket_id');
+            foreach ($detail as $dtl) {
+                $tmp_detail = [
+                    'ticket_id' => $dtl[0]->ticket_id,
+                    'ticket_name' => $dtl[0]->ticket_name,
+                    'ticket_price_idr' => $dtl[0]->ticket_price_idr,
+                    'ticket_price_usd' => $dtl[0]->ticket_price_usd,
+                    'qty' => $dtl[0]->qty,
+                    'total_price_idr' => $dtl[0]->total_price_idr,
+                    'total_price_usd' => $dtl[0]->total_price_usd,
+                    'program' => [],
+                ];
+                foreach ($dtl as $dt) {
+                    $tmp_detail['program'][] = [
+                        'program_id' => $dt->program_id,
+                        'program_name' => $dt->program_name,
+                        'program_schedule' => $dt->program_schedule,
+                    ];
+                }
+                $return['item'][] = $tmp_detail;
+            }
         }
+
+
         return $return;
     }
 }

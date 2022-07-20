@@ -22,8 +22,8 @@ class CreateTransacationTable extends Migration
             $table->string('user_phone');
             $table->string('user_address')->nullable();
 
-            $table->bigInteger('payment_method_id');
-            $table->string('payment_method_name');
+            $table->bigInteger('payment_method_id')->nullable();
+            $table->string('payment_method_name')->nullable();
             $table->string('payment_status')->default('pending')->description('pending|paid|cancel');
 
             $table->bigInteger('province_id')->nullable();

@@ -4,6 +4,7 @@ namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Payment;
+use App\Cart;
 
 class CheckoutRequest extends FormRequest
 {
@@ -26,21 +27,18 @@ class CheckoutRequest extends FormRequest
     {
         // $payment_method = array_column(Payment::PAYMENT_METHOD, 'id');
         // $payment_method = implode(',', $payment_method);
-
-        dd(auth()->user()->cart);
+        $user = auth()->user();
+        $cart = Cart::select('ticket_id')->where('user_id', $user->id)->get();
+        $cart = $cart->pluck('ticket_id')->toArray();
 
         $return = [
             'cart' => 'required|array',
             'cart.*.ticket_id' => [
                 'required',
                 'exists:ticket,id',
-                function ($attr, $val, $fail) {
-                    $check = Ticket::where([
-                        'id' => $val,
-                        'type' => Ticket::type[1]
-                    ])->count();
-                    if ($check != 0) {
-                        $fail('Ticket is not type daring');
+                function ($attr, $val, $fail) use ($cart) {
+                    if (!in_array($val, $cart)) {
+                        $fail('Ticket not exist in cart');
                     }
                 }
             ],

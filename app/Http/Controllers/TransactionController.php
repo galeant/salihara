@@ -89,6 +89,7 @@ class TransactionController extends Controller
 
     public function checkout(CheckoutRequest $request)
     {
+
         DB::beginTransaction();
         try {
             $user = auth()->user();
@@ -120,7 +121,7 @@ class TransactionController extends Controller
                         $trans_detail[] = [
                             'program_id' => $pr->id,
                             'program_name' => $pr->name,
-                            'program_schedule' => $pr->schedule,
+                            'program_schedule' => json_encode($pr->schedule),
                             'ticket_id' => $ticket->id,
                             'ticket_name' => $ticket->name,
                             'ticket_price_idr' => $ticket->price_idr,
@@ -180,17 +181,27 @@ class TransactionController extends Controller
 
             $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
             // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
+
             $trans_fill['signature_payment'] = $payment_gateway->Signature;
+            // $trans_fill['signature_payment'] = '';
+
             $trans_fill['checkout_id'] = $payment_gateway->CheckoutID;
+            // $trans_fill['checkout_id'] = '';
+
             // $trans_fill['payment_expired'] = Carbon::parse($payment_gateway->TransactionExpiryDate);
             // $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
             // $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
+
             $trans_fill['reff_id'] = $payment_gateway->RefNo;
+            // $trans_fill['reff_id'] = '';
+
             $transaction = Transaction::create($trans_fill);
+
             foreach ($trans_detail as $tr_detail) {
                 $tr_detail['transaction_id'] = $transaction->id;
                 TransactionDetail::create($tr_detail);
             }
+
             PaymentLog::firstOrCreate([
                 'transaction_id' => $transaction->id,
                 'status' => Payment::PAYMENT_STATUS[1],
