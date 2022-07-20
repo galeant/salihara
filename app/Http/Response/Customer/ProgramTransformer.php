@@ -64,9 +64,11 @@ class ProgramTransformer
         // }
 
         $video_url = $val->video_url;
-        // if (!in_array($val->id, $access)) {
-        //     $video_url = 401;
-        // }
+        $can_paid = false;
+        if (!in_array($val->id, $access)) {
+            $video_url = 401;
+            $can_paid = true;
+        }
 
         $return = [
             'id' => $val->id,
@@ -93,7 +95,8 @@ class ProgramTransformer
             'trailer_url' => $val->trailer_url,
             'video_url' => $video_url,
             'color' => $val->color,
-            'luring_url' => $val->luring_url
+            'luring_url' => $val->luring_url,
+            'can_paid' => $can_paid,
         ];
         foreach ($val->ticket as $ticket) {
             $t_desc_id = $ticket->desc_id;

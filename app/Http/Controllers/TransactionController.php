@@ -209,6 +209,13 @@ class TransactionController extends Controller
                 'payload_request' => json_encode($trans_fill),
                 'payload_response' => json_encode($payment_gateway)
             ]);
+
+            foreach ($request->cart as $crt) {
+                Cart::where([
+                    'user_id' => $user->id,
+                    'ticket_id' => $crt['ticket_id']
+                ])->delete();
+            }
             DB::commit();
             $data = Transaction::where('id', $transaction->id)->first();
             return TransactionTransformer::getDetail($data);
