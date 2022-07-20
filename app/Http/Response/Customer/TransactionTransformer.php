@@ -17,6 +17,7 @@ class TransactionTransformer
                 'ticket_name' => $v->ticket->name,
                 'ticket_price_idr' => $v->ticket->price_idr,
                 'ticket_price_usd' => $v->ticket->price_usd,
+                'type' => $v->ticket->type,
                 'qty' => $v->qty,
                 'program' => [],
             ];
