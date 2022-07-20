@@ -13,18 +13,22 @@ class TransactionTransformer
         $data = $data->transform(function ($v) {
             $return = [
                 'cart_id' => $v->id,
-                'program_id' => $v->ticket->program_id,
-                'program_name' => $v->ticket->program->name,
-                'program_date' => $v->ticket->schedule_date,
-                'program_date_unix' => $v->ticket->schedule_unix,
-                'program_duration_hours' => $v->ticket->duration_hour,
-                'program_duration_minutes' => $v->ticket->duration_minute,
                 'ticket_id' => $v->ticket_id,
                 'ticket_name' => $v->ticket->name,
                 'ticket_price_idr' => $v->ticket->price_idr,
                 'ticket_price_usd' => $v->ticket->price_usd,
-                'qty' => $v->qty
+                'qty' => $v->qty,
+                'program' => [],
             ];
+
+            foreach ($v->ticket->program as $pr) {
+                $return['program'][] = [
+                    'program_id' => $pr->id,
+                    'program_name' => $pr->name,
+                    'program_date' => $pr->schedule,
+                ];
+            }
+
             return $return;
         });
         if ($sub_total == NULL) {

@@ -101,7 +101,8 @@ class TransactionController extends Controller
                 $voucher_code = $voucher->code;
                 $voucher_discount = $voucher->discount;
                 $voucher->update([
-                    'used_qouta' => ($voucher->used_qouta + 1)
+                    'used_qouta' => ($voucher->used_qouta + 1),
+                    'quota' => ($voucher->quota - 1)
                 ]);
             }
 
@@ -115,19 +116,20 @@ class TransactionController extends Controller
                     $val_usd = $ticket->price_usd * $cart['qty'];
                     $gross_value_idr = $gross_value_idr + $val_idr;
                     $gross_value_usd = $gross_value_usd + $val_usd;
-                    $trans_detail[] = [
-                        'program_id' => $ticket->program_id,
-                        'program_name' => $ticket->program->name,
-                        'ticket_id' => $ticket->id,
-                        'ticket_name' => $ticket->name,
-                        'ticket_price_idr' => $ticket->price_idr,
-                        'ticket_price_usd' => $ticket->price_usd,
-                        'qty' => $cart['qty'],
-                        'total_price_idr' => $val_idr,
-                        'total_price_usd' => $val_usd,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ];
+                    foreach ($ticket->program as $pr) {
+                        $trans_detail[] = [
+                            'program_id' => $pr->id,
+                            'program_name' => $pr->name,
+                            'program_schedule' => $pr->schedule,
+                            'ticket_id' => $ticket->id,
+                            'ticket_name' => $ticket->name,
+                            'ticket_price_idr' => $ticket->price_idr,
+                            'ticket_price_usd' => $ticket->price_usd,
+                            'qty' => $cart['qty'],
+                            'total_price_idr' => $val_idr,
+                            'total_price_usd' => $val_usd,
+                        ];
+                    }
                 }
             }
 
@@ -174,6 +176,8 @@ class TransactionController extends Controller
                 'payment_method_name' => $payment_method['name'],
                 'payment_status' => Payment::PAYMENT_STATUS[1],
             ];
+
+
             $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
             // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
             $trans_fill['signature_payment'] = $payment_gateway->Signature;
@@ -272,7 +276,7 @@ class TransactionController extends Controller
         ];
         DB::beginTransaction();
         try {
-            $data = Transaction::where('reff_id', $request->RefNo)
+            $data = Transaction::with('detail')->where('reff_id', $request->RefNo)
                 ->where('payment_status', Payment::PAYMENT_STATUS[1])
                 ->first();
             if ($data != NULL) {
@@ -297,6 +301,9 @@ class TransactionController extends Controller
                     'payload_request' => 'Payment Notification',
                     'payload_response' => json_encode($request->all()),
                 ]);
+                //
+
+                //
                 Log::channel('payment_log')->info('backendUrl log: data ketemu' . json_encode($request->all()));
                 if ($request->TransactionStatus == 1) {
                     Mail::to($data->user_email)->queue(new TransactionSuccessMail($data->customer));
@@ -326,12 +333,14 @@ class TransactionController extends Controller
         $user = auth()->user();
         try {
             $voucher = Voucher::where('code', $request->voucher_code)
-                ->where('quota', '>', 0)
                 ->first();
 
             if ($voucher == NULL) {
                 throw new \Exception('Voucer Not found');
+            } else if ($voucher->quota) {
+                throw new \Exception('Voucer limit reached');
             }
+
             $ticket = array_column($request->cart, 'ticket_id');
             $data = Cart::with('user', 'ticket.program')
                 ->where('user_id', $user->id)

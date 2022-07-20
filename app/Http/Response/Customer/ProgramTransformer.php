@@ -64,9 +64,9 @@ class ProgramTransformer
         // }
 
         $video_url = $val->video_url;
-        if (!in_array($val->id, $access)) {
-            $video_url = 401;
-        }
+        // if (!in_array($val->id, $access)) {
+        //     $video_url = 401;
+        // }
 
         $return = [
             'id' => $val->id,

@@ -29,7 +29,9 @@ class CheckoutRequest extends FormRequest
 
         return [
             'cart' => 'required|array',
-            'cart.*.ticket_id' => 'required|exists:ticket,id',
+            'cart.*.ticket_id' => [
+                'required|exists:ticket,id',
+            ],
             'cart.*.qty' => 'required',
             'voucher_code' => 'nullable|exists:voucher,code',
             'payment_method_id' => 'required|in:' . $payment_method
