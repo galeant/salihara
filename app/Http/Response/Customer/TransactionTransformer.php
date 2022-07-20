@@ -159,6 +159,7 @@ class TransactionTransformer
                     'total_price_usd' => $dtl[0]->total_price_usd,
                     'program' => [],
                 ];
+                // KADAL
                 foreach ($dtl as $dt) {
                     $tmp_detail['program'][] = [
                         'program_id' => $dt->program_id,
