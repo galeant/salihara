@@ -252,8 +252,14 @@ class TransactionController extends Controller
                 return TransactionTransformer::getDetail($data);
             }
             $data = $data->order($order_by, $sort)
-                ->search($search_by, $keyword)
-                ->paginate(10);
+                ->search($search_by, $keyword);
+
+            if ($request->has('all') || $request->all == true) {
+                $data = $data->get();
+            } else {
+                $data = $data->paginate(10);
+            }
+
             return TransactionTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
