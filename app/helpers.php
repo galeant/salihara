@@ -19,10 +19,8 @@ function imageUpload($folder_upload, $image, $resize = null, $name = null)
 
     if (is_file($image)) {
         $format = $image->getClientOriginalExtension();
-        if ($format == 'gif') {
-            $image_name = $folder_upload . (string) Str::uuid() . '.' . $format;
-            $image->storeAs('', $image_name);
-        }
+        $image_name = $folder_upload . (string) Str::uuid() . '.' . $format;
+        $image->storeAs('', $image_name);
     } else {
         $img = ImageManipulation::make($image);
         $type = str_replace('image/', '.', $img->mime());
