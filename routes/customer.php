@@ -34,4 +34,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('transaction', 'TransactionController@transaction');
     Route::get('transaction/payment_method', 'TransactionController@paymentMethod');
+
+    Route::get('access', 'TransactionController@access');
 });

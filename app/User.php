@@ -143,7 +143,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function access()
     {
-        return $this->belongsToMany('App\Program', 'user_access', 'user_id', 'program_id');
+        return $this->belongsToMany('App\Ticket', 'user_access', 'user_id', 'ticket_id');
     }
 
     public function transaction()

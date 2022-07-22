@@ -176,4 +176,37 @@ class TransactionTransformer
 
         return $return;
     }
+
+    public static function access($data, $message = 'Success')
+    {
+
+        $tmp = [];
+        foreach ($data as $dt) {
+            $tmp_2 = [
+                "ticket_id" => $dt->id,
+                "ticket_name" => $dt->name,
+                "ticket_price_idr" => $dt->price_idr,
+                "ticket_price_usd" => $dt->price_usd,
+                'program' => []
+            ];
+            foreach ($dt->program as $pr) {
+                $tmp_2['program'][] = [
+                    'program_slug' => $pr->slug,
+                    'program_id' => $pr->id,
+                    'program_name' => $pr->name,
+                    'program_schedule' => $pr->schedule,
+                    'program_banner' => (isset($pr->imageBanner) && isset($pr->imageBanner->path)) ? url($pr->imageBanner->path) : NULL,
+                ];
+            }
+            $tmp['item'][] = $tmp_2;
+        }
+        $return = [
+            'data' => $tmp,
+            'total' => count($data)
+        ];
+        return response()->json([
+            'message' => $message,
+            'result' => $return
+        ]);
+    }
 }

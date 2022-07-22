@@ -79,8 +79,12 @@ class TicketTransformer
 
             'program' => [],
             'banner' => (isset($val->imageBanner) && isset($val->imageBanner->path)) ? url($val->imageBanner->path) : NULL,
-            'can_paid' => true
+            'can_paid' => false
         ];
+
+        if (!in_array($val->id, $access)) {
+            $return['can_paid'] = true;
+        }
         foreach ($val->program as $pr) {
             $p_desc_id = $pr->desc_id;
             $p_desc_en = $pr->desc_en;
@@ -95,10 +99,6 @@ class TicketTransformer
                 'desc_id' => $p_desc_id,
                 'desc_en' => $p_desc_en,
             ];
-
-            if ($return['can_paid'] == true && in_array($pr->id, $access)) {
-                $return['can_paid'] = false;
-            }
         }
 
         return $return;

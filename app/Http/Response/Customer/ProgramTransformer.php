@@ -65,10 +65,7 @@ class ProgramTransformer
 
         $video_url = $val->video_url;
         $can_paid = false;
-        if (!in_array($val->id, $access)) {
-            $video_url = 401;
-            $can_paid = true;
-        }
+
         // dd($video_url);
         $return = [
             'id' => $val->id,
@@ -122,6 +119,11 @@ class ProgramTransformer
 
                 'banner' => (isset($ticket->imageBanner) && isset($val->imageBanner->path)) ? url($ticket->imageBanner->path) : NULL,
             ];
+
+            if (!in_array($ticket->id, $access)) {
+                $return['video_url'] = 401;
+                $return['can_paid'] = true;
+            }
         }
         // if ($type == 'index') {
         //     // unset($return['penampil']);

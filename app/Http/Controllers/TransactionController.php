@@ -301,10 +301,11 @@ class TransactionController extends Controller
             if ($data != NULL) {
                 switch ($request->TransactionStatus) {
                     case '1':
-
                         $payment_status = Payment::PAYMENT_STATUS[0];
                         $exist_access = $data->customer->access->pluck('id')->toArray();
-                        $final_access = array_diff([1], $exist_access);
+
+                        $transaction_ticket = $data->detail->groupBy('ticket_id')->keys()->toArray();
+                        $final_access = array_diff($transaction_ticket, $exist_access);
                         $data->customer->access()->attach($final_access);
 
                         break;
@@ -401,4 +402,15 @@ class TransactionController extends Controller
     //     // dd($res);
     //     dd('badak');
     // }
+
+    public function access(Request $request)
+    {
+        try {
+            $user = auth()->user();
+            $access = $user->access;
+            return TransactionTransformer::access($access);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
