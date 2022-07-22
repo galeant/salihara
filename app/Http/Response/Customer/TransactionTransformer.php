@@ -198,7 +198,7 @@ class TransactionTransformer
                     'program_banner' => (isset($pr->imageBanner) && isset($pr->imageBanner->path)) ? url($pr->imageBanner->path) : NULL,
                 ];
             }
-            $tmp[]['item'] = $tmp_2;
+            $tmp[]['item'][] = $tmp_2;
         }
         $return = [
             'data' => $tmp,
