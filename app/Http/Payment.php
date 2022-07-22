@@ -141,7 +141,7 @@ class Payment
             'Lang' => 'UTF-8',
 
             'ResponseURL' => ENV('PAYMENT_RESPONSE_URL'),
-            'BackendURL' => ENV('PAYMENT_BACKEND_URL'),
+            'BackendURL' => ENV('TRANSACTION_DETAIL_URL') . $ref_no,
 
             'Signature' => $this->getSignature([
                 'RefNo' => $ref_no,

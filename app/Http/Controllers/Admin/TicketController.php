@@ -13,6 +13,9 @@ use Carbon\Carbon;
 use DB;
 use App\Ticket;
 use App\Image;
+use App\Transaction;
+use App\Http\Payment;
+use App\Cart;
 
 class TicketController extends Controller
 {
@@ -173,9 +176,22 @@ class TicketController extends Controller
         try {
             $data = Ticket::where([
                 'id' => $id
-            ])->firstOrFail();
+            ])->withCount('comments')
+                ->firstOrFail();
+
+            $transaction = Transaction::whereHas('detail', function ($q) use ($id) {
+                $q->where('ticket_id', $id);
+            })->count();
+
+            $cart = Cart::where('ticket_id', $id)->count();
+
+            if ($data->user_count != 0 || $transaction != 0 || $cart != 0) {
+                throw new \Exception('Ticket has been bought by customer');
+            }
             $data->program()->detach();
+            $data->user()->detach($id);
             $data->delete();
+
             DB::commit();
             return TicketTransformer::getDetail($data);
         } catch (\Exception $e) {

@@ -210,6 +210,7 @@ class ProgramController extends Controller
                 'id' => $id
             ])->firstOrFail();
             $data->penampil()->detach();
+            $data->ticket()->detach();
             $data->delete();
             DB::commit();
             return ProgramTransformer::getDetail($data);

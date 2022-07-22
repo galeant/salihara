@@ -44,6 +44,20 @@ class TransactionController extends Controller
         DB::beginTransaction();
         $user = auth()->user();
         try {
+            $access = $user->access->pluck('id')->toArray();
+            if (in_array($request->ticket_id, $access)) {
+                throw new \Exception('Ticket has already buy');
+            }
+            $transaction = Transaction::where('user_id', $user->id)
+                ->where('payment_status', Payment::PAYMENT_STATUS[1])
+                ->whereHas('detail', function ($q) use ($request) {
+                    $q->where('ticket_id', $request->ticket_id);
+                })->count();
+
+            if ($transaction > 0) {
+                throw new \Exception('Payment in proggress');
+            }
+
             $data = Cart::where([
                 'user_id' => $user->id,
                 'ticket_id' => $request->ticket_id
@@ -110,6 +124,7 @@ class TransactionController extends Controller
             $gross_value_idr = 0;
             $gross_value_usd = 0;
             $trans_detail = [];
+
             foreach ($request->cart as $cart) {
                 $ticket = Ticket::with('program')->where('id', $cart['ticket_id'])->first();
                 if ($ticket !== NULL) {
@@ -117,30 +132,29 @@ class TransactionController extends Controller
                     $val_usd = $ticket->price_usd * $cart['qty'];
                     $gross_value_idr = $gross_value_idr + $val_idr;
                     $gross_value_usd = $gross_value_usd + $val_usd;
-                    foreach ($ticket->program as $pr) {
-                        $trans_detail[] = [
-                            'program_id' => $pr->id,
-                            'program_name' => $pr->name,
-                            'program_schedule' => json_encode($pr->schedule),
-                            'ticket_id' => $ticket->id,
-                            'ticket_name' => $ticket->name,
-                            'ticket_price_idr' => $ticket->price_idr,
-                            'ticket_price_usd' => $ticket->price_usd,
-                            'qty' => $cart['qty'],
-                            'total_price_idr' => $val_idr,
-                            'total_price_usd' => $val_usd,
-                        ];
-                    }
+                    $trans_detail[] = [
+                        // 'program_id' => $pr->id,
+                        // 'program_name' => $pr->name,
+                        // 'program_schedule' => json_encode($pr->schedule),
+                        // 'program_slug' => $pr->slug,
+                        // 'program_banner' => (isset($pr->imageBanner) && isset($pr->imageBanner->path)) ? url($pr->imageBanner->path) : NULL,
+                        'ticket_id' => $ticket->id,
+                        'ticket_name' => $ticket->name,
+                        'ticket_price_idr' => $ticket->price_idr,
+                        'ticket_price_usd' => $ticket->price_usd,
+                        'qty' => $cart['qty'],
+                        'total_price_idr' => $val_idr,
+                        'total_price_usd' => $val_usd,
+                    ];
                 }
             }
-
             $nett_idr = $gross_value_idr - (float)$voucher_discount;
             $nett_usd = $gross_value_usd - (float)$voucher_discount;
-            $payment_method = collect(Payment::PAYMENT_METHOD)->first(function ($v) use ($request) {
-                if ($v['id'] == $request->payment_method_id) {
-                    return $v;
-                }
-            });
+            // $payment_method = collect(Payment::PAYMENT_METHOD)->first(function ($v) use ($request) {
+            //     if ($v['id'] == $request->payment_method_id) {
+            //         return $v;
+            //     }
+            // });
 
 
             $trans_fill = [
@@ -174,10 +188,9 @@ class TransactionController extends Controller
                 'net_value_usd' => $nett_usd,
 
                 'payment_method_id' => $request->payment_method_id,
-                'payment_method_name' => $payment_method['name'],
+                // 'payment_method_name' => $payment_method['name'],
                 'payment_status' => Payment::PAYMENT_STATUS[1],
             ];
-
 
             $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
             // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
@@ -227,8 +240,8 @@ class TransactionController extends Controller
 
     public function transaction(Request $request, $id = NULL)
     {
-        $order_by = $request->input('order_by', 'created_at');
-        $sort = $request->input('sort', 'desc');
+        $order_by = $request->input('order_by', ['created_at']);
+        $sort = $request->input('sort', ['desc']);
 
         $search_by = $request->search_by;
         $keyword = $request->keyword;
@@ -259,7 +272,6 @@ class TransactionController extends Controller
             } else {
                 $data = $data->paginate(10);
             }
-
             return TransactionTransformer::getList($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
