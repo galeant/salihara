@@ -28,9 +28,8 @@ class UpdateRequest extends FormRequest
         $return = [
             'type' => 'required|in:' . implode(',', Ticket::type),
             'name' => 'required|unique:ticket,name,' . $this->id,
-            'program_id' => 'required|array',
+            'program_id' => 'array',
             'program_id.*' => [
-                'required',
                 'exists:program,id',
                 function ($att, $val, $fail) {
                     $count = Program::where([

@@ -80,7 +80,8 @@ class ProgramController extends Controller
                 'trailer_url' => $request->trailer_url,
                 'video_url' => $request->video_url,
                 'type' => $request->type,
-                'category' => $request->category,
+                'category_id' => $request->category_id,
+                'category_en' => $request->category_en,
                 'color' => $request->color,
                 'luring_url' => NULL
             ];
@@ -168,7 +169,8 @@ class ProgramController extends Controller
                 'trailer_url' => $request->trailer_url,
                 'video_url' => $request->video_url,
                 'type' => $request->type,
-                'category' => $request->category,
+                'category_id' => $request->category_id,
+                'category_en' => $request->category_en,
                 'color' => $request->color,
                 'luring_url' => NULL,
             ];

@@ -38,7 +38,8 @@ class CreateRequest extends FormRequest
             'only_indo' => 'nullable|in:' . true . ',' . false,
             'penampil_id' => 'array',
             'type' => 'required|in:' . implode(',', Program::type),
-            'category' => 'required',
+            'category_id' => 'required',
+            // 'category_en' => 'required',
             'color' => 'required',
         ];
         if ($this->type == Program::type[1]) {

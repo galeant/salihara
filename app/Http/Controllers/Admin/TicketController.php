@@ -86,8 +86,10 @@ class TicketController extends Controller
                     'path' => $image
                 ]);
             }
+            if ($request->filled('program_id') && count($request->program_id) > 0) {
+                $data->program()->sync($request->program_id);
+            }
 
-            $data->program()->sync($request->program_id);
 
             DB::commit();
             return TicketTransformer::getDetail($data);
@@ -160,7 +162,10 @@ class TicketController extends Controller
                 'path' => $image
             ]);
 
-            $data->program()->sync($request->program_id);
+            if ($request->filled('program_id') && count($request->program_id) > 0) {
+                $data->program()->sync($request->program_id);
+            }
+
 
             DB::commit();
             return TicketTransformer::getDetail($data->fresh());
