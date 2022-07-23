@@ -63,8 +63,8 @@ class ProgramTransformer
         $short_desc_en = mb_strimwidth(strip_tags($val->desc_en), 0, 150, "...");
         // }
 
-        $video_url = $val->video_url;
-        $can_paid = false;
+        $video_url = NULL;
+        $can_paid = true;
 
         // dd($video_url);
         $return = [
@@ -121,9 +121,9 @@ class ProgramTransformer
                 'banner' => (isset($ticket->imageBanner) && isset($val->imageBanner->path)) ? url($ticket->imageBanner->path) : NULL,
             ];
 
-            if (!in_array($ticket->id, $access)) {
-                $return['video_url'] = 401;
-                $return['can_paid'] = true;
+            if ($return['can_paid'] != false && in_array($ticket->id, $access)) {
+                $return['video_url'] = $val->video_url;;
+                $return['can_paid'] = false;
             }
         }
         // if ($type == 'index') {
