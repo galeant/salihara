@@ -438,6 +438,9 @@ class TransactionController extends Controller
             $discount = $voucher->discount;
             $sub_total = $ticket_list->sum('price_idr');
             $total = $ticket_list->sum('price_idr') - $discount;
+            if ($total < 0) {
+                $total = 0;
+            }
             return TransactionTransformer::cart($data, $sub_total, $total, $discount);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
