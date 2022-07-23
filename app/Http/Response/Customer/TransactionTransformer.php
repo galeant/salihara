@@ -121,6 +121,7 @@ class TransactionTransformer
             'virtual_account_assign' => $v->virtual_account_assign,
             'payment_status' => $v->payment_status,
             'created_at' => $v->created_at,
+            'unix_created_at' => strtotime($v->created_at),
             'item' => []
         ];
         if (auth()->user()->role == user::ROLE[0]) {
