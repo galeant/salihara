@@ -198,22 +198,22 @@ class TransactionController extends Controller
                 'payment_status' => Payment::PAYMENT_STATUS[1],
             ];
 
-            if ($nett_idr > 0) {
-                $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
-                // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
+            // if ($nett_idr > 0) {
+            $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
+            // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
 
-                $trans_fill['signature_payment'] = $payment_gateway->Signature;
-                // $trans_fill['signature_payment'] = '';
+            $trans_fill['signature_payment'] = $payment_gateway->Signature;
+            // $trans_fill['signature_payment'] = '';
 
-                $trans_fill['checkout_id'] = $payment_gateway->CheckoutID;
-                // $trans_fill['checkout_id'] = '';
+            $trans_fill['checkout_id'] = $payment_gateway->CheckoutID;
+            // $trans_fill['checkout_id'] = '';
 
-                // $trans_fill['payment_expired'] = Carbon::parse($payment_gateway->TransactionExpiryDate);
-                // $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
-                // $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
+            // $trans_fill['payment_expired'] = Carbon::parse($payment_gateway->TransactionExpiryDate);
+            // $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
+            // $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
 
-                $trans_fill['reff_id'] = $payment_gateway->RefNo;
-            }
+            $trans_fill['reff_id'] = $payment_gateway->RefNo;
+            // }
 
             $transaction = Transaction::create($trans_fill);
 
