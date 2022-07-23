@@ -323,6 +323,37 @@ class TransactionController extends Controller
                         $final_access = array_diff($transaction_ticket, $exist_access);
                         $data->customer->access()->attach($final_access);
 
+                        $expired_date = NULL;
+                        $epoch_time_payment_expired = NULL;
+                        if (isset($request->TransactionExpiryDate)) {
+                            $expired_date = Carbon::parse($request->TransactionExpiryDate)->addHours(-7);
+                            $epoch_time_payment_expired = strtotime($expired_date);
+                        }
+
+                        $payment_method_name = NULL;
+                        if (isset($request->PaymentId)) {
+                            $payment_list = Payment::PAYMENT_METHOD;
+                            $payment_first = collect($payment_list)->first(function ($v) use ($request) {
+                                if ($v['id'] == $request->PaymentId) {
+                                    return $v;
+                                }
+                            });
+                            if ($payment_first !== NULL) {
+                                $payment_method_name = $payment_first['name'];
+                            }
+                        }
+
+                        $data->update([
+                            'payment_method_id' => isset($request->PaymentId) ? $request->PaymentId : NULL,
+                            'payment_method_name' => $payment_method_name,
+
+                            'payment_gateway_trans_id' => isset($request->TransId) ? $request->TransId : NULL,
+
+                            'payment_expired' => $expired_date,
+                            'epoch_time_payment_expired' => $epoch_time_payment_expired,
+                            'virtual_account_assign' => isset($request->VirtualAccountAssigned) ? $request->VirtualAccountAssigned : NULL,
+                        ]);
+
                         break;
                     case '6':
                         $payment_status = Payment::PAYMENT_STATUS[1];
@@ -350,7 +381,7 @@ class TransactionController extends Controller
                 //
                 Log::channel('payment_log')->info('reponseUrl log: data ketemu' . json_encode($request->all()));
                 if ($request->TransactionStatus == 1) {
-                    Mail::to($data->user_email)->queue(new TransactionSuccessMail($data->customer, $data, 'payment_success'));
+                    Mail::to($data->user_email)->queue(new TransactionSuccessMail($data->customer, $data->fresh(), 'payment_success'));
                 }
             } else {
                 Log::channel('payment_log')->info('reponseUrl log: data tidak ditemukan' . json_encode($request->all()));
