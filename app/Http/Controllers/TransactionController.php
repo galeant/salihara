@@ -44,19 +44,19 @@ class TransactionController extends Controller
         DB::beginTransaction();
         $user = auth()->user();
         try {
-            $access = $user->access->pluck('id')->toArray();
-            if (in_array($request->ticket_id, $access)) {
-                throw new \Exception('Ticket has already buy');
-            }
-            $transaction = Transaction::where('user_id', $user->id)
-                ->where('payment_status', Payment::PAYMENT_STATUS[1])
-                ->whereHas('detail', function ($q) use ($request) {
-                    $q->where('ticket_id', $request->ticket_id);
-                })->count();
+            // $access = $user->access->pluck('id')->toArray();
+            // if (in_array($request->ticket_id, $access)) {
+            //     throw new \Exception('Ticket has already buy');
+            // }
+            // $transaction = Transaction::where('user_id', $user->id)
+            //     ->where('payment_status', Payment::PAYMENT_STATUS[1])
+            //     ->whereHas('detail', function ($q) use ($request) {
+            //         $q->where('ticket_id', $request->ticket_id);
+            //     })->count();
 
-            if ($transaction > 0) {
-                throw new \Exception('Payment in proggress');
-            }
+            // if ($transaction > 0) {
+            //     throw new \Exception('Payment in proggress');
+            // }
 
             $data = Cart::where([
                 'user_id' => $user->id,
@@ -229,6 +229,9 @@ class TransactionController extends Controller
                     'ticket_id' => $crt['ticket_id']
                 ])->delete();
             }
+
+            Mail::to($user->email)->queue(new TransactionSuccessMail($user, $transaction->fresh(), 'checkout'));
+
             DB::commit();
             $data = Transaction::where('id', $transaction->id)->first();
             return TransactionTransformer::getDetail($data);
@@ -424,5 +427,74 @@ class TransactionController extends Controller
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function emailTest(Request $request)
+    {
+        $data = Transaction::with('detail');
+        if ($request->filled('id')) {
+            $data = $data->where('id', $request->id);
+        }
+        $data = $data->first();
+
+        $type = 'end';
+        $url = ENV('TRANSACTION_DETAIL_URL') . $data->reff_id;
+        $str_title = 'Menunggu Pembayaran';
+        $str_button = 'Lihat Status Pesanan';
+        $str = 'Hi Adinda, Segera lakukan pembayaran sebelum <strong>( hari ini + 1 hari) pukul 13.00&nbsp;</strong>atau pesanan anda akan di batalkan secara otomatis.';
+
+        $transaction_date = Carbon::parse($data->created_at)->setTimezone('Asia/Jakarta')->isoFormat('dddd, D MMMM Y hh:mm') . ' WIB';
+        $payment_method = NULL;
+        if ($data->payment_method_id !== NULL && $data->payment_method_id !== '') {
+            $payment_list = collect(Payment::PAYMENT_METHOD);
+            $payment_method = $payment_list->first(function ($v) use ($data) {
+                if ($v['id'] == $data->payment_method_id) {
+                    return $v;
+                }
+            });
+            $payment_method = isset($payment_method) ? $payment_method['name'] : NULL;
+        }
+
+
+        $trans_detail = collect($data->detail)->transform(function ($v) {
+            return [
+                'product' => $v->ticket_name,
+                'qty' => 'x' . $v->qty,
+                'price' => $v->total_price_idr
+            ];
+        });
+
+        $trans_detail->push(
+            [
+                'product' => 'Total',
+                'qty' => NULL,
+                'price' => $trans_detail->sum('price')
+            ]
+        );
+
+        $trans_detail->transform(function ($v) {
+            $v['price'] = number_format($v['price'], 0, ',', '.');
+            return $v;
+        });
+        if ($type == 'end') {
+            $detail_first = $data->detail->first();
+            $program_first = $detail_first->ticket->program->first();
+            $url = ENV('PROGRAM_DETAIL_URL');
+            $url = str_replace('{slug}', $program_first->slug, $url);
+            $str_title = 'Pembayaran Berhasil';
+            $str_button = 'Tonton Sekarang';
+            $str = 'Hi Adinda, Pembayaran Anda telah berhasil. Klik tombol dibawah untuk memulai menonton.';
+        }
+        return view('email.transaction', [
+            'url' => $url,
+            'str_title' => $str_title,
+            'str_button' => $str_button,
+            'str' => $str,
+            'reff_id' => $data->reff_id,
+            'transaction_date' => $transaction_date,
+            'total_payment' => number_format($data->net_value_idr, 0, ',', '.'),
+            'payment_method' => $payment_method,
+            'trans_detail' => $trans_detail
+        ]);
     }
 }

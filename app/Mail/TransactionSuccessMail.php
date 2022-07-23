@@ -6,20 +6,85 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Carbon\Carbon;
+use App\Http\Payment;
 
 class TransactionSuccessMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $subject, $url, $str_title,
+        $str_button, $str, $reff_id, $transaction_date,
+        $total_payment, $payment_method, $trans_detail;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $transaction, $type)
     {
-        $this->user = $user;
+        $subject = 'Menunggu Pembayaran';
+        $url = ENV('TRANSACTION_DETAIL_URL') . $transaction->reff_id;
+        $str_title = 'Menunggu Pembayaran';
+        $str_button = 'Lihat Status Pesanan';
+        $str = 'Hi ' . $user->name . ', Segera lakukan pembayaran sebelum <strong>( hari ini + 1 hari) pukul 13.00&nbsp;</strong>atau pesanan anda akan di batalkan secara otomatis.';
+
+        $transaction_date = Carbon::parse($transaction->created_at)->setTimezone('Asia/Jakarta')->isoFormat('dddd, D MMMM Y hh:mm') . ' WIB';
+        $payment_method = NULL;
+        if ($transaction->payment_method_id !== NULL && $transaction->payment_method_id !== '') {
+            $payment_list = collect(Payment::PAYMENT_METHOD);
+            $payment_method = $payment_list->first(function ($v) use ($transaction) {
+                if ($v['id'] == $transaction->payment_method_id) {
+                    return $v;
+                }
+            });
+            $payment_method = isset($payment_method) ? $payment_method['name'] : NULL;
+        }
+
+
+        $trans_detail = collect($transaction->detail)->transform(function ($v) {
+            return [
+                'product' => $v->ticket_name,
+                'qty' => 'x' . $v->qty,
+                'price' => $v->total_price_idr
+            ];
+        });
+
+        $trans_detail->push(
+            [
+                'product' => 'Total',
+                'qty' => NULL,
+                'price' => $trans_detail->sum('price')
+            ]
+        );
+
+        $trans_detail->transform(function ($v) {
+            $v['price'] = number_format($v['price'], 0, ',', '.');
+            return $v;
+        });
+
+        if ($type == 'payment_success') {
+            $subject = 'Pembayaran Berhasil';
+            $detail_first = $transaction->detail->first();
+            $program_first = $detail_first->ticket->program->first();
+            $url = ENV('PROGRAM_DETAIL_URL');
+            $url = str_replace('{slug}', $program_first->slug, $url);
+
+            $str_title = 'Pembayaran Berhasil';
+            $str_button = 'Tonton Sekarang';
+            $str = 'Hi ' . $user->name . ', Pembayaran Anda telah berhasil. Klik tombol dibawah untuk memulai menonton.';
+        }
+
+        $this->subject = $subject;
+        $this->url = $url;
+        $this->str_title = $str_title;
+        $this->str_button = $str_button;
+        $this->str = $str;
+        $this->reff_id = $transaction->reff_id;
+        $this->transaction_date = $transaction_date;
+        $this->total_payment = number_format($transaction->net_value_idr, 0, ',', '.');
+        $this->payment_method = $payment_method;
+        $this->trans_detail = $trans_detail;
     }
 
     /**
@@ -30,7 +95,7 @@ class TransactionSuccessMail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Selamat datang di Musim Seni Salihara! / Welcome to Musim Seni Salihara!')
+            ->subject($this->subject)
             ->view('email.transaction');
     }
 }

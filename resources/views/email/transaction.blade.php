@@ -1,311 +1,633 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--[if mso]>
+    <xml>
+     <o:OfficeDocumentSettings>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+      <o:AllowPNG/>
+     </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
     <style>
-        @media only screen and (max-width: 620px) {
-            table.body h1 {
-                font-size: 28px !important;
-                margin-bottom: 10px !important;
-            }
-
-            table.body p,
-            table.body ul,
-            table.body ol,
-            table.body td,
-            table.body span,
-            table.body a {
-                font-size: 16px !important;
-            }
-
-            table.body .wrapper,
-            table.body .article {
-                padding: 10px !important;
-            }
-
-            table.body .content {
-                padding: 0 !important;
-            }
-
-            table.body .container {
-                padding: 0 !important;
-                width: 100% !important;
-            }
-
-            table.body .main {
-                border-left-width: 0 !important;
-                border-radius: 0 !important;
-                border-right-width: 0 !important;
-            }
-
-            table.body .btn table {
-                width: 100% !important;
-            }
-
-            table.body .btn a {
-                width: 100% !important;
-            }
-
-            table.body .img-responsive {
-                height: auto !important;
-                max-width: 100% !important;
-                width: auto !important;
-            }
+        * {
+            box-sizing: border-box
         }
 
-        @media all {
-            .ExternalClass {
+        body {
+            margin: 0;
+            padding: 0
+        }
+
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: inherit !important
+        }
+
+        #MessageViewBody a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        p {
+            line-height: inherit
+        }
+
+        .desktop_hide,
+        .desktop_hide table {
+            mso-hide: all;
+            display: none;
+            max-height: 0;
+            overflow: hidden
+        }
+
+        @media (max-width:520px) {
+            .desktop_hide table.icons-inner {
+                display: inline-block !important
+            }
+
+            .icons-inner {
+                text-align: center
+            }
+
+            .icons-inner td {
+                margin: 0 auto
+            }
+
+            .row-content {
+                width: 100% !important
+            }
+
+            .mobile_hide {
+                display: none
+            }
+
+            .stack .column {
                 width: 100%;
+                display: block
             }
 
-            .ExternalClass,
-            .ExternalClass p,
-            .ExternalClass span,
-            .ExternalClass font,
-            .ExternalClass td,
-            .ExternalClass div {
-                line-height: 100%;
+            .mobile_hide {
+                min-height: 0;
+                max-height: 0;
+                max-width: 0;
+                overflow: hidden;
+                font-size: 0
             }
 
-            .apple-link a {
-                color: inherit !important;
-                font-family: inherit !important;
-                font-size: inherit !important;
-                font-weight: inherit !important;
-                line-height: inherit !important;
-                text-decoration: none !important;
-            }
-
-            #MessageViewBody a {
-                color: inherit;
-                text-decoration: none;
-                font-size: inherit;
-                font-family: inherit;
-                font-weight: inherit;
-                line-height: inherit;
-            }
-
-            .btn-primary table td:hover {
-                background-color: #34495e !important;
-            }
-
-            .btn-primary a:hover {
-                background-color: #34495e !important;
-                border-color: #34495e !important;
+            .desktop_hide,
+            .desktop_hide table {
+                display: table !important;
+                max-height: none !important
             }
         }
     </style>
 </head>
 
-<body
-    style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
-    {{-- <span class="preheader"
-        style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">
-        Selamat datang di Musim Seni Salihara! / Welcome to Musim Seni Salihara!</span> --}}
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body"
-        style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;"
-        width="100%" bgcolor="#f6f6f6">
-        <tr>
-            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">&nbsp;</td>
-            <td class="container"
-                style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;"
-                width="580" valign="top">
-                <div class="content"
-                    style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;">
-
-                    <!-- START CENTERED WHITE CONTAINER -->
-                    <table role="presentation" class="main"
-                        style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;"
-                        width="100%">
-
-                        <!-- START MAIN CONTENT AREA -->
-                        <tr>
-                            <td class="wrapper"
-                                style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;"
-                                valign="top">
-                                <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-                                    style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;"
-                                    width="100%">
-                                    <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;"
-                                            valign="top">
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                Halo {{ $user->name }} !
-                                            </p>
-
-
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                Terima kasih telah membeli akses menonton pertunjukan daring Musim Seni
-                                                Salihara.<br>
-                                                E-mail ini adalah konfirmasi bahwa pembayaran anda telah
-                                                berhasil.
-
-                                            </p>
-
-                                            {{--  --}}
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                Silakan masuk ke akun anda untuk mulai menonton pertunjukan daring Musim
-                                                Seni Salihara.
-
-                                            </p>
-
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:bold">
-                                                Tata cara menonton:
-                                            </p>
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:bold">
-                                            <ul>
-                                                <li>
-                                                    Kunjungi situs musimseni.salihara.org dari 06 Agustus hingga 04
-                                                    September 2022
-                                                </li>
-                                                <li>
-                                                    Silahkan masuk dengan email dan kata sandi yang sudah anda buat dan
-                                                    terverifikasi untuk mengakses seluruh pertunjukan sesuai jadwal
-                                                </li>
-                                                <li>
-                                                    Untuk mendapatkan pengalaman menonton yang optimal disarankan untuk
-                                                    menonton melalui layar monitor PC/laptop, ditonton pada resolusi
-                                                    maksimal dan menggunakan pelantang suara stereo atau pelantang
-                                                    telinga;
-                                                </li>
-                                                <li>
-                                                    Pertunjukan dapat ditonton lebih dari 1 (satu) kali sesuai jadwal
-                                                    tayang dan selama Musim Seni Salihara berlangsung.
-                                                </li>
-                                            </ul>
-                                            </p>
-
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                Salam hangat,
-                                                <br>
-                                                <br>
-                                                Komunitas Salihara Arts Center
-
-                                            </p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="wrapper"
-                                style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;"
-                                valign="top">
-                                <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-                                    style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;"
-                                    width="100%">
-                                    <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;"
-                                            valign="top">
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:italic">
-                                                Halo {{ $user->name }} !
-                                            </p>
-
-
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:italic">
-                                                Thank you for purchasing Musim Seni Salihara’s online performances
-                                                access. <br>
-                                                We sent this email to confirm your payment is successful.
-
-                                            </p>
-
-                                            {{--  --}}
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:italic">
-                                                Sign-in to your account to start watching Musim Seni Salihara online
-                                                performances.
-
-                                            </p>
-
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:italic">
-                                                How to watch:
-                                            </p>
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:italic">
-                                            <ul>
-                                                <li>
-                                                    Visit musimseni.salihara.org from August 6th to September 4th 2022
-                                                </li>
-                                                <li>
-                                                    Sign-in with your verified email & password to access all online
-                                                    shows, scheduled and non-scheduled
-                                                </li>
-                                                <li>
-                                                    To get an optimal watching experience, it is recommended to watch
-                                                    through a PC/laptop, in maximum resolution and use stereo speakers
-                                                    or headphones
-                                                </li>
-                                                <li>
-                                                    All shows can be watched more than one time during Musim Seni
-                                                    Salihara
-                                                </li>
-                                            </ul>
-                                            </p>
-
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;font-style:italic">
-                                                Warm regards,
-                                                <br>
-                                                <br>
-                                                Komunitas Salihara Arts Center
-
-                                            </p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <!-- END MAIN CONTENT AREA -->
+<body style="background-color:#fff;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none">
+    <table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#fff">
+        <tbody>
+            <tr>
+                <td>
+                    <table class="row row-1" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;padding-top:5px;padding-bottom:5px;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="width:100%;padding-right:0;padding-left:0">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <img src="{{ asset('img/Frame.png') }}"
+                                                                        style="display:block;height:auto;border:0;width:100px;max-width:100%"
+                                                                        width="100">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <br>
+                                                    <table class="heading_block block-2" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad" style="width:100%;text-align:center">
+                                                                <h1
+                                                                    style="margin:0;color:#555;font-size:23px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;line-height:120%;text-align:center;direction:ltr;font-weight:700;letter-spacing:normal;margin-top:0;margin-bottom:0">
+                                                                    <span
+                                                                        class="tinyMce-placeholder">{{ $str_title }}</span>
+                                                                </h1>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="paragraph_block block-3" width="100%" border="0"
+                                                        cellpadding="10" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div
+                                                                    style="color:#000;font-size:16px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:150%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:24px">
+                                                                    <p style="margin:0"> {!! $str !!}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="button_block block-4" width="100%" border="0"
+                                                        cellpadding="10" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div class="alignment" align="center">
+                                                                    <!--[if mso]>
+                     <v:roundrect
+                      xmlns:v="urn:schemas-microsoft-com:vml"
+                      xmlns:w="urn:schemas-microsoft-com:office:word" style="height:48px;width:336px;v-text-anchor:middle;" arcsize="0%" stroke="false" fillcolor="#00ff00">
+                      <w:anchorlock/>
+                      <v:textbox inset="0px,0px,0px,0px">
+                       <center style="color:#000000; font-family:Arial, sans-serif; font-size:14px">
+                        <![endif]-->
+                                                                    <a href="{{ $url }}">
+                                                                        <div
+                                                                            style="text-decoration:none;display:block;color:#000;background-color:#0f0;border-radius:0;width:70%;width:calc(70% - 2px);border-top:1px solid #0f0;font-weight:400;border-right:1px solid #0f0;border-bottom:1px solid #0f0;border-left:1px solid #0f0;padding-top:10px;padding-bottom:10px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all">
+                                                                            <span
+                                                                                style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:normal;">
+                                                                                <span dir="ltr"
+                                                                                    style="word-break: break-word; line-height: 28px;">
+                                                                                    <u>{{ $str_button }}</u>
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                    <!--[if mso]>
+                       </center>
+                      </v:textbox>
+                     </v:roundrect>
+                     <![endif]-->
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
-                    <!-- END CENTERED WHITE CONTAINER -->
-
-                    <!-- START FOOTER -->
-                    {{-- <div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%;">
-                        <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-                            style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;"
-                            width="100%">
+                    <table class="row row-2" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
                             <tr>
-                                <td class="content-block"
-                                    style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;"
-                                    valign="top" align="center">
-                                    <span class="apple-link"
-                                        style="color: #999999; font-size: 12px; text-align: center;">Company Inc, 3
-                                        Abbey Road, San Francisco CA 94102</span>
-                                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif"
-                                        style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;border-radius:0;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="50%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="paragraph_block block-2" width="100%"
+                                                        border="0" cellpadding="0" cellspacing="0"
+                                                        role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-top:15px;padding-right:10px;padding-bottom:15px;padding-left:10px">
+                                                                <div
+                                                                    style="color:#000;font-size:14px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                    <p style="margin:0;margin-bottom:16px">
+                                                                        <strong>No. Transaksi</strong>
+                                                                    </p>
+                                                                    <p style="margin:0">{{ $reff_id }}</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                @if (isset($payment_method))
+                                                    <td class="column column-2" width="50%"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                        <table class="paragraph_block block-2" width="100%"
+                                                            border="0" cellpadding="0" cellspacing="0"
+                                                            role="presentation"
+                                                            style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                            <tr>
+                                                                <td class="pad"
+                                                                    style="padding-top:15px;padding-right:10px;padding-bottom:15px;padding-left:10px">
+                                                                    <div
+                                                                        style="color:#000;font-size:14px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                        <p style="margin:0;margin-bottom:16px">
+                                                                            <strong>Metode Pembayaran</strong>
+                                                                        </p>
+                                                                        <p style="margin:0">{{ $payment_method }}</p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-3" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
                             <tr>
-                                <td class="content-block powered-by"
-                                    style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;"
-                                    valign="top" align="center">
-                                    Powered by <a href="http://htmlemail.io"
-                                        style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">HTMLemail</a>.
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;border-radius:0;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="50%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="paragraph_block block-2" width="100%"
+                                                        border="0" cellpadding="0" cellspacing="0"
+                                                        role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-top:15px;padding-right:10px;padding-bottom:15px;padding-left:10px">
+                                                                <div
+                                                                    style="color:#000;font-size:14px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                    <p style="margin:0;margin-bottom:16px">
+                                                                        <strong>Tanggal Transaksi:</strong>
+                                                                    </p>
+                                                                    <p style="margin:0">{{ $transaction_date }}
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td class="column column-2" width="50%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="paragraph_block block-2" width="100%"
+                                                        border="0" cellpadding="0" cellspacing="0"
+                                                        role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="padding-top:15px;padding-right:10px;padding-bottom:15px;padding-left:10px">
+                                                                <div
+                                                                    style="color:#000;font-size:14px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:left;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                    <p style="margin:0;margin-bottom:16px">
+                                                                        <strong>Jumlah Pembayaran</strong>
+                                                                    </p>
+                                                                    <p style="margin:0">Rp. {{ $total_payment }}</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
-                        </table>
-                    </div> --}}
-                    <!-- END FOOTER -->
+                        </tbody>
+                    </table>
+                    <table class="row row-4" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;border-radius:0;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;padding-top:5px;padding-bottom:5px;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="html_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div style="font-family:Arial,Helvetica Neue,Helvetica,sans-serif;text-align:center"
+                                                                    align="center">
+                                                                    <table style="width:100%;text-align:left">
+                                                                        <tr style="background-color:#F4F4F4;">
+                                                                            <th style="padding:10px">Produk</th>
+                                                                            <th style="padding:10px">Jumlah</th>
+                                                                            <th style="padding:10px">Harga</th>
+                                                                        </tr>
+                                                                        @foreach ($trans_detail as $td)
+                                                                            <tr>
+                                                                                <td style="padding:10px">
+                                                                                    <p>
+                                                                                        <b>{{ $td['product'] }}</b>
+                                                                                    </p>
+                                                                                </td>
+                                                                                <td style="padding:10px">
+                                                                                    <b>{{ $td['qty'] }}</b>
+                                                                                </td>
+                                                                                <td style="padding:10px">
+                                                                                    <b>Rp.{{ $td['price'] }}</b>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
 
-                </div>
-            </td>
-            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">&nbsp;</td>
-        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-5" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;border-radius:0;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;padding-top:5px;padding-bottom:5px;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="paragraph_block block-1" width="100%"
+                                                        border="0" cellpadding="10" cellspacing="0"
+                                                        role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div
+                                                                    style="color:#595959;font-size:14px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                    <p style="margin:0;margin-bottom:16px">Punya
+                                                                        pertanyaan mengenai transaksi ini ?</p>
+                                                                    <p style="margin:0">info@salihara.org |
+                                                                        cs@salihara.org | 0817 0771913 | 021 7891202</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-6" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;border-radius:0;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;padding-top:5px;padding-bottom:5px;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="paragraph_block block-1" width="100%"
+                                                        border="0" cellpadding="10" cellspacing="0"
+                                                        role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div
+                                                                    style="color:#000;font-size:14px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                    <p style="margin:0">
+                                                                        <strong>Temukan kami</strong>
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="social_block block-2" width="100%" border="0"
+                                                        cellpadding="10" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div class="alignment" style="text-align:center">
+                                                                    <table class="social-table" border="0"
+                                                                        cellpadding="0" cellspacing="0"
+                                                                        role="presentation"
+                                                                        style="mso-table-lspace:0;mso-table-rspace:0;display:inline-block">
+                                                                        <tr>
+                                                                            <td style="padding:0 2px 0 2px">
+                                                                                <a href="https://www.instagram.com/komunitas_salihara/"
+                                                                                    target="_blank">
+                                                                                    <p
+                                                                                        style="color:#595959;font-size:14px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                                        Instagram
+                                                                                    </p>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td style="padding:0 2px 0 2px">
+                                                                                <a href="https://twitter.com/salihara"
+                                                                                    target="_blank">
+                                                                                    <p
+                                                                                        style="color:#595959;font-size:14px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                                        Twitter
+                                                                                    </p>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td style="padding:0 2px 0 2px">
+                                                                                <a href="https://www.tiktok.com/@komunitas_salihara"
+                                                                                    target="_blank">
+                                                                                    <p
+                                                                                        style="color:#595959;font-size:14px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                                        Tiktok
+                                                                                    </p>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td style="padding:0 2px 0 2px">
+                                                                                <a href="https://www.youtube.com/c/KomunitasSaliharaArtsCenter"
+                                                                                    target="_blank">
+                                                                                    <p
+                                                                                        style="color:#595959;font-size:14px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                                        Youtube
+                                                                                    </p>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td style="padding:0 2px 0 2px">
+                                                                                <a href="https://www.facebook.com/salihara.org"
+                                                                                    target="_blank">
+                                                                                    <p
+                                                                                        style="color:#595959;font-size:14px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                                        Facebook
+                                                                                    </p>
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-7" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;border-radius:0;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;padding-top:5px;padding-bottom:5px;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="image_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="width:100%;padding-right:0;padding-left:0">
+                                                                <div class="alignment" align="center"
+                                                                    style="line-height:10px">
+                                                                    <img src="{{ asset('img/logo.png') }}"
+                                                                        style="display:block;height:auto;border:0;width:100px;max-width:100%"
+                                                                        width="100">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-8" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;border-radius:0;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;padding-top:5px;padding-bottom:5px;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="paragraph_block block-1" width="100%"
+                                                        border="0" cellpadding="10" cellspacing="0"
+                                                        role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        <tr>
+                                                            <td class="pad">
+                                                                <div
+                                                                    style="color:#000;font-size:14px;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-weight:400;line-height:120%;text-align:center;direction:ltr;letter-spacing:0;mso-line-height-alt:16.8px">
+                                                                    <p style="margin:0">Salihara Arts Center &copy;
+                                                                        2022</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="row row-9" align="center" width="100%" border="0" cellpadding="0"
+                        cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0"
+                                        cellspacing="0" role="presentation"
+                                        style="mso-table-lspace:0;mso-table-rspace:0;color:#000;width:500px"
+                                        width="500">
+                                        <tbody>
+                                            <tr>
+                                                <td class="column column-1" width="100%"
+                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;padding-top:5px;padding-bottom:5px;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="icons_block block-1" width="100%" border="0"
+                                                        cellpadding="0" cellspacing="0" role="presentation"
+                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                        <tr>
+                                                            <td class="pad"
+                                                                style="vertical-align:middle;color:#9d9d9d;font-family:inherit;font-size:15px;padding-bottom:5px;padding-top:5px;text-align:center">
+                                                                <table width="100%" cellpadding="0" cellspacing="0"
+                                                                    role="presentation"
+                                                                    style="mso-table-lspace:0;mso-table-rspace:0">
+                                                                    <tr>
+                                                                        <td class="alignment"
+                                                                            style="vertical-align:middle;text-align:center">
+                                                                            <!--[if vml]>
+                            <table align="left" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                             <![endif]-->
+                                                                            <!--[if !vml]>
+                             <!-->
+                                                                            <table class="icons-inner"
+                                                                                style="mso-table-lspace:0;mso-table-rspace:0;display:inline-block;margin-right:-4px;padding-left:0;padding-right:0"
+                                                                                cellpadding="0" cellspacing="0"
+                                                                                role="presentation">
+                                                                                <!--
+                              <![endif]-->
+
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
     </table>
+    <!-- End -->
 </body>
 
 </html>
