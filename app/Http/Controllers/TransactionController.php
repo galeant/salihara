@@ -350,7 +350,7 @@ class TransactionController extends Controller
                 //
                 Log::channel('payment_log')->info('reponseUrl log: data ketemu' . json_encode($request->all()));
                 if ($request->TransactionStatus == 1) {
-                    Mail::to($data->user_email)->queue(new TransactionSuccessMail($data->customer));
+                    Mail::to($data->user_email)->queue(new TransactionSuccessMail($data->customer, $data, 'payment_success'));
                 }
             } else {
                 Log::channel('payment_log')->info('reponseUrl log: data tidak ditemukan' . json_encode($request->all()));
