@@ -78,7 +78,7 @@ class Program extends Model
 
     public function ticket()
     {
-        return $this->belongsToMany('App\Ticket', 'program_ticket', 'ticket_id', 'program_id');
+        return $this->belongsToMany('App\Ticket', 'program_ticket', 'program_id', 'ticket_id');
     }
 
     public function imageBanner()
