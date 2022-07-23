@@ -24,7 +24,7 @@ class TransactionSuccessMail extends Mailable
     public function __construct($user, $transaction, $type)
     {
         $subject = 'Menunggu Pembayaran';
-        $url = ENV('TRANSACTION_DETAIL_URL') . $transaction->reff_id;
+        $url = ENV('TRANSACTION_LIST_URL');
         $str_title = 'Menunggu Pembayaran';
         $str_button = 'Lihat Status Pesanan';
         $str = 'Hi ' . $user->name . ', Segera lakukan pembayaran sebelum <strong>( hari ini + 1 hari) pukul 13.00&nbsp;</strong>atau pesanan anda akan di batalkan secara otomatis.';

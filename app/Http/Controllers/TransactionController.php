@@ -469,7 +469,7 @@ class TransactionController extends Controller
         $data = $data->first();
 
         $type = 'end';
-        $url = ENV('TRANSACTION_DETAIL_URL') . $data->reff_id;
+        $url = ENV('TRANSACTION_LIST_URL');
         $str_title = 'Menunggu Pembayaran';
         $str_button = 'Lihat Status Pesanan';
         $str = 'Hi Adinda, Segera lakukan pembayaran sebelum <strong>( hari ini + 1 hari) pukul 13.00&nbsp;</strong>atau pesanan anda akan di batalkan secara otomatis.';
