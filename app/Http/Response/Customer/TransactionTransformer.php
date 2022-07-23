@@ -144,7 +144,7 @@ class TransactionTransformer
                 return [
                     'status' => $v->status,
                     'created_at' => $v->created_at,
-                    'epoch_created_at' => strtotime($v->created_at)
+                    'unix_created_at' => strtotime($v->created_at)
                 ];
             });
         }
