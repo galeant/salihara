@@ -120,6 +120,7 @@ class TransactionTransformer
             'payment_method_name' => $v->payment_method_name,
             'virtual_account_assign' => $v->virtual_account_assign,
             'payment_status' => $v->payment_status,
+            'created_at' => $v->created_at,
             'item' => []
         ];
         if (auth()->user()->role == user::ROLE[0]) {
