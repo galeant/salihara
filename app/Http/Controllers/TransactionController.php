@@ -488,16 +488,27 @@ class TransactionController extends Controller
 
 
         $trans_detail = collect($data->detail)->transform(function ($v) {
+            $str_product = '<b>' . $v->ticket_name . '</b><ul>';
+            foreach ($v->ticket->program as $tcp) {
+                $tmp_str_product = '<li><b>' . $tcp->name . '</b><ul>';
+                // $sch = dd($tcp->schedule);
+                foreach ($tcp->schedule as $sch) {
+                    $tmp_str_product = $tmp_str_product . '<li>' . Carbon::parse($sch->unix_date)->setTimezone('Asia/Jakarta')->format('Y-m-d') . '</li>';
+                }
+                $tmp_str_product = $tmp_str_product . '</ul></li>';
+                $str_product = $str_product . $tmp_str_product;
+            }
+            $str_product = $str_product . '</ul>';
             return [
-                'product' => $v->ticket_name,
+                'product' => $str_product,
                 'qty' => 'x' . $v->qty,
-                'price' => $v->total_price_idr
+                'price' => $v->total_price_idr,
             ];
         });
 
         $trans_detail->push(
             [
-                'product' => 'Total',
+                'product' => '<b>Total</b>',
                 'qty' => NULL,
                 'price' => $trans_detail->sum('price')
             ]

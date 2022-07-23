@@ -339,9 +339,7 @@
                                                                         @foreach ($trans_detail as $td)
                                                                             <tr>
                                                                                 <td style="padding:10px">
-                                                                                    <p>
-                                                                                        <b>{{ $td['product'] }}</b>
-                                                                                    </p>
+                                                                                    {!! $td['product'] !!}
                                                                                 </td>
                                                                                 <td style="padding:10px">
                                                                                     <b>{{ $td['qty'] }}</b>
