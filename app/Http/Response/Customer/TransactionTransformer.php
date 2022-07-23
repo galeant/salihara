@@ -127,16 +127,16 @@ class TransactionTransformer
             $return['customer']['user_name'] = $v->user_name;
             $return['customer']['user_email'] = $v->user_email;
             $return['customer']['user_phone'] = $v->user_phone;
-            $return['customer']['user_address'] = $v->user_address;
-            $return['customer']['province_id'] = $v->province_id;
-            $return['customer']['province_name'] = $v->province_name;
-            $return['customer']['city_id'] = $v->city_id;
-            $return['customer']['city_name'] = $v->city_name;
-            $return['customer']['district_id'] = $v->district_id;
-            $return['customer']['district_name'] = $v->district_name;
-            $return['customer']['sub_district_id'] = $v->sub_district_id;
-            $return['customer']['sub_district_name'] = $v->sub_district_name;
-            $return['customer']['postal'] = $v->postal;
+            // $return['customer']['user_address'] = $v->user_address;
+            // $return['customer']['province_id'] = $v->province_id;
+            // $return['customer']['province_name'] = $v->province_name;
+            // $return['customer']['city_id'] = $v->city_id;
+            // $return['customer']['city_name'] = $v->city_name;
+            // $return['customer']['district_id'] = $v->district_id;
+            // $return['customer']['district_name'] = $v->district_name;
+            // $return['customer']['sub_district_id'] = $v->sub_district_id;
+            // $return['customer']['sub_district_name'] = $v->sub_district_name;
+            // $return['customer']['postal'] = $v->postal;
 
             $return['log'] = $v->paymentLog->transform(function ($v) {
                 return [
