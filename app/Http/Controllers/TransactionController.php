@@ -44,19 +44,19 @@ class TransactionController extends Controller
         DB::beginTransaction();
         $user = auth()->user();
         try {
-            // $access = $user->access->pluck('id')->toArray();
-            // if (in_array($request->ticket_id, $access)) {
-            //     throw new \Exception('Ticket has already buy');
-            // }
-            // $transaction = Transaction::where('user_id', $user->id)
-            //     ->where('payment_status', Payment::PAYMENT_STATUS[1])
-            //     ->whereHas('detail', function ($q) use ($request) {
-            //         $q->where('ticket_id', $request->ticket_id);
-            //     })->count();
+            $access = $user->access->pluck('id')->toArray();
+            if (in_array($request->ticket_id, $access)) {
+                throw new \Exception('Ticket has already buy');
+            }
+            $transaction = Transaction::where('user_id', $user->id)
+                ->where('payment_status', Payment::PAYMENT_STATUS[1])
+                ->whereHas('detail', function ($q) use ($request) {
+                    $q->where('ticket_id', $request->ticket_id);
+                })->count();
 
-            // if ($transaction > 0) {
-            //     throw new \Exception('Payment in proggress');
-            // }
+            if ($transaction > 0) {
+                throw new \Exception('Payment in proggress');
+            }
 
             $data = Cart::where([
                 'user_id' => $user->id,
@@ -150,6 +150,12 @@ class TransactionController extends Controller
             }
             $nett_idr = $gross_value_idr - (float)$voucher_discount;
             $nett_usd = $gross_value_usd - (float)$voucher_discount;
+            if ($nett_idr < 0) {
+                $nett_idr = 0;
+            }
+            if ($nett_usd < 0) {
+                $nett_usd = 0;
+            }
             // $payment_method = collect(Payment::PAYMENT_METHOD)->first(function ($v) use ($request) {
             //     if ($v['id'] == $request->payment_method_id) {
             //         return $v;
@@ -192,21 +198,22 @@ class TransactionController extends Controller
                 'payment_status' => Payment::PAYMENT_STATUS[1],
             ];
 
-            $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
-            // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
+            if ($nett_idr > 0) {
+                $payment_gateway = (new Payment)->paymentRequest($trans_fill, $trans_detail);
+                // $payment_gateway = (new Payment)->paymentRequestBeta($trans_fill, $trans_detail);
 
-            $trans_fill['signature_payment'] = $payment_gateway->Signature;
-            // $trans_fill['signature_payment'] = '';
+                $trans_fill['signature_payment'] = $payment_gateway->Signature;
+                // $trans_fill['signature_payment'] = '';
 
-            $trans_fill['checkout_id'] = $payment_gateway->CheckoutID;
-            // $trans_fill['checkout_id'] = '';
+                $trans_fill['checkout_id'] = $payment_gateway->CheckoutID;
+                // $trans_fill['checkout_id'] = '';
 
-            // $trans_fill['payment_expired'] = Carbon::parse($payment_gateway->TransactionExpiryDate);
-            // $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
-            // $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
+                // $trans_fill['payment_expired'] = Carbon::parse($payment_gateway->TransactionExpiryDate);
+                // $trans_fill['epoch_time_payment_expired'] = strtotime($payment_gateway->TransactionExpiryDate);
+                // $trans_fill['virtual_account_assign'] = $payment_gateway->VirtualAccountAssigned;
 
-            $trans_fill['reff_id'] = $payment_gateway->RefNo;
-            // $trans_fill['reff_id'] = '';
+                $trans_fill['reff_id'] = $payment_gateway->RefNo;
+            }
 
             $transaction = Transaction::create($trans_fill);
 
@@ -417,7 +424,7 @@ class TransactionController extends Controller
 
             if ($voucher == NULL) {
                 throw new \Exception('Voucer Not found');
-            } else if ($voucher->quota) {
+            } else if ($voucher->quota == $voucher->used_qouta) {
                 throw new \Exception('Voucer limit reached');
             }
 
