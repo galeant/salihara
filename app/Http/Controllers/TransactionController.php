@@ -291,7 +291,7 @@ class TransactionController extends Controller
         }
     }
 
-    public function responseUrl(Request $request)
+    public function backendUrl(Request $request)
     {
         Log::channel('payment_log')->info('reponseUrl log: ' . json_encode($request->all()));
         $msg = [
@@ -403,7 +403,7 @@ class TransactionController extends Controller
         }
     }
 
-    public function backendUrl(Request $request)
+    public function responseUrl(Request $request)
     {
         Log::channel('payment_log')->info('backendUrl log: ' . json_encode($request->all()));
     }
