@@ -90,11 +90,11 @@ class Program extends Model
             ]);
     }
 
-    public function getScheduleAttribute($v)
-    {
-        if ($v == NULL || $v == '') {
-            return [];
-        }
-        return json_decode($v);
-    }
+    // public function getScheduleAttribute($v)
+    // {
+    //     if ($v == NULL || $v == '') {
+    //         return [];
+    //     }
+    //     return json_decode($v);
+    // }
 }

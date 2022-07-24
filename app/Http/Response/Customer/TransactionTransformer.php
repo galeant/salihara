@@ -26,7 +26,8 @@ class TransactionTransformer
                 $return['program'][] = [
                     'program_id' => $pr->id,
                     'program_name' => $pr->name,
-                    'program_date' => $pr->schedule,
+                    'program_schedule_id' => $pr->schedule_id,
+                    'program_schedule_en' => $pr->schedule_en,
                 ];
             }
 
@@ -166,7 +167,8 @@ class TransactionTransformer
                         'program_slug' => $dt->slug,
                         'program_id' => $dt->id,
                         'program_name' => $dt->name,
-                        'program_schedule' => $dt->schedule,
+                        'program_schedule_id' => $dt->schedule_id,
+                        'program_schedule_en' => $dt->schedule_en,
                         'program_banner' => (isset($dt->imageBanner) && isset($dt->imageBanner->path)) ? url($dt->imageBanner->path) : NULL,
                     ];
                 }
@@ -194,7 +196,8 @@ class TransactionTransformer
                     'program_slug' => $pr->slug,
                     'program_id' => $pr->id,
                     'program_name' => $pr->name,
-                    'program_schedule' => $pr->schedule,
+                    'program_schedule_id' => $pr->schedule_id,
+                    'program_schedule_en' => $pr->schedule_en,
                     'program_banner' => (isset($pr->imageBanner) && isset($pr->imageBanner->path)) ? url($pr->imageBanner->path) : NULL,
                 ];
             }

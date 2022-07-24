@@ -20,7 +20,8 @@ class CreateProgramTable extends Migration
             $table->string('slug');
             $table->string('category_id');
             $table->string('category_en')->nullable();
-            $table->text('schedule');
+            $table->text('schedule_id')->nullable();
+            $table->text('schedule_en')->nullable();
             // $table->string('schedule_unix')->comment('unix timestamp ');
             // $table->dateTime('schedule_date');
             // $table->integer('duration_hour')->default(0);

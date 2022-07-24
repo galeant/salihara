@@ -26,11 +26,12 @@ class UpdateRequest extends FormRequest
     {
         $return = [
             'name' => 'required|unique:program,name,' . $this->id,
-            'schedule' => 'required|array',
-            'schedule.*.date' => 'required|date',
-            'schedule.*.hour' => 'required',
-            'schedule.*.minute' => 'required',
-            'schedule.*.unix_date' => 'required',
+            'schedule_id' => 'required',
+            'schedule_en' => 'required',
+            // 'schedule.*.date' => 'required|date',
+            // 'schedule.*.hour' => 'required',
+            // 'schedule.*.minute' => 'required',
+            // 'schedule.*.unix_date' => 'required',
             // 'schedule_date'  => 'required|date',
             // 'duration_hour' => 'required',
             // 'duration_minute' => 'nullable',
