@@ -9,8 +9,11 @@ use App\Image;
 use Illuminate\Support\Str;
 use App\Http\Requests\Admin\Misc\BannerCreateRequest;
 use App\Http\Requests\Admin\Misc\AboutCreateRequest;
+
+use App\Http\Requests\Admin\Misc\FaqCreateRequest;
 use App\Http\Response\Admin\MiscTransformer;
 use App\Misc;
+use App\FAQ;
 
 class MiscController extends Controller
 {
@@ -154,6 +157,86 @@ class MiscController extends Controller
             ]);
             return $this->about($request);
         } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function faqIndex(Request $request)
+    {
+
+        $order_by = $request->input('order_by', 'id');
+        $sort = $request->input('sort', 'asc');
+
+        $search_by = $request->search_by;
+        $keyword = $request->keyword;
+
+        $per_page = $request->input('per_page', 10);
+
+        try {
+            $data = Faq::order($order_by, $sort)
+                ->search($search_by, $keyword)
+                ->paginate($per_page);
+
+            return MiscTransformer::faqList($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    public function faqDetail(Request $request, $id)
+    {
+        try {
+            $data = Faq::where('id', $id)->firstOrFail();
+            return MiscTransformer::faqDetail($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function faqCreate(FaqCreateRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $data  = Faq::create([
+                'group' => $request->group,
+                'question' => $request->question,
+                'answer' => $request->answer
+            ]);
+            DB::commit();
+            return $this->faqDetail($request, $data->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function faqUpdate(FaqCreateRequest $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $data  = Faq::where('id', $id)->firstOrFail();
+            $data->update([
+                'group' => $request->group,
+                'question' => $request->question,
+                'answer' => $request->answer
+            ]);
+            DB::commit();
+            return $this->faqDetail($request, $data->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function faqDelete(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $data = Faq::where('id', $id)->firstOrFail();
+            $data->delete();
+            DB::commit();
+            return MiscTransformer::faqDetail($data);
+        } catch (\Exception $e) {
+            DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }

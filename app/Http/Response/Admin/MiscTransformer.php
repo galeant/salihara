@@ -104,4 +104,74 @@ class MiscTransformer
             ]
         ]);
     }
+
+    public static function faqList($data, $message = 'Success')
+    {
+        if ($data instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+            $items = collect($data->items())->transform(function ($v) {
+                return self::faqReform($v);
+            });
+            $return = [
+                'data' => $items,
+                'current_page' => $data->currentPage(),
+                'next_page_url' => $data->nextPageUrl(),
+                'prev_page_url' => $data->previousPageUrl(),
+                'total' => $data->total(),
+                'total_page' => $data->lastPage(),
+                'per_page' => $data->perPage()
+            ];
+        } else {
+
+            $return = [
+                'data' => $data->transform(function ($v) {
+                    return self::faqReform($v);
+                }),
+                'total' => count($data)
+            ];
+        }
+        return response()->json([
+            'message' => $message,
+            'result' => $return
+        ]);
+    }
+
+    public static function faqDetail($data, $message = 'Success')
+    {
+        return response()->json([
+            'message' => $message,
+            'result' => self::faqReform($data)
+        ]);
+    }
+
+    public static function faqGrouping($data, $message = 'Succes')
+    {
+        $return = [];
+        $group = $data->pluck('group')->unique();
+        foreach ($group as $gp) {
+            $return[$gp] = [
+                'group' => $gp,
+                'list' => []
+            ];
+        }
+        foreach ($data as $dt) {
+            $return[$dt->group]['list'][] = [
+                'question' => $dt->question,
+                'answer' => $dt->answer
+            ];
+        }
+        return response()->json([
+            'message' => $message,
+            'result' => array_values($return)
+        ]);
+    }
+
+    private static function faqReform($data)
+    {
+        return [
+            'id' => $data->id,
+            'group' => $data->group,
+            'question' => $data->question,
+            'answer' => $data->answer
+        ];
+    }
 }

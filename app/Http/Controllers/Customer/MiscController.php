@@ -8,6 +8,7 @@ use App\Image;
 use App\Http\Response\Admin\MiscTransformer;
 use App\Cart;
 use App\Misc;
+use App\FAQ;
 
 use Illuminate\Support\Facades\Log;
 
@@ -29,6 +30,16 @@ class MiscController extends Controller
         try {
             $data = Misc::with('aboutImageBanner')->about()->first();
             return MiscTransformer::about($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function faq(Request $request)
+    {
+        try {
+            $data = FAQ::get();
+            return MiscTransformer::faqGrouping($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

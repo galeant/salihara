@@ -58,6 +58,14 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::get('about', 'MiscController@about');
             Route::post('about', 'MiscController@postAbout');
+
+            Route::group(['prefix' => 'faq'], function () {
+                Route::get('/', 'MiscController@faqIndex');
+                Route::get('{id}', 'MiscController@faqDetail');
+                Route::post('create', 'MiscController@faqCreate');
+                Route::post('update/{id}', 'MiscController@faqUpdate');
+                Route::post('delete/{id}', 'MiscController@faqDelete');
+            });
         });
 
         Route::group(['prefix' => 'user'], function () {
