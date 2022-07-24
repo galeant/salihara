@@ -300,7 +300,7 @@ class TransactionController extends Controller
 
     public function backendUrl(Request $request)
     {
-        Log::channel('payment_log')->info('reponseUrl log: ' . json_encode($request->all()));
+        Log::channel('payment_log')->info('backendUrl log: ' . json_encode($request->all()));
         $msg = [
             '1' => [
                 'Indonesian' => 'Pembayaran diterima',
@@ -412,7 +412,7 @@ class TransactionController extends Controller
 
     public function responseUrl(Request $request)
     {
-        Log::channel('payment_log')->info('backendUrl log: ' . json_encode($request->all()));
+        Log::channel('payment_log')->info('responseUrl log: ' . json_encode($request->all()));
     }
 
     public function checkVoucher(CheckVoucherRequest $request)
