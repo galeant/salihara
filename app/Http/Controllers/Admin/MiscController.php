@@ -11,9 +11,12 @@ use App\Http\Requests\Admin\Misc\BannerCreateRequest;
 use App\Http\Requests\Admin\Misc\AboutCreateRequest;
 
 use App\Http\Requests\Admin\Misc\FaqCreateRequest;
+use App\Http\Requests\Admin\Misc\CommitteeCreateRequest;
+
 use App\Http\Response\Admin\MiscTransformer;
 use App\Misc;
 use App\FAQ;
+use App\Committee;
 
 class MiscController extends Controller
 {
@@ -235,6 +238,85 @@ class MiscController extends Controller
             $data->delete();
             DB::commit();
             return MiscTransformer::faqDetail($data);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    // COMMITEEE
+    public function committeeIndex(Request $request)
+    {
+
+        $order_by = $request->input('order_by', 'id');
+        $sort = $request->input('sort', 'asc');
+
+        $search_by = $request->search_by;
+        $keyword = $request->keyword;
+
+        $per_page = $request->input('per_page', 10);
+
+        try {
+            $data = Committee::order($order_by, $sort)
+                ->search($search_by, $keyword)
+                ->paginate($per_page);
+
+            return MiscTransformer::committeeList($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    public function committeeDetail(Request $request, $id)
+    {
+        try {
+            $data = Committee::where('id', $id)->firstOrFail();
+            return MiscTransformer::committeeDetail($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function committeeCreate(CommitteeCreateRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $data  = Committee::create([
+                'division' => $request->division,
+                'name' => $request->name,
+            ]);
+            DB::commit();
+            return $this->committeeDetail($request, $data->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function committeeUpdate(CommitteeCreateRequest $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $data  = Committee::where('id', $id)->firstOrFail();
+            $data->update([
+                'division' => $request->division,
+                'name' => $request->name,
+            ]);
+            DB::commit();
+            return $this->committeeDetail($request, $data->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function committeeDelete(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $data = Committee::where('id', $id)->firstOrFail();
+            $data->delete();
+            DB::commit();
+            return MiscTransformer::committeeDetail($data);
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());

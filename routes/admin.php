@@ -66,6 +66,14 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('update/{id}', 'MiscController@faqUpdate');
                 Route::post('delete/{id}', 'MiscController@faqDelete');
             });
+
+            Route::group(['prefix' => 'committee'], function () {
+                Route::get('/', 'MiscController@committeeIndex');
+                Route::get('{id}', 'MiscController@committeeDetail');
+                Route::post('create', 'MiscController@committeeCreate');
+                Route::post('update/{id}', 'MiscController@committeeUpdate');
+                Route::post('delete/{id}', 'MiscController@committeeDelete');
+            });
         });
 
         Route::group(['prefix' => 'user'], function () {

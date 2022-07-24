@@ -9,6 +9,7 @@ use App\Http\Response\Admin\MiscTransformer;
 use App\Cart;
 use App\Misc;
 use App\FAQ;
+use App\Committee;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -42,6 +43,16 @@ class MiscController extends Controller
         try {
             $data = FAQ::get();
             return MiscTransformer::faqGrouping($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function committee(Request $request)
+    {
+        try {
+            $data = Committee::get();
+            return MiscTransformer::committeeGrouping($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
