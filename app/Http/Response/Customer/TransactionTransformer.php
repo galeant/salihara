@@ -14,7 +14,8 @@ class TransactionTransformer
             $return = [
                 'cart_id' => $v->id,
                 'ticket_id' => $v->ticket_id,
-                'ticket_name' => $v->ticket->name,
+                'ticket_name_id' => $v->ticket->name_id,
+                'ticket_name_en' => $v->ticket->name_en,
                 'ticket_price_idr' => $v->ticket->price_idr,
                 'ticket_price_usd' => $v->ticket->price_usd,
                 'type' => $v->ticket->type,
@@ -154,7 +155,8 @@ class TransactionTransformer
             foreach ($v->detail as $dtl) {
                 $tmp_detail = [
                     'ticket_id' => $dtl->ticket_id,
-                    'ticket_name' => $dtl->ticket_name,
+                    'ticket_name_id' => $dtl->ticket_name_id,
+                    'ticket_name_en' => $dtl->ticket_name_en,
                     'ticket_price_idr' => $dtl->ticket_price_idr,
                     'ticket_price_usd' => $dtl->ticket_price_usd,
                     'qty' => $dtl->qty,
@@ -186,7 +188,8 @@ class TransactionTransformer
         foreach ($data as $dt) {
             $tmp_2 = [
                 "ticket_id" => $dt->id,
-                "ticket_name" => $dt->name,
+                "ticket_name_id" => $dt->name_id,
+                "ticket_name_en" => $dt->name_en,
                 "ticket_price_idr" => $dt->price_idr,
                 "ticket_price_usd" => $dt->price_usd,
                 'program' => []

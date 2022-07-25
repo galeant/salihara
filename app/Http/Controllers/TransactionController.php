@@ -44,19 +44,19 @@ class TransactionController extends Controller
         DB::beginTransaction();
         $user = auth()->user();
         try {
-            $access = $user->access->pluck('id')->toArray();
-            if (in_array($request->ticket_id, $access)) {
-                throw new \Exception('Ticket has already buy');
-            }
-            $transaction = Transaction::where('user_id', $user->id)
-                ->where('payment_status', Payment::PAYMENT_STATUS[1])
-                ->whereHas('detail', function ($q) use ($request) {
-                    $q->where('ticket_id', $request->ticket_id);
-                })->count();
+            // $access = $user->access->pluck('id')->toArray();
+            // if (in_array($request->ticket_id, $access)) {
+            //     throw new \Exception('Ticket has already buy');
+            // }
+            // $transaction = Transaction::where('user_id', $user->id)
+            //     ->where('payment_status', Payment::PAYMENT_STATUS[1])
+            //     ->whereHas('detail', function ($q) use ($request) {
+            //         $q->where('ticket_id', $request->ticket_id);
+            //     })->count();
 
-            if ($transaction > 0) {
-                throw new \Exception('Payment in proggress');
-            }
+            // if ($transaction > 0) {
+            //     throw new \Exception('Payment in proggress');
+            // }
 
             $data = Cart::where([
                 'user_id' => $user->id,
@@ -139,7 +139,8 @@ class TransactionController extends Controller
                         // 'program_slug' => $pr->slug,
                         // 'program_banner' => (isset($pr->imageBanner) && isset($pr->imageBanner->path)) ? url($pr->imageBanner->path) : NULL,
                         'ticket_id' => $ticket->id,
-                        'ticket_name' => $ticket->name,
+                        'ticket_name_id' => $ticket->name_id,
+                        'ticket_name_en' => $ticket->name_en,
                         'ticket_price_idr' => $ticket->price_idr,
                         'ticket_price_usd' => $ticket->price_usd,
                         'qty' => $cart['qty'],
@@ -498,7 +499,7 @@ class TransactionController extends Controller
 
 
         $trans_detail = collect($data->detail)->transform(function ($v) {
-            $str_product = '<b>' . $v->ticket_name . '</b><ul>';
+            $str_product = '<b>' . $v->ticket_name_id . '</b><ul>';
             foreach ($v->ticket->program as $tcp) {
                 $tmp_str_product = '<li><b>' . $tcp->name . '</b>';
                 $tmp_str_product = $tmp_str_product . $tcp->schedule_id;

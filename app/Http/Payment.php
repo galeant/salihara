@@ -117,7 +117,7 @@ class Payment
         $trans_detail_payload = collect($trans_detail)->transform(function ($v) {
             return [
                 'Id' => $v['ticket_id'],
-                'Name' => $v['ticket_name'],
+                'Name' => $v['ticket_name_id'],
                 'Quantity' => $v['qty'],
                 'Amount' => $v['total_price_idr'],
                 'ParentType' => 'ITEM',

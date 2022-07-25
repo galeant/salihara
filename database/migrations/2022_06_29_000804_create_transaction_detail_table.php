@@ -24,7 +24,8 @@ class CreateTransactionDetailTable extends Migration
             // $table->text('program_schedule');
 
             $table->bigInteger('ticket_id');
-            $table->string('ticket_name');
+            $table->string('ticket_name_id');
+            $table->string('ticket_name_en');
 
 
             $table->decimal('ticket_price_idr', 25, 5);

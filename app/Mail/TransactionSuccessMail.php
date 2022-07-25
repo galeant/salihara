@@ -43,7 +43,7 @@ class TransactionSuccessMail extends Mailable
 
 
         $trans_detail = collect($transaction->detail)->transform(function ($v) {
-            $str_product = '<b>' . $v->ticket_name . '</b><ul>';
+            $str_product = '<b>' . $v->ticket_name_id . '</b><ul>';
             foreach ($v->ticket->program as $tcp) {
                 // $tmp_str_product = '<li><b>' . $tcp->name . '</b><ul>';
                 // $sch = dd($tcp->schedule);
