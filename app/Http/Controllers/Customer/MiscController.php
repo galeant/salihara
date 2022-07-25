@@ -74,6 +74,10 @@ class MiscController extends Controller
             $subject = 'Bantuan ' . ucwords($segment);
             Mail::to($email)
                 ->queue(new HelpMail($request, $subject));
+            return response()->json([
+                'message' => 'Success',
+                'result' => NULL
+            ]);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
