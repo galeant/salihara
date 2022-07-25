@@ -62,7 +62,8 @@ class TicketTransformer
         }
         $return = [
             'id' => $val->id,
-            'name' => $val->name,
+            'name_id' => $val->name_id,
+            'name_en' => $val->name_en,
             'slug' => $val->slug,
             'order' => $val->order,
             'type' => $val->type,

@@ -21,8 +21,8 @@ class TicketController extends Controller
 {
     public function index(Request $request)
     {
-        $order_by = $request->input('order_by', 'id');
-        $sort = $request->input('sort', 'asc');
+        $order_by = $request->input('order_by', ['id']);
+        $sort = $request->input('sort', ['asc']);
 
         $search_by = $request->search_by;
         $keyword = $request->keyword;
@@ -53,7 +53,8 @@ class TicketController extends Controller
                 'external_url' => NULL,
                 // 'program_id' => $request->program_id,
                 'order' => $order,
-                'name' => $request->name,
+                'name_id' => $request->name_id,
+                'name_en' => $request->name_en,
                 'slug' => $slug,
 
                 'price_idr' => NULL,
@@ -128,7 +129,8 @@ class TicketController extends Controller
                 'external_url' => NULL,
                 // 'program_id' => $request->program_id,
                 'order' => $order,
-                'name' => $request->name,
+                'name_id' => $request->name_id,
+                'name_en' => $request->name_en,
                 'slug' => $slug,
 
                 'price_idr' => $request->price_idr,

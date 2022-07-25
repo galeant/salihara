@@ -17,8 +17,8 @@ class CustomerController extends Controller
 {
     public function index(Request $request)
     {
-        $order_by = $request->input('order_by', 'id');
-        $sort = $request->input('sort', 'asc');
+        $order_by = $request->input('order_by', ['created_at']);
+        $sort = $request->input('sort', ['desc']);
 
         $search_by = $request->search_by;
         $keyword = $request->keyword;

@@ -27,7 +27,8 @@ class UpdateRequest extends FormRequest
     {
         $return = [
             'type' => 'required|in:' . implode(',', Ticket::type),
-            'name' => 'required|unique:ticket,name,' . $this->id,
+            'name_id' => 'required|unique:ticket,name_id,' . $this->id,
+            'name_en' => 'required|unique:ticket,name_en,' . $this->id,
             'program_id' => 'nullable|array',
             'program_id.*' => [
                 'exists:program,id',

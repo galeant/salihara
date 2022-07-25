@@ -15,8 +15,8 @@ class VoucherController extends Controller
 {
     public function index(Request $request)
     {
-        $order_by = $request->input('order_by', 'id');
-        $sort = $request->input('sort', 'asc');
+        $order_by = $request->input('order_by', ['id']);
+        $sort = $request->input('sort', ['asc']);
 
         $search_by = $request->search_by;
         $keyword = $request->keyword;

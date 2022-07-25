@@ -12,10 +12,8 @@ class TicketController extends Controller
 {
     public function index(Request $request, $type = NULL)
     {
-        // $order_by = $request->input('order_by', 'id');
-        // $sort = $request->input('sort', 'asc');
-        $order_by = 'order';
-        $sort = 'asc';
+        $order_by = $request->input('order_by', ['order']);
+        $sort = $request->input('sort', ['asc']);
 
         $search_by = $request->search_by;
         $keyword = $request->keyword;

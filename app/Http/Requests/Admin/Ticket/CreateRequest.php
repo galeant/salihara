@@ -27,7 +27,8 @@ class CreateRequest extends FormRequest
     {
         $return = [
             'type' => 'required|in:' . implode(',', Ticket::type),
-            'name' => 'required|unique:ticket,name',
+            'name_id' => 'required|unique:ticket,name_id',
+            'name_en' => 'required|unique:ticket,name_en',
             'program_id' => 'nullable|array',
             'program_id.*' => [
                 'exists:program,id',

@@ -167,8 +167,8 @@ class MiscController extends Controller
     public function faqIndex(Request $request)
     {
 
-        $order_by = $request->input('order_by', 'id');
-        $sort = $request->input('sort', 'asc');
+        $order_by = $request->input('order_by', ['id']);
+        $sort = $request->input('sort', ['asc']);
 
         $search_by = $request->search_by;
         $keyword = $request->keyword;
@@ -248,8 +248,8 @@ class MiscController extends Controller
     public function committeeIndex(Request $request)
     {
 
-        $order_by = $request->input('order_by', 'id');
-        $sort = $request->input('sort', 'asc');
+        $order_by = $request->input('order_by', ['id']);
+        $sort = $request->input('sort', ['asc']);
 
         $search_by = $request->search_by;
         $keyword = $request->keyword;

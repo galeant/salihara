@@ -19,7 +19,8 @@ class CreateTicketTable extends Migration
             $table->string('external_url')->nullable();
             // $table->bigInteger('program_id');
             $table->integer('order');
-            $table->string('name');
+            $table->string('name_id');
+            $table->string('name_en');
             $table->string('slug');
             $table->decimal('price_idr', 18, 6)->nullable();
             $table->decimal('price_usd', 18, 6)->nullable();
