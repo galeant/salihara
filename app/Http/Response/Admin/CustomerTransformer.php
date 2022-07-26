@@ -58,10 +58,20 @@ class CustomerTransformer
 
         if ($type == 'detail') {
             $return['access'] = $val->access->transform(function ($v) {
-                return [
+                $ret = [
                     'id' => $v->id,
-                    'name' => $v->name
+                    'name_id' => $v->name_id,
+                    'name_en' => $v->name_en,
+                    'program' => []
                 ];
+                foreach ($v->program as $prg) {
+                    $ret['program'][] = [
+                        'id' => $prg->id,
+                        'name' => $prg->name,
+                    ];
+                }
+
+                return $ret;
             });
         }
 

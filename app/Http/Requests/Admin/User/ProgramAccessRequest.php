@@ -24,8 +24,8 @@ class ProgramAccessRequest extends FormRequest
     public function rules()
     {
         return [
-            'program_id' => 'required|array',
-            'program_id.*' => 'exists:program,id',
+            'ticket_id' => 'required|array',
+            'ticket_id.*' => 'exists:ticket,id',
         ];
     }
 }

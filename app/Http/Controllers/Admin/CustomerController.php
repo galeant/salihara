@@ -85,7 +85,7 @@ class CustomerController extends Controller
         try {
 
             $user = User::customer()->where('id', $id)->firstOrfail();
-            $akses_request = $request->program_id;
+            $akses_request = $request->ticket_id;
             $exist_access = $user->access->pluck('id')->toArray();
 
             $final_access = array_diff($akses_request, $exist_access);
