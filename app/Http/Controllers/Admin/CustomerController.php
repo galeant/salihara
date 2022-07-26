@@ -86,10 +86,10 @@ class CustomerController extends Controller
 
             $user = User::customer()->where('id', $id)->firstOrfail();
             $akses_request = $request->ticket_id;
-            $exist_access = $user->access->pluck('id')->toArray();
+            // $exist_access = $user->access->pluck('id')->toArray();
 
-            $final_access = array_diff($akses_request, $exist_access);
-            $user->access()->attach($final_access);
+            // $final_access = array_diff($akses_request, $exist_access);
+            $user->access()->sync($akses_request);
             DB::commit();
             return $this->detail($request, $id);
         } catch (\Exception $e) {
