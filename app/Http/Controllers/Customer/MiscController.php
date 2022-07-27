@@ -41,7 +41,15 @@ class MiscController extends Controller
     public function faq(Request $request)
     {
         try {
-            $data = FAQ::get();
+            $order_by = $request->input('order_by', ['id']);
+            $sort = $request->input('sort', ['asc']);
+
+            $search_by = $request->search_by;
+            $keyword = $request->keyword;
+
+            $data = FAQ::order($order_by, $sort)
+                ->search($search_by, $keyword)
+                ->get();
             return MiscTransformer::faqGrouping($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -51,7 +59,15 @@ class MiscController extends Controller
     public function committee(Request $request)
     {
         try {
-            $data = Committee::get();
+            $order_by = $request->input('order_by', ['id']);
+            $sort = $request->input('sort', ['asc']);
+
+            $search_by = $request->search_by;
+            $keyword = $request->keyword;
+
+            $data = Committee::order($order_by, $sort)
+                ->search($search_by, $keyword)
+                ->get();
             return MiscTransformer::committeeGrouping($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
