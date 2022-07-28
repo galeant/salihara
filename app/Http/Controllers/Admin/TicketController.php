@@ -183,8 +183,7 @@ class TicketController extends Controller
         try {
             $data = Ticket::where([
                 'id' => $id
-            ])->withCount('comments')
-                ->firstOrFail();
+            ])->firstOrFail();
 
             $transaction = Transaction::whereHas('detail', function ($q) use ($id) {
                 $q->where('ticket_id', $id);
