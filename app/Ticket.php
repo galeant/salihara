@@ -86,7 +86,7 @@ class Ticket extends Model
 
     public function user()
     {
-        return $this->belongsToMany('App\User', 'user_acces', 'ticket_id', 'user_id');
+        return $this->belongsToMany('App\User', 'user_access', 'ticket_id', 'user_id');
     }
 
     public function imageBanner()
