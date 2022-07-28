@@ -281,7 +281,8 @@ class MiscController extends Controller
         DB::beginTransaction();
         try {
             $data  = Committee::create([
-                'division' => $request->division,
+                'division_id' => $request->division_id,
+                'division_en' => $request->division_en,
                 'name' => $request->name,
             ]);
             DB::commit();
@@ -298,7 +299,8 @@ class MiscController extends Controller
         try {
             $data  = Committee::where('id', $id)->firstOrFail();
             $data->update([
-                'division' => $request->division,
+                'division_id' => $request->division_id,
+                'division_en' => $request->division_en,
                 'name' => $request->name,
             ]);
             DB::commit();

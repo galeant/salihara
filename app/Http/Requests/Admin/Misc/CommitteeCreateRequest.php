@@ -24,7 +24,8 @@ class CommitteeCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'division' => 'required',
+            'division_id' => 'required',
+            'division_en' => 'required',
             'name' => 'required',
         ];
     }

@@ -217,15 +217,16 @@ class MiscTransformer
     public static function committeeGrouping($data, $message = 'Succes')
     {
         $return = [];
-        $group = $data->pluck('division')->unique()->sort();
+        $group = $data->pluck('division_id')->unique()->sort();
         foreach ($group as $gp) {
             $return[$gp] = [
-                'division' => $gp,
+                'division_id' => $gp,
                 'names' => []
             ];
         }
         foreach ($data as $dt) {
-            $return[$dt->division]['names'][] = $dt->name;
+            $return[$dt->division_id]['division_en'] = $dt->division_en;
+            $return[$dt->division_id]['names'][] = $dt->name;
         }
         return response()->json([
             'message' => $message,
@@ -237,7 +238,8 @@ class MiscTransformer
     {
         return [
             'id' => $data->id,
-            'division' => $data->division,
+            'division_id' => $data->division_id,
+            'division_en' => $data->division_en,
             'name' => $data->name,
         ];
     }
