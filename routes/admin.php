@@ -68,11 +68,13 @@ Route::group(['middleware' => ['auth']], function () {
             });
 
             Route::group(['prefix' => 'committee'], function () {
-                Route::get('/', 'MiscController@committeeIndex');
-                Route::get('{id}', 'MiscController@committeeDetail');
-                Route::post('create', 'MiscController@committeeCreate');
-                Route::post('update/{id}', 'MiscController@committeeUpdate');
-                Route::post('delete/{id}', 'MiscController@committeeDelete');
+                Route::get('/', 'MiscController@committee');
+                Route::post('/', 'MiscController@committeePost');
+                // Route::get('/', 'MiscController@committeeIndex');
+                // Route::get('{id}', 'MiscController@committeeDetail');
+                // Route::post('create', 'MiscController@committeeCreate');
+                // Route::post('update/{id}', 'MiscController@committeeUpdate');
+                // Route::post('delete/{id}', 'MiscController@committeeDelete');
             });
         });
 

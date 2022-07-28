@@ -36,4 +36,9 @@ class Misc extends Model
     {
         return $query->where('segment', 'main_banner');
     }
+
+    public function scopeCommittee($query)
+    {
+        return $query->where('segment', 'committee');
+    }
 }

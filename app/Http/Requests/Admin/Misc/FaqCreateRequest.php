@@ -24,9 +24,12 @@ class FaqCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'group' => 'required',
-            'question' => 'required',
-            'answer' => 'required',
+            'group_id' => 'required',
+            'group_en' => 'required',
+            'question_id' => 'required',
+            'question_en' => 'required',
+            'answer_id' => 'required',
+            'answer_en' => 'required',
         ];
     }
 }

@@ -200,9 +200,18 @@ class MiscController extends Controller
         DB::beginTransaction();
         try {
             $data  = Faq::create([
-                'group' => $request->group,
-                'question' => $request->question,
-                'answer' => $request->answer
+                'group' => json_encode([
+                    'id' => $request->group_id,
+                    'en' => $request->group_en,
+                ]),
+                'question' => json_encode([
+                    'id' => $request->question_id,
+                    'en' => $request->question_en,
+                ]),
+                'answer' => json_encode([
+                    'id' => $request->answer_id,
+                    'en' => $request->answer_en,
+                ]),
             ]);
             DB::commit();
             return $this->faqDetail($request, $data->id);
@@ -218,9 +227,18 @@ class MiscController extends Controller
         try {
             $data  = Faq::where('id', $id)->firstOrFail();
             $data->update([
-                'group' => $request->group,
-                'question' => $request->question,
-                'answer' => $request->answer
+                'group' => json_encode([
+                    'id' => $request->group_id,
+                    'en' => $request->group_en,
+                ]),
+                'question' => json_encode([
+                    'id' => $request->question_id,
+                    'en' => $request->question_en,
+                ]),
+                'answer' => json_encode([
+                    'id' => $request->answer_id,
+                    'en' => $request->answer_en,
+                ]),
             ]);
             DB::commit();
             return $this->faqDetail($request, $data->id);
@@ -245,83 +263,110 @@ class MiscController extends Controller
     }
 
     // COMMITEEE
-    public function committeeIndex(Request $request)
-    {
-
-        $order_by = $request->input('order_by', ['id']);
-        $sort = $request->input('sort', ['asc']);
-
-        $search_by = $request->search_by;
-        $keyword = $request->keyword;
-
-        $per_page = $request->input('per_page', 10);
-
-        try {
-            $data = Committee::order($order_by, $sort)
-                ->search($search_by, $keyword)
-                ->paginate($per_page);
-
-            return MiscTransformer::committeeList($data);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-    }
-    public function committeeDetail(Request $request, $id)
+    public function committee(Request $request)
     {
         try {
-            $data = Committee::where('id', $id)->firstOrFail();
-            return MiscTransformer::committeeDetail($data);
+            $data = Misc::committee()->first();
+            return MiscTransformer::committee($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
     }
 
-    public function committeeCreate(CommitteeCreateRequest $request)
+    public function committeePost(CommitteeCreateRequest $request)
     {
         DB::beginTransaction();
         try {
-            $data  = Committee::create([
-                'division_id' => $request->division_id,
-                'division_en' => $request->division_en,
-                'name' => $request->name,
+            $data = Misc::updateOrCreate([
+                'segment' => 'committee'
+            ], [
+                'value_id' => $request->value_id,
+                'value_en' => $request->value_en
             ]);
             DB::commit();
-            return $this->committeeDetail($request, $data->id);
+            return MiscTransformer::committee($data);
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
         }
     }
+    // public function committeeIndex(Request $request)
+    // {
 
-    public function committeeUpdate(CommitteeCreateRequest $request, $id)
-    {
-        DB::beginTransaction();
-        try {
-            $data  = Committee::where('id', $id)->firstOrFail();
-            $data->update([
-                'division_id' => $request->division_id,
-                'division_en' => $request->division_en,
-                'name' => $request->name,
-            ]);
-            DB::commit();
-            return $this->committeeDetail($request, $data->id);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw new \Exception($e->getMessage());
-        }
-    }
+    //     $order_by = $request->input('order_by', ['id']);
+    //     $sort = $request->input('sort', ['asc']);
 
-    public function committeeDelete(Request $request, $id)
-    {
-        DB::beginTransaction();
-        try {
-            $data = Committee::where('id', $id)->firstOrFail();
-            $data->delete();
-            DB::commit();
-            return MiscTransformer::committeeDetail($data);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw new \Exception($e->getMessage());
-        }
-    }
+    //     $search_by = $request->search_by;
+    //     $keyword = $request->keyword;
+
+    //     $per_page = $request->input('per_page', 10);
+
+    //     try {
+    //         $data = Committee::order($order_by, $sort)
+    //             ->search($search_by, $keyword)
+    //             ->paginate($per_page);
+
+    //         return MiscTransformer::committeeList($data);
+    //     } catch (\Exception $e) {
+    //         throw new \Exception($e->getMessage());
+    //     }
+    // }
+    // public function committeeDetail(Request $request, $id)
+    // {
+    //     try {
+    //         $data = Committee::where('id', $id)->firstOrFail();
+    //         return MiscTransformer::committeeDetail($data);
+    //     } catch (\Exception $e) {
+    //         throw new \Exception($e->getMessage());
+    //     }
+    // }
+
+    // public function committeeCreate(CommitteeCreateRequest $request)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $data  = Committee::create([
+    //             'division_id' => $request->division_id,
+    //             'division_en' => $request->division_en,
+    //             'name' => $request->name,
+    //         ]);
+    //         DB::commit();
+    //         return $this->committeeDetail($request, $data->id);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         throw new \Exception($e->getMessage());
+    //     }
+    // }
+
+    // public function committeeUpdate(CommitteeCreateRequest $request, $id)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $data  = Committee::where('id', $id)->firstOrFail();
+    //         $data->update([
+    //             'division_id' => $request->division_id,
+    //             'division_en' => $request->division_en,
+    //             'name' => $request->name,
+    //         ]);
+    //         DB::commit();
+    //         return $this->committeeDetail($request, $data->id);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         throw new \Exception($e->getMessage());
+    //     }
+    // }
+
+    // public function committeeDelete(Request $request, $id)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $data = Committee::where('id', $id)->firstOrFail();
+    //         $data->delete();
+    //         DB::commit();
+    //         return MiscTransformer::committeeDetail($data);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         throw new \Exception($e->getMessage());
+    //     }
+    // }
 }
