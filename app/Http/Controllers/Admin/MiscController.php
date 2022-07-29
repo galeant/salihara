@@ -186,7 +186,6 @@ class MiscController extends Controller
                 'answer' => json_encode($ans)
             ]);
         }
-        dd('wdwdwdwd');
         $order_by = $request->input('order_by', ['id']);
         $sort = $request->input('sort', ['asc']);
 
