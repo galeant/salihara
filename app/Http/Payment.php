@@ -298,6 +298,10 @@ class Payment
 
     private function apiPaymentCall($payload, $url, $type = 'json')
     {
+        $paymentBaseUrl = ENV('IPAY88SANDBOX');
+        if (ENV('APP_ENV') === 'production') {
+            $paymentBaseUrl = ENV('IPAY88PROD');
+        }
         try {
             $data_payload = [
                 RequestOptions::JSON => $payload
@@ -309,7 +313,7 @@ class Payment
             }
             // dd(json_encode($payload));
             $client = new Client([
-                'base_uri' => ENV('IPAY88SANDBOX'),
+                'base_uri' => $paymentBaseUrl
             ]);
             $response = $client->post($url, $data_payload);
             $body = $response->getBody();
