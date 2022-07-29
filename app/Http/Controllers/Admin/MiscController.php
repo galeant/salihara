@@ -166,7 +166,27 @@ class MiscController extends Controller
 
     public function faqIndex(Request $request)
     {
-
+        $data = FAQ::get();
+        foreach ($data as $dt) {
+            $group = [
+                'id' => $dt->group,
+                'en' => $dt->group,
+            ];
+            $ques = [
+                'id' => $dt->question,
+                'en' => $dt->question,
+            ];
+            $ans = [
+                'id' => $dt->answer,
+                'en' => $dt->answer,
+            ];
+            $dt->update([
+                'group' => json_encode($group),
+                'question' => json_encode($ques),
+                'answer' => json_encode($ans)
+            ]);
+        }
+        dd('wdwdwdwd');
         $order_by = $request->input('order_by', ['id']);
         $sort = $request->input('sort', ['asc']);
 

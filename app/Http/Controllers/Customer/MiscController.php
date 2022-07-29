@@ -50,7 +50,7 @@ class MiscController extends Controller
             $data = FAQ::order($order_by, $sort)
                 ->search($search_by, $keyword)
                 ->get();
-            return MiscTransformer::faqList($data);
+            return MiscTransformer::faqGrouping($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

@@ -148,15 +148,21 @@ class MiscTransformer
         $return = [];
         $group = $data->pluck('group')->unique()->sort();
         foreach ($group as $gp) {
+            $grp = json_decode($gp);
             $return[$gp] = [
-                'group' => $gp,
+                'group_id' => $grp->id,
+                'group_en' => $grp->en,
                 'list' => []
             ];
         }
         foreach ($data as $dt) {
+            $qrs = json_decode($dt->question);
+            $ans = json_decode($dt->answer);
             $return[$dt->group]['list'][] = [
-                'question' => $dt->question,
-                'answer' => $dt->answer
+                'question_id' => $qrs->id,
+                'question_en' => $qrs->en,
+                'answer_id' => $ans->id,
+                'answer_en' => $ans->en,
             ];
         }
         return response()->json([
