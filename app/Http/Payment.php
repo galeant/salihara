@@ -110,7 +110,6 @@ class Payment
 
     public function paymentRequest($trans, $trans_detail)
     {
-        dd($trans);
         $procDesc = collect($trans_detail)->pluck('ticket_name_id')->implode(' | ');
         $ref_no = $this->reffIdGenerator($trans['user_id']);
         $amount = $trans['net_value_idr'];
