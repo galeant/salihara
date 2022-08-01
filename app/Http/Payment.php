@@ -110,6 +110,7 @@ class Payment
 
     public function paymentRequest($trans, $trans_detail)
     {
+        dd($trans);
         $procDesc = collect($trans_detail)->pluck('ticket_name_id')->implode(' | ');
         $ref_no = $this->reffIdGenerator($trans['user_id']);
         $amount = $trans['net_value_idr'];
@@ -133,9 +134,9 @@ class Payment
             'Amount' => (string)$amount,
             'ProdDesc' => /*'Ticket'*/ (string)$procDesc,
 
-            'UserName' => '',
-            'UserEmail' => '',
-            'UserContact' => '',
+            'UserName' => $trans['user_name'],
+            'UserEmail' => $trans['user_email'],
+            'UserContact' => $trans['user_phone'],
 
             'RequestType' => 'Redirect',
             'Remark' => $remark,
