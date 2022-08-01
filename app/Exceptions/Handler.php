@@ -68,6 +68,8 @@ class Handler extends ExceptionHandler
         } else if (str_contains($message, 'No query results for model')) {
             $code = 404;
             $message = 'Data Not Found';
+        } else if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+            $code = $exception->getStatusCode();
         }
         // $uri = Route::current()->uri;
         // if (str_starts_with($uri, 'admin') || str_starts_with($uri, 'customer') || str_starts_with($uri, 'api')) {

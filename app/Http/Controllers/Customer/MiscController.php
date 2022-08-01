@@ -10,6 +10,7 @@ use App\Cart;
 use App\Misc;
 use App\FAQ;
 use App\Committee;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -70,6 +71,20 @@ class MiscController extends Controller
             //     ->get();
             $data = Misc::committee()->first();
             return MiscTransformer::committee($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function partner(Request $request, $type)
+    {
+        $avail_type = Misc::PARTNER_TYPE;
+        if (!in_array($type, $avail_type)) {
+            throw new HttpException(404);
+        }
+        try {
+            $data = Image::where('function_type', $type)->get();
+            return MiscTransformer::partner($data);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

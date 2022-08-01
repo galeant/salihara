@@ -12,11 +12,14 @@ use App\Http\Requests\Admin\Misc\AboutCreateRequest;
 
 use App\Http\Requests\Admin\Misc\FaqCreateRequest;
 use App\Http\Requests\Admin\Misc\CommitteeCreateRequest;
+use App\Http\Requests\Admin\Misc\PartnerCreateRequest;
 
 use App\Http\Response\Admin\MiscTransformer;
 use App\Misc;
 use App\FAQ;
 use App\Committee;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 
 class MiscController extends Controller
 {
@@ -368,4 +371,61 @@ class MiscController extends Controller
     //         throw new \Exception($e->getMessage());
     //     }
     // }
+
+    // PARTNER
+
+    public function partner(Request $request, $type)
+    {
+        $avail_type = Misc::PARTNER_TYPE;
+        if (!in_array($type, $avail_type)) {
+            throw new HttpException(404, 'Route Not Found');
+        }
+        try {
+            $data = Image::where('function_type', $type)->get();
+            return MiscTransformer::partner($data);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function partnerPost(PartnerCreateRequest $request, $type)
+    {
+        $avail_type = Misc::PARTNER_TYPE;
+        if (!in_array($type, $avail_type)) {
+            throw new HttpException(404);
+        }
+        DB::beginTransaction();
+        try {
+            $data = Image::where('function_type', $type)->get();
+            $max = count($data);
+            if (count($request->logo) > $max) {
+                $max = count($request->logo);
+            }
+
+            for ($i = 0; $i < $max; $i++) {
+                if (isset($data[$i]) && isset($request->logo[$i])) {
+                    $ex_img = $data[$i];
+                    $tmp_img = $request->logo[$i];
+                    $image = imageUpload('public/' . $type . '/', $tmp_img, NULL, Str::uuid());
+                    $ex_img->update([
+                        'path' => $image
+                    ]);
+                } else if (!isset($data[$i]) && isset($request->logo[$i])) {
+                    $tmp_img = $request->logo[$i];
+                    $image = imageUpload('public/' . $type . '/', $tmp_img, NULL, Str::uuid());
+                    Image::create([
+                        'function_type' => $type,
+                        'path' => $image
+                    ]);
+                } else if (isset($data[$i]) && !isset($request->logo[$i])) {
+                    $data[$i]->delete();
+                }
+            }
+            DB::commit();
+            return $this->partner($request, $type);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
 }

@@ -76,6 +76,14 @@ Route::group(['middleware' => ['auth']], function () {
                 // Route::post('update/{id}', 'MiscController@committeeUpdate');
                 // Route::post('delete/{id}', 'MiscController@committeeDelete');
             });
+
+            Route::group(['prefix' => 'partner'], function () {
+                Route::get('{type}', 'MiscController@partner');
+                Route::post('{type}', 'MiscController@partnerPost');
+                // Route::post('create', 'MiscController@partnerCreate');
+                // Route::post('update/{id}', 'MiscController@partnerUpdate');
+                // Route::post('delete/{id}', 'MiscController@partnerDelete');
+            });
         });
 
         Route::group(['prefix' => 'user'], function () {

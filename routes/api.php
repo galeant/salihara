@@ -37,6 +37,7 @@ Route::group(['middleware' => ['nullable_token']], function () {
         Route::get('/about', 'MiscController@about');
         Route::get('/faq', 'MiscController@faq');
         Route::get('/committee', 'MiscController@committee');
+        Route::get('/partner/{type}', 'MiscController@partner');
 
         Route::post('/help_mail/{segment?}', 'MiscController@helpMail');
     });

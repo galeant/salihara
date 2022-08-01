@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Misc extends Model
 {
+
+    const PARTNER_TYPE = [
+        'logo_program', 'logo_media'
+    ];
+
     protected $table = 'misc';
     protected $guarded = [];
 

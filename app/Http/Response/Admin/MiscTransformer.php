@@ -272,4 +272,20 @@ class MiscTransformer
     //         'name' => $data->name,
     //     ];
     // }
+
+    public static function partner($data, $message = 'Success')
+    {
+        $return = $data->pluck('path')->transform(function ($v) {
+            return isset($v) ? url($v) : NULL;
+        });
+        // $return = $data->transform(function ($v) {
+        //     return [
+        //         'url' => isset($v->path) ? url($v->path) : NULL
+        //     ];
+        // });
+        return response()->json([
+            'message' => $message,
+            'result' => $return
+        ]);
+    }
 }
